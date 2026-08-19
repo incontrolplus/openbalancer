@@ -94,10 +94,12 @@ if [ -f "${OBSIDIAN_BRIDGE}" ]; then
         --task_id "e2e-regression-${TIMESTAMP}" || log "⚠️ Obsidian bridge execution warning (non-fatal)"
 fi
 
-# Mirror Obsidian to Secondary SSD
-if ssh -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=3 diokarabaz2@100.70.181.127 "test -d /Volumes/PHILIPS_SSD/Obsidian_Vault_Backup" 2>/dev/null; then
+# Resilient Mirroring of Obsidian Vault to Secondary SSD
+if ssh -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=4 diokarabaz2@100.70.181.127 "test -d /Volumes/PHILIPS_SSD/Obsidian_Vault_Backup" 2>/dev/null; then
     log "🔄 Mirroring Obsidian Vault to macmini-secondary (/Volumes/PHILIPS_SSD)..."
-    rsync -avz --delete "/Users/diokarabaz/Documents/Obsidian Vault/" diokarabaz2@100.70.181.127:"/Volumes/PHILIPS_SSD/Obsidian_Vault_Backup/" >> "${LOG_FILE}" 2>&1 || log "⚠️ Obsidian secondary mirroring warning"
+    rsync -avz --inplace --partial --timeout=30 \
+        -e "ssh -o BatchMode=yes -o StrictHostKeyChecking=no -o ServerAliveInterval=15 -o ServerAliveCountMax=6 -o ConnectTimeout=10" \
+        "/Users/diokarabaz/Documents/Obsidian Vault/" diokarabaz2@100.70.181.127:"/Volumes/PHILIPS_SSD/Obsidian_Vault_Backup/" >> "${LOG_FILE}" 2>&1 || log "⚠️ Obsidian secondary mirroring warning (non-fatal)"
 fi
 
 log "🏁 Nightly Playwright E2E Regression Pipeline Finished with status: ${TEST_STATUS}"
