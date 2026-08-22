@@ -60,16 +60,22 @@ export default {
     }
 
     // 1a. Handle clean page rewrites with strict no-cache headers
-    const cleanPages = ['/docs', '/blog', '/contact', '/privacy', '/refunds', '/terms'];
-    if (cleanPages.includes(url.pathname)) {
-      const assetUrl = new URL(request.url);
-      assetUrl.pathname = url.pathname + '.html';
-      const pageResp = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
+    const cleanPages = {
+      '/docs': '/docs.html',
+      '/blog': '/blog.html',
+      '/contact': '/contact.html',
+      '/privacy': '/privacy.html',
+      '/refunds': '/refunds.html',
+      '/terms': '/terms.html'
+    };
+    if (cleanPages[url.pathname]) {
+      const targetUrl = new URL(cleanPages[url.pathname], request.url);
+      const pageResp = await env.ASSETS.fetch(targetUrl);
       const headers = new Headers(pageResp.headers);
       headers.set('Content-Type', 'text/html; charset=utf-8');
       headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       headers.set('Access-Control-Allow-Origin', '*');
-      return new Response(pageResp.body, { status: 200, headers });
+      return new Response(pageResp.body, { status: pageResp.status, headers });
     }
 
     // 1b. Handle /api/revenue endpoint
