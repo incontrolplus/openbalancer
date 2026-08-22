@@ -97,7 +97,7 @@
   <link rel="apple-touch-icon" href="assets/favicon.svg?v=7.0.0">
 
   <!-- Stylesheet & Typography (Full Engineering Design System) -->
-  <link rel="stylesheet" href="css/style.css?v=5.8.0">
+  <link rel="stylesheet" href="css/style.css?v=6.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -120,6 +120,8 @@
   </style>
 </head>
 <body>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-to-content" data-i18n="skip_to_content">Премини към съдържанието</a>
 
   <!-- Navigation -->
   <header class="navbar">
@@ -204,6 +206,9 @@
       <a href="#enterprise" class="btn btn-primary" style="width: 100%;" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
     </div>
   </aside>
+
+  <!-- Semantic Main Landmark -->
+  <main id="main-content">
 
   <!-- Hero Section (CompanyBook Design System Architecture) -->
   <section class="hero-section">
@@ -1014,6 +1019,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- Footer -->
   <footer class="site-footer">

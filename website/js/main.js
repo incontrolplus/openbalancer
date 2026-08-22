@@ -2014,12 +2014,12 @@ function initDocsConfigBuilder() {
       const row = document.createElement('div');
       row.className = 'upstream-item';
       row.innerHTML = `
-        <input type="text" class="d-u-host" value="${item.host}" style="flex: 2; min-width: 100px;" placeholder="Host">
-        <input type="number" class="d-u-port" value="${item.port}" style="width: 65px;" placeholder="Port">
+        <input type="text" class="d-u-host" value="${item.host}" style="flex: 2; min-width: 100px;" placeholder="Host" aria-label="Backend Host ${index + 1}">
+        <input type="number" class="d-u-port" value="${item.port}" style="width: 65px;" placeholder="Port" aria-label="Backend Port ${index + 1}">
         <span style="color: var(--text-dim); font-size: 0.75rem;">W:</span>
-        <input type="number" class="d-u-weight" value="${item.weight}" min="1" max="100" style="width: 45px;">
-        <input type="text" class="d-u-path" value="${item.health_path}" style="width: 70px;" placeholder="/health">
-        <button type="button" class="btn-remove-upstream d-u-remove" data-index="${index}" title="Remove Node">&times;</button>
+        <input type="number" class="d-u-weight" value="${item.weight}" min="1" max="100" style="width: 45px;" aria-label="Backend Weight ${index + 1}">
+        <input type="text" class="d-u-path" value="${item.health_path}" style="width: 70px;" placeholder="/health" aria-label="Health Check Path ${index + 1}">
+        <button type="button" class="btn-remove-upstream d-u-remove" data-index="${index}" title="Remove Backend Node" aria-label="Remove Backend Node ${index + 1}">&times;</button>
       `;
       upstreamsList.appendChild(row);
     });

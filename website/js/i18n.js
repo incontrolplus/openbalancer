@@ -6,7 +6,8 @@
 (function () {
   const translations = {
     en: {
-      // Navigation
+      // Accessibility & Navigation
+      "skip_to_content": "Skip to main content",
       "nav_benchmarks": "Benchmarks",
       "nav_parameters": "Parameters",
       "nav_architecture": "Architecture",
@@ -389,7 +390,8 @@
     },
 
     bg: {
-      // Navigation
+      // Accessibility & Navigation
+      "skip_to_content": "Премини към съдържанието",
       "nav_benchmarks": "Бенчмаркове",
       "nav_parameters": "Параметри",
       "nav_architecture": "Архитектура",
