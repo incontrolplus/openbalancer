@@ -13,6 +13,7 @@
       html, body { background-color: #080c14 !important; color: #f8fafc !important; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; margin: 0; padding: 0; }
       .brand-logo-img, img[src*="logo.svg"] { width: 36px !important; height: 36px !important; }
       .glass-card { background: rgba(13, 20, 36, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; }
+      .screen-canvas { border-radius: 8px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); }
     </style>
     <link rel="stylesheet" crossorigin href="/assets/index-DCENW1Lr.css">
   </head>
@@ -23,7 +24,7 @@
         <div class="flex items-center gap-3">
           <a href="https://openbalancer.com" class="flex items-center gap-2 font-bold text-lg text-white">
             <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center font-mono text-slate-950 font-black text-sm shadow-lg shadow-cyan-500/20">OB</div>
-            <span>Open Balancer <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Windows VM</span></span>
+            <span>Open Balancer <span class="text-xs px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Windows 11 VM</span></span>
           </a>
         </div>
         <div class="flex items-center gap-3">
@@ -31,7 +32,7 @@
           <a href="https://cashflow.openbalancer.com" class="text-xs px-3 py-1.5 rounded-lg border border-white/10 text-slate-300 hover:text-white hover:bg-white/5 transition-all">💳 B2B Cashflow</a>
           <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            VM Online
+            QEMU Running
           </span>
         </div>
       </div>
@@ -40,7 +41,7 @@
     <!-- Main Content -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8 flex flex-col gap-6">
       <!-- Bento Specs Header -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="glass-card p-4">
           <div class="text-xs text-slate-400 font-medium">Virtual Machine Host</div>
           <div class="text-base font-semibold text-white mt-1">macmini-secondary (Leon2)</div>
@@ -63,28 +64,41 @@
         </div>
       </div>
 
-      <!-- noVNC Screen Container -->
-      <div class="glass-card overflow-hidden flex flex-col flex-1 min-h-[560px] border border-white/10 shadow-2xl">
-        <div class="p-3 bg-[#080d1a] border-b border-white/10 flex items-center justify-between">
+      <!-- Live Screen Container -->
+      <div class="glass-card overflow-hidden flex flex-col flex-1 border border-white/10 shadow-2xl">
+        <div class="p-3 bg-[#080d1a] border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
             <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
             <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
-            <span class="text-xs font-mono text-slate-400 ml-2">OpenBalancer-Windows11 [QEMU Virtual Display]</span>
+            <span class="text-xs font-mono text-slate-300 ml-2">OpenBalancer-Windows11 [Live Framebuffer Display]</span>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="document.getElementById('vnc-iframe').src = document.getElementById('vnc-iframe').src" class="text-xs px-2.5 py-1 rounded bg-white/5 hover:bg-white/10 text-slate-300 transition-all">🔄 Рестарт на сесията</button>
-            <button onclick="document.getElementById('vnc-iframe').requestFullscreen()" class="text-xs px-2.5 py-1 rounded bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 transition-all">⛶ Цял екран</button>
+            <span id="refresh-indicator" class="text-xs text-slate-400 font-mono mr-2">🟢 Active • 1s</span>
+            <button onclick="toggleFullscreen()" class="text-xs px-3 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 font-medium transition-all">⛶ Цял екран</button>
           </div>
         </div>
         
-        <div class="flex-1 relative bg-black flex items-center justify-center">
-          <iframe 
-            id="vnc-iframe"
-            src="http://100.70.181.127:8006/vnc.html?autoconnect=true&resize=scale"
-            class="w-full h-full min-h-[500px] border-0"
-            allow="fullscreen; clipboard-read; clipboard-write"
-          ></iframe>
+        <div id="screen-container" class="flex-1 min-h-[480px] bg-[#030712] p-4 flex items-center justify-center relative">
+          <img 
+            id="vm-display" 
+            src="/screenshots/vm_screen.png" 
+            alt="Windows 11 Live Framebuffer" 
+            class="max-w-full max-h-[600px] object-contain rounded-lg border border-white/10 shadow-2xl"
+          />
+        </div>
+
+        <div class="p-3 bg-[#080d1a]/90 border-t border-white/10 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
+          <div class="flex items-center gap-2">
+            <span>🔹 QEMU 11.1.0</span>
+            <span>•</span>
+            <span>VirtIO Network Attached</span>
+            <span>•</span>
+            <span>AHCI SATA Controller</span>
+          </div>
+          <div class="font-mono text-slate-300">
+            RDP: <span class="text-cyan-400">100.70.181.127:3389</span> | VNC: <span class="text-cyan-400">100.70.181.127:5901</span>
+          </div>
         </div>
       </div>
     </main>
@@ -95,5 +109,16 @@
         © 2026 INCONTROL PLUS ЕООД. Open Balancer Enterprise Virtualization & Mesh Gateway.
       </div>
     </footer>
+
+    <script>
+      function toggleFullscreen() {
+        const elem = document.getElementById('screen-container');
+        if (!document.fullscreenElement) {
+          elem.requestFullscreen().catch(err => alert(err.message));
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    </script>
   </body>
 </html>
