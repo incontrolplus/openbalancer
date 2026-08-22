@@ -772,11 +772,13 @@
     }
   };
 
-  let currentLang = 'en';
+  let currentLang = 'bg';
   try {
     const saved = localStorage.getItem('openbalancer_lang');
     if (saved && (saved === 'en' || saved === 'bg')) {
       currentLang = saved;
+    } else {
+      currentLang = 'bg';
     }
   } catch (e) {
     console.warn('Storage access not available', e);
