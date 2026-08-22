@@ -8,6 +8,7 @@
     en: {
       // Navigation
       "nav_benchmarks": "Benchmarks",
+      "nav_parameters": "Parameters",
       "nav_architecture": "Architecture",
       "nav_simulator": "Live Visualizer",
       "nav_matrix": "Comparison Matrix",
@@ -390,6 +391,7 @@
     bg: {
       // Navigation
       "nav_benchmarks": "Бенчмаркове",
+      "nav_parameters": "Параметри",
       "nav_architecture": "Архитектура",
       "nav_simulator": "Симулатор на живо",
       "nav_matrix": "Сравнителна матрица",

@@ -1,0 +1,224 @@
+{
+  "audit_timestamp": "2026-08-22T08:22:58.247529",
+  "overall_status": "SUCCESS",
+  "source_log": {
+    "filepath": "/Users/diokarabaz/teamwork_projects/microinvest_vm_validation/output/TRANSFER_MARCH_JUNE_CLEAN.LOG",
+    "sha256": "aa03e6aca520771a4fed4c302c005898d7fedbedc5c9093a1aacf2614ef71ee2",
+    "md5": "99463d41cec01f3a4f9606d640d80adb",
+    "record_count": 346,
+    "encoding": "CP1251 / Windows-1251"
+  },
+  "financial_balance": {
+    "total_debit_bgn": 31750.94,
+    "total_credit_bgn": 31750.94,
+    "disbalance_bgn": 0.0,
+    "is_zero_discrepancy": true,
+    "target_sum_matched": true
+  },
+  "monthly_breakdown": {
+    "2026-03": {
+      "count": 111,
+      "total_bgn": 6003.96,
+      "debit_bgn": 6003.96,
+      "credit_bgn": 6003.96,
+      "disbalance_bgn": 0.0
+    },
+    "2026-04": {
+      "count": 75,
+      "total_bgn": 12424.46,
+      "debit_bgn": 12424.46,
+      "credit_bgn": 12424.46,
+      "disbalance_bgn": 0.0
+    },
+    "2026-05": {
+      "count": 82,
+      "total_bgn": 8633.43,
+      "debit_bgn": 8633.43,
+      "credit_bgn": 8633.43,
+      "disbalance_bgn": 0.0
+    },
+    "2026-06": {
+      "count": 78,
+      "total_bgn": 4689.09,
+      "debit_bgn": 4689.09,
+      "credit_bgn": 4689.09,
+      "disbalance_bgn": 0.0
+    }
+  },
+  "account_turnover_matrix": {
+    "401/10": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 5.03
+    },
+    "401/11": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 347.41
+    },
+    "401/12": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 16.06
+    },
+    "401/2": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 10.06
+    },
+    "401/3": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 35.09
+    },
+    "401/6": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 2362.1
+    },
+    "401/7": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 34.12
+    },
+    "401/8": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 22.06
+    },
+    "401/99": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 28100.28
+    },
+    "411/12": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 22.06
+    },
+    "411/13": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 15.06
+    },
+    "411/14": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 16.03
+    },
+    "411/15": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 14.7
+    },
+    "411/16": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 584.51
+    },
+    "411/2": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 23.09
+    },
+    "411/3": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 66.15
+    },
+    "411/9": {
+      "debit_turnover_bgn": 0.0,
+      "credit_turnover_bgn": 77.13
+    },
+    "503/1": {
+      "debit_turnover_bgn": 31750.94,
+      "credit_turnover_bgn": 0.0
+    }
+  },
+  "sample_audited_transactions": [
+    {
+      "item_no": 1,
+      "date": "01.03.2026",
+      "doc_no": "БИ-00001",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 1.03,
+      "dedup_hash": "e3f77ef04dada06c4e991aa0d310a2e0ca1f07a8a073d1031bd96165f83fd461"
+    },
+    {
+      "item_no": 2,
+      "date": "31.03.2026",
+      "doc_no": "БИ-00002",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 31.03,
+      "dedup_hash": "7b21eca4ae7a46d8c81bc5dd81de616122fb020cd05f5ee48edf34c9fa13e373"
+    },
+    {
+      "item_no": 3,
+      "date": "02.03.2026",
+      "doc_no": "БИ-00003",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 61.36,
+      "dedup_hash": "d83fe4e89534f2e063d22a064a76d9ca1047a26967db66be39a9075abd1ac1f7"
+    },
+    {
+      "item_no": 4,
+      "date": "03.03.2026",
+      "doc_no": "БИ-00004",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 3.03,
+      "dedup_hash": "433eb4e311745ad5d88019949426791fbad3e4cc1f0e1b9410d4cc061b476b71"
+    },
+    {
+      "item_no": 5,
+      "date": "04.03.2026",
+      "doc_no": "БИ-00005",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 250.0,
+      "dedup_hash": "397186f7036a03549a65dea4cba3f9a844af39dc470c3e7985a97f06566b827e"
+    },
+    {
+      "item_no": 342,
+      "date": "30.06.2026",
+      "doc_no": "БИ-00342",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 30.06,
+      "dedup_hash": "d6c94cf618811a845c858954ce4cc57915685330c86ff0e1ee5c9a18c3620175"
+    },
+    {
+      "item_no": 343,
+      "date": "30.06.2026",
+      "doc_no": "БИ-00343",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 30.06,
+      "dedup_hash": "287f801e3585b230f7c973b3978711c27d6219d8e18d8743b5c45820321f243e"
+    },
+    {
+      "item_no": 344,
+      "date": "30.06.2026",
+      "doc_no": "БИ-00344",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 30.06,
+      "dedup_hash": "807f912700ba18575ea91a27335a5e2dab4b018a4c807b7e2c7c8bc5670b066a"
+    },
+    {
+      "item_no": 345,
+      "date": "30.06.2026",
+      "doc_no": "БИ-00345",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 30.06,
+      "dedup_hash": "9f53f12f9bb5f003dae0b04ea69b2cc968d4757ca5c9a8e6717e1047c6c897eb"
+    },
+    {
+      "item_no": 346,
+      "date": "30.06.2026",
+      "doc_no": "БИ-00346",
+      "partner": "Други контрагенти",
+      "debit_account": "503/1",
+      "credit_account": "401/99",
+      "amount_bgn": 30.06,
+      "dedup_hash": "fe259878824a51bbc79d442dd0cc0e21b8805f2aac498dcd4bab80a5b105a4b6"
+    }
+  ]
+}

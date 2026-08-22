@@ -1,229 +1,1172 @@
 <!DOCTYPE html>
-<html lang="bg" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Balancer — High-Throughput AI &amp; API Load Balancer</title>
-  <meta name="description" content="Интелигентен асинхронен балансьор на натоварването и обратен прокси сървър за AI модели, микросървиси и корпоративни SLA договори от ИНКОНТРОЛ ПЛЮС ЕООД.">
+  <title>OpenBalancer — Asynchronous AI & API Reverse Proxy Engine</title>
+  <meta name="description" content="High-throughput, non-blocking load balancer and reverse proxy engineered for AI model inference clusters, microservices, and enterprise SLAs by INCONTROL PLUS.">
+  <meta name="keywords" content="openbalancer, load balancer, reverse proxy, ai inference gateway, api router, incontrol plus, enterprise sla">
+  <meta name="author" content="INCONTROL PLUS EOOD">
   
+  <!-- JSON-LD Structured Data: SoftwareApplication & Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "OpenBalancer",
+        "applicationCategory": "InfrastructureApplication",
+        "operatingSystem": "Linux, macOS, Docker, Kubernetes",
+        "softwareVersion": "1.4.0-stable",
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "EUR"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "INCONTROL PLUS EOOD",
+          "url": "https://www.openbalancer.com",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+359-87-725-3017",
+            "contactType": "customer service",
+            "email": "support@openbalancer.com"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does the contractual 99.9% uptime SLA compensation work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under our Master Services Agreement (MSA), if your cluster uptime falls below 99.9% in a calendar month, INCONTROL PLUS automatically applies contractual service credits calculated per minute of downtime, credited directly against your next Stripe invoice."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are corporate EU VAT invoices and payments handled via Stripe?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All corporate retainers are invoiced securely through Stripe Invoicing with automated EU VAT reverse-charge calculation. We support SEPA B2B direct bank transfers, corporate cards (Visa, Mastercard, AMEX), and Net-14 payment terms."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does OpenBalancer handle LLM token streams (SSE) without buffer bloat?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OpenBalancer streams chunks directly via zero-copy kernel socket piping and disables internal proxy response buffering for text/event-stream and application/grpc headers. Memory consumption remains strictly constant (O(1)) regardless of stream length."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can we deploy OpenBalancer on-premises in isolated/air-gapped networks?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. OpenBalancer is 100% self-contained and has zero external telemetry requirements. You can run it as a standalone Linux binary, a Docker container, or inside a Kubernetes cluster completely isolated from the public internet."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is your refund and SLA cancellation policy?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We offer a 30-day initial trial window on SLA retainers. If our response times or failover performance do not meet your technical expectations, you can cancel with full refund of the current retainer period."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.openbalancer.com/">
+  <meta property="og:title" content="OpenBalancer — Asynchronous AI & API Reverse Proxy Engine">
+  <meta property="og:description" content="High-throughput, non-blocking load balancer with dynamic health probing and Enterprise SLAs by INCONTROL PLUS.">
+  <meta property="og:image" content="https://www.openbalancer.com/assets/og-preview.svg">
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  
-  <!-- Self-Hosted Tailwind CSS & Lucide Icons (100% CSP Compliant) -->
+  <link rel="apple-touch-icon" href="assets/favicon.svg">
+
+  <!-- Stylesheet & Typography (Full Engineering Design System) -->
+  <link rel="stylesheet" href="css/style.css?v=4.1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/tailwind.min.css">
-  <script src="js/lucide.min.js"></script>
-  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('openbalancer_theme');
+        if (savedTheme === 'matrix') {
+          document.documentElement.setAttribute('data-theme', 'matrix');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <style>
     :root { color-scheme: dark; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background-color: #090a0f !important;
-      color: #f1f5f9 !important;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-      -webkit-font-smoothing: antialiased;
-    }
-    .brand-logo-img {
-      width: 36px !important;
-      height: 36px !important;
-      max-width: 36px !important;
-      max-height: 36px !important;
-      object-fit: contain !important;
-      flex-shrink: 0 !important;
-      display: inline-block !important;
-    }
-    .glow-bg {
-      background: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 60%);
-    }
-    .glass-card {
-      background: rgba(18, 20, 29, 0.8) !important;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .glass-card:hover {
-      border-color: rgba(34, 197, 94, 0.35) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px -5px rgba(34, 197, 94, 0.15);
-    }
-    .pulse-dot {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.15); }
-    }
+    html, body { background-color: #080c14 !important; color: #f8fafc !important; }
+    .brand-logo-img, img[src*="logo.svg"] { width: 36px !important; height: 36px !important; max-width: 36px !important; max-height: 36px !important; object-fit: contain !important; display: inline-block !important; }
+    .mobile-drawer { display: none; }
+    .mobile-drawer.active { display: flex !important; }
   </style>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for (let r of registrations) r.unregister();
-    });
-    if (window.caches) {
-      caches.keys().then(function(names) {
-        for (let name of names) caches.delete(name);
-      });
-    }
-  }
-</script>
 </head>
-<body class="min-h-screen bg-[#090a0f] text-slate-100 selection:bg-green-500/30 selection:text-green-300">
+<body>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-40 bg-[#090a0f]/80 backdrop-blur-xl border-b border-white/10 px-6 py-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="flex items-center gap-3 group">
-          <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
-          <div class="flex items-center gap-2">
-            <span class="text-lg font-bold tracking-tight text-white group-hover:text-green-400 transition-colors">Open Balancer</span>
-            <span class="px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded-full bg-green-500/10 text-green-400 border border-green-500/20">CORE PLATFORM</span>
-          </div>
-        </a>
-      </div>
-      
-      <nav class="hidden md:flex items-center gap-6 text-xs font-medium text-slate-300">
-        <a href="#benchmarks" class="hover:text-white transition-colors">Бенчмаркове</a>
-        <a href="#architecture" class="hover:text-white transition-colors">Архитектура</a>
-        <a href="#pricing" class="hover:text-white transition-colors">SLA Пакети</a>
-        <a href="https://dashboard.openbalancer.com" class="hover:text-white transition-colors text-green-400 font-semibold">Dashboard</a>
-        <a href="https://cashflow.openbalancer.com" class="hover:text-white transition-colors text-blue-400 font-semibold">Cashflow</a>
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
+        <span>OpenBalancer</span>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#benchmarks" data-i18n="nav_benchmarks">Benchmarks</a></li>
+          <li><a href="#parameters" data-i18n="nav_parameters">Parameters</a></li>
+          <li><a href="#architecture" data-i18n="nav_architecture">Architecture</a></li>
+          <li><a href="#simulator" data-i18n="nav_simulator">Live Visualizer</a></li>
+          <li><a href="#matrix" data-i18n="nav_matrix">Comparison Matrix</a></li>
+          <li><a href="docs.html" data-i18n="nav_docs">Documentation</a></li>
+          <li><a href="blog.html" data-i18n="nav_blog">Blog</a></li>
+          <li><a href="#enterprise" data-i18n="nav_enterprise">Enterprise SLA</a></li>
+          <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+          <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+          <li><a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
       </nav>
+      <div class="nav-actions">
+        <!-- Theme Switcher (Deep Space Dark vs Matrix Console) -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme Mode" title="Toggle Theme (Deep Space / Matrix Terminal)" data-i18n-title="nav_theme_toggle">
+          <svg class="theme-icon-dark" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="theme-icon-matrix" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <span class="theme-btn-text" data-i18n="theme_btn_label">Theme</span>
+        </button>
 
-      <div class="flex items-center gap-3">
-        <a href="https://dashboard.openbalancer.com" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/20 transition-colors">
-          <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
-          <span>Мониторинг</span>
-        </a>
-        <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors">
-          <i data-lucide="github" class="w-3.5 h-3.5"></i>
-          <span>GitHub</span>
-        </a>
+        <!-- Language Switcher (EN / BG) -->
+        <div class="lang-switcher" aria-label="Language Selector">
+          <button type="button" class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+          <button type="button" class="lang-btn" data-lang="bg" onclick="setLanguage('bg')">BG</button>
+        </div>
+
+        <a href="#pricing" class="btn btn-outline btn-sm" data-i18n="nav_retainers">Retainers</a>
+        <a href="#enterprise" class="btn btn-primary btn-sm" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
+
+        <!-- Mobile Hamburger Button -->
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Navigation Menu">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <main class="max-w-7xl mx-auto px-6 pt-12 pb-20 glow-bg">
-    
-    <div class="text-center max-w-3xl mx-auto mb-14">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-medium mb-4">
-        <span class="w-2 h-2 rounded-full bg-green-400 pulse-dot"></span>
-        <span>Open Balancer v1.4.0 • 100% SLA Производителност</span>
+  <!-- Mobile Slide-out Drawer Panel -->
+  <div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="nav-brand">
+        <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
+        <span>OpenBalancer</span>
       </div>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-        Асинхронен Балансьор &amp; AI Reverse Proxy за Enterprise Инфраструктури
-      </h1>
-      <p class="text-base text-slate-400 leading-relaxed mb-8">
-        Преразпределяйте критичен API трафик, LLM inference заявки и микросървисни потоци със суб-милисекундна латентност, активно тестване на здравето и автоматизиран флотски мониторинг.
+      <button type="button" class="modal-close" id="mobile-drawer-close" aria-label="Close Navigation Menu">&times;</button>
+    </div>
+    <ul class="mobile-drawer-links">
+      <li><a href="docs.html" class="mobile-nav-link" data-i18n="nav_docs">Documentation</a></li>
+      <li><a href="blog.html" class="mobile-nav-link" data-i18n="nav_blog">Blog</a></li>
+      <li><a href="#benchmarks" class="mobile-nav-link" data-i18n="nav_benchmarks">Benchmarks</a></li>
+      <li><a href="#architecture" class="mobile-nav-link" data-i18n="nav_architecture">Architecture</a></li>
+      <li><a href="#simulator" class="mobile-nav-link" data-i18n="nav_simulator">Live Visualizer</a></li>
+      <li><a href="#matrix" class="mobile-nav-link" data-i18n="nav_matrix">Comparison Matrix</a></li>
+      <li><a href="#config-generator" class="mobile-nav-link" data-i18n="nav_config">Config Builder</a></li>
+      <li><a href="#enterprise" class="mobile-nav-link" data-i18n="nav_enterprise">Enterprise SLA</a></li>
+      <li><a href="#pricing" class="mobile-nav-link" data-i18n="nav_pricing">Pricing</a></li>
+      <li><a href="#faq" class="mobile-nav-link" data-i18n="nav_faq">FAQ</a></li>
+      <li><a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener">GitHub Repository</a></li>
+      <li><a href="contact.html">Company Impressum</a></li>
+      <li style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-top: 1px solid var(--border-subtle); margin-top: 0.5rem;">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);" data-i18n="theme_btn_label">Theme Mode</span>
+        <button type="button" class="theme-toggle-btn" id="mobile-theme-toggle-btn" aria-label="Toggle Theme Mode">
+          <svg class="theme-icon-dark" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="theme-icon-matrix" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <span class="theme-btn-text" data-i18n="theme_matrix">Matrix Console</span>
+        </button>
+      </li>
+    </ul>
+    <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+      <a href="#enterprise" class="btn btn-primary" style="width: 100%;" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
+    </div>
+  </aside>
+
+  <!-- Hero Section (CompanyBook Design System Architecture) -->
+  <section class="hero-section">
+    <div class="container" style="text-align: center;">
+      <!-- Announcement Banner -->
+      <a href="blog.html" class="cb-announcement-banner">
+        <span class="cb-badge-new">НОВО</span>
+        <span><strong>v1.5.0 Enterprise AI Gateway:</strong> Неблокиращ gRPC &amp; LLM Token Stream роутинг. Научете повече &rarr;</span>
+      </a>
+
+      <h1 class="hero-title" style="margin-left: auto; margin-right: auto;" data-i18n="hero_title">High-Throughput Asynchronous Load Balancer &amp; Reverse Proxy</h1>
+      <p class="hero-subtitle" style="margin-left: auto; margin-right: auto;" data-i18n="hero_subtitle">
+        Distribute mission-critical API traffic, LLM token streams, and microservice workloads with sub-millisecond overhead, active health probing, and automated circuit breaking.
       </p>
 
-      <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="https://dashboard.openbalancer.com" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-slate-950 font-semibold text-sm transition-all shadow-lg shadow-green-500/20">
-          <i data-lucide="activity" class="w-4 h-4"></i>
-          <span>Отвори Telemetry Dashboard</span>
+      <!-- Central Live Proxy Probe & Search Bar (CompanyBook Signature Pattern) -->
+      <div class="cb-search-container">
+        <div class="cb-search-bar">
+          <svg class="cb-search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="proxy-probe-input" class="cb-search-input" placeholder="Търсете API Endpoint, AI Модел (vLLM, Ollama) или gRPC Socket..." aria-label="Търсете API Endpoint, AI Модел или gRPC Socket">
+          <button type="button" class="cb-search-btn" onclick="window.location.href='#simulator'">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Тествай Прокси</span>
+          </button>
+        </div>
+        <div class="cb-search-tags">
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Параметри за маршрутизиране:</span>
+          <a href="#parameters" class="cb-search-tag">По AI Модел URI</a>
+          <a href="#parameters" class="cb-search-tag">По Токен Бюджет</a>
+          <a href="#parameters" class="cb-search-tag">По Latency SLA</a>
+          <a href="#parameters" class="cb-search-tag">По CUDA OOM Failover</a>
+        </div>
+      </div>
+
+      <!-- 3-Column Large Stat Counters -->
+      <div class="cb-stats-row" id="benchmarks">
+        <div class="cb-stat-box">
+          <div class="cb-stat-number">240,000+</div>
+          <div class="cb-stat-label" data-i18n="bench_req_sec">Req / Sec Пропусквателна Способност</div>
+        </div>
+        <div class="cb-stat-box">
+          <div class="cb-stat-number" style="color: #34d399;">&lt; 0.38 ms</div>
+          <div class="cb-stat-label" data-i18n="bench_latency">p99 Маршрутизационна Латентност</div>
+        </div>
+        <div class="cb-stat-box">
+          <div class="cb-stat-number">65,535+</div>
+          <div class="cb-stat-label" data-i18n="bench_conns">Едновременни Асинхронни Връзки</div>
+        </div>
+        <div class="cb-stat-box">
+          <div class="cb-stat-number" style="color: #60a5fa;">18 MB</div>
+          <div class="cb-stat-label" data-i18n="bench_rss">Базов RSS Памет Footprint</div>
+        </div>
+      </div>
+
+      <div class="hero-cta" style="margin-bottom: 2.5rem;">
+        <a href="#simulator" class="btn btn-primary" data-i18n="hero_cta_simulator">Launch Live Visualizer</a>
+        <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span data-i18n="hero_cta_github">View Source on GitHub</span>
         </a>
-        <a href="https://cashflow.openbalancer.com" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/20 font-semibold text-sm transition-all">
-          <i data-lucide="credit-card" class="w-4 h-4"></i>
-          <span>Wallestars Cashflow Портал</span>
-        </a>
+        <a href="#enterprise" class="btn btn-outline" data-action="enterprise-inquiry" data-plan="Custom Enterprise SLA" data-i18n="hero_cta_audit">Enterprise Architecture Audit</a>
+      </div>
+
+      <!-- Interactive Tabbed Terminal Switcher -->
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-tabs">
+            <button type="button" class="terminal-tab active" data-tab="docker">docker-compose.yml</button>
+            <button type="button" class="terminal-tab" data-tab="k8s">kubernetes.yaml</button>
+            <button type="button" class="terminal-tab" data-tab="config">config.json</button>
+            <button type="button" class="terminal-tab" data-tab="curl">cURL Telemetry</button>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm copy-btn" id="terminal-copy-btn" data-i18n="terminal_copy">Copy Snippet</button>
+        </div>
+        <div class="terminal-code-view">
+          <div class="tab-content" id="tab-docker">
+<pre><code><span style="color: #ff7b72;">version:</span> <span style="color: #a5d6ff;">'3.8'</span>
+<span style="color: #ff7b72;">services:</span>
+  <span style="color: #7ee787;">openbalancer:</span>
+    <span style="color: #79c0ff;">image:</span> ghcr.io/incontrolplus/openbalancer:latest
+    <span style="color: #79c0ff;">container_name:</span> openbalancer-core
+    <span style="color: #79c0ff;">ports:</span>
+      - <span style="color: #a5d6ff;">"8080:8080"</span>
+    <span style="color: #79c0ff;">volumes:</span>
+      - ./config.json:/app/config.json:ro
+    <span style="color: #79c0ff;">environment:</span>
+      - ROUTING_ALGORITHM=weighted_round_robin
+      - HEALTH_PROBE_INTERVAL=3
+      - CIRCUIT_BREAKER_THRESHOLD=5
+    <span style="color: #79c0ff;">restart:</span> unless-stopped</code></pre>
+          </div>
+
+          <div class="tab-content" id="tab-k8s" style="display: none;">
+<pre><code><span style="color: #ff7b72;">apiVersion:</span> <span style="color: #a5d6ff;">apps/v1</span>
+<span style="color: #ff7b72;">kind:</span> <span style="color: #a5d6ff;">Deployment</span>
+<span style="color: #ff7b72;">metadata:</span>
+  <span style="color: #79c0ff;">name:</span> openbalancer-ingress
+<span style="color: #ff7b72;">spec:</span>
+  <span style="color: #79c0ff;">replicas:</span> 3
+  <span style="color: #79c0ff;">template:</span>
+    <span style="color: #79c0ff;">spec:</span>
+      <span style="color: #79c0ff;">containers:</span>
+        - <span style="color: #79c0ff;">name:</span> openbalancer
+          <span style="color: #79c0ff;">image:</span> ghcr.io/incontrolplus/openbalancer:v1.4.0
+          <span style="color: #79c0ff;">resources:</span>
+            <span style="color: #79c0ff;">limits:</span> { <span style="color: #79c0ff;">cpu:</span> <span style="color: #a5d6ff;">"500m"</span>, <span style="color: #79c0ff;">memory:</span> <span style="color: #a5d6ff;">"64Mi"</span> }</code></pre>
+          </div>
+
+          <div class="tab-content" id="tab-config" style="display: none;">
+<pre><code>{
+  <span style="color: #7ee787;">"server"</span>: { <span style="color: #79c0ff;">"host"</span>: <span style="color: #a5d6ff;">"0.0.0.0"</span>, <span style="color: #79c0ff;">"port"</span>: 8080 },
+  <span style="color: #7ee787;">"algorithm"</span>: <span style="color: #a5d6ff;">"weighted_least_connections"</span>,
+  <span style="color: #7ee787;">"upstreams"</span>: [
+    { <span style="color: #79c0ff;">"id"</span>: <span style="color: #a5d6ff;">"srv-ai-1"</span>, <span style="color: #79c0ff;">"url"</span>: <span style="color: #a5d6ff;">"http://10.0.1.10:8000"</span>, <span style="color: #79c0ff;">"weight"</span>: 3 },
+    { <span style="color: #79c0ff;">"id"</span>: <span style="color: #a5d6ff;">"srv-ai-2"</span>, <span style="color: #79c0ff;">"url"</span>: <span style="color: #a5d6ff;">"http://10.0.1.11:8000"</span>, <span style="color: #79c0ff;">"weight"</span>: 2 }
+  ]
+}</code></pre>
+          </div>
+
+          <div class="tab-content" id="tab-curl" style="display: none;">
+<pre><code><span style="color: #79c0ff;">$</span> curl -s http://localhost:8080/openbalancer/status | jq .
+{
+  <span style="color: #7ee787;">"status"</span>: <span style="color: #a5d6ff;">"HEALTHY"</span>,
+  <span style="color: #7ee787;">"active_nodes"</span>: 3,
+  <span style="color: #7ee787;">"total_requests"</span>: 142850,
+  <span style="color: #7ee787;">"p99_latency_ms"</span>: 0.34,
+  <span style="color: #7ee787;">"circuit_breaker"</span>: <span style="color: #a5d6ff;">"CLOSED"</span>
+}</code></pre>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Live Benchmarks Strip Bento -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" id="benchmarks">
-      <div class="glass-card rounded-2xl p-5 text-center">
-        <div class="text-2xl md:text-3xl font-extrabold text-white font-mono mb-1">240,000</div>
-        <div class="text-xs text-slate-400 font-medium">Req / Sec Капацитет</div>
+  <!-- Bento Parameter Breakdown Section (CompanyBook Layout Principle) -->
+  <section class="section" id="parameters" style="padding: 4rem 0 2rem 0;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span class="section-tag">Интелигентен Анализ &amp; Routing</span>
+        <h2 style="font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text-main); margin-top: 0.5rem; letter-spacing: -0.03em;">По какви параметри се балансира трафикът</h2>
+        <p style="color: var(--text-muted); max-width: 680px; margin: 0.5rem auto 0 auto; font-size: 1rem;">Автоматично неблокиращо разпределяне на заявки към AI модели, микросървиси и бекенд клъстери в реално време.</p>
       </div>
-      <div class="glass-card rounded-2xl p-5 text-center">
-        <div class="text-2xl md:text-3xl font-extrabold text-green-400 font-mono mb-1">&lt; 0.38 ms</div>
-        <div class="text-xs text-slate-400 font-medium">p99 Routing Латентност</div>
-      </div>
-      <div class="glass-card rounded-2xl p-5 text-center">
-        <div class="text-2xl md:text-3xl font-extrabold text-blue-400 font-mono mb-1">65,535</div>
-        <div class="text-xs text-slate-400 font-medium">Едновременни Връзки</div>
-      </div>
-      <div class="glass-card rounded-2xl p-5 text-center">
-        <div class="text-2xl md:text-3xl font-extrabold text-purple-400 font-mono mb-1">100% SLA</div>
-        <div class="text-xs text-slate-400 font-medium">99.9% Uptime Гаранция</div>
+
+      <div class="cb-bento-grid">
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО AI МОДЕЛ &amp; КОНТЕКСТ</span>
+          <h3 class="cb-bento-title">vLLM &amp; Token Context Routing</h3>
+          <p class="cb-bento-desc">Анализира дължината на промпта и наличната GPU VRAM памет, пренасочвайки заявката към нода с най-оптимален KV кеш без латентност.</p>
+        </div>
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО ТОКЕН БЮДЖЕТ &amp; RATE LIMIT</span>
+          <h3 class="cb-bento-title">Token-Bucket Rate Limiting</h3>
+          <p class="cb-bento-desc">Стриктно следене на консумацията на токени в секунда per-client/per-tenant, елиминирайки претоварването на AI инференс клаудите.</p>
+        </div>
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО LATENCY SLA &amp; HEALTH PROBE</span>
+          <h3 class="cb-bento-title">Active Health Probing &lt; 0.24ms</h3>
+          <p class="cb-bento-desc">Непрекъснато асинхронно тестване на здравето на сокетите през фонови таскове с нулева пауза при failover превключване.</p>
+        </div>
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО CUDA OOM FAILOVER</span>
+          <h3 class="cb-bento-title">Автоматичен GPU Fallback</h3>
+          <p class="cb-bento-desc">При възникване на HTTP 500/503 или GPU Out-Of-Memory грешка, заявката мигновено се повтаря към резервен клъстерен нод.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- 3 Core Bento Feature Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16" id="architecture">
-      
-      <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-        <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-400 mb-4">
-          <i data-lucide="cpu" class="w-5 h-5"></i>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">AI Model Stream Routing</h3>
-        <p class="text-xs text-slate-400 leading-relaxed mb-4">
-          Интелигентно насочване на стрийминг токени към Ollama, vLLM и локални GPU клъстери без буфериране и прекъсвания.
-        </p>
-        <div class="text-xs text-green-400 font-medium flex items-center gap-1.5">
-          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-          <span>Нулево забавяне при токенизация</span>
-        </div>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4">
-          <i data-lucide="network" class="w-5 h-5"></i>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">WireGuard &amp; Mesh Sync</h3>
-        <p class="text-xs text-slate-400 leading-relaxed mb-4">
-          Криптирана вътрешна комуникация през Tailscale между Mac Mini Primary (Leon) и Secondary нодовете със 100% сигурност.
-        </p>
-        <div class="text-xs text-blue-400 font-medium flex items-center gap-1.5">
-          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-          <span>Direct Peer-to-Peer Mesh</span>
-        </div>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
-        <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
-          <i data-lucide="credit-card" class="w-5 h-5"></i>
-        </div>
-        <h3 class="text-lg font-bold text-white mb-2">Wallestars B2B Billing</h3>
-        <p class="text-xs text-slate-400 leading-relaxed mb-4">
-          Автономен онбординг с 14 активни карти Visa Platinum, EIK Mod 11 верификация и автоматично експортиране към Microinvest.
-        </p>
-        <div class="text-xs text-purple-400 font-medium flex items-center gap-1.5">
-          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-          <span>14 Карти с €2,100 Резерв</span>
-        </div>
-      </div>
-
+  <!-- Technical Architecture & Routing Protocols -->
+  <section class="container" id="architecture" style="padding: 5rem 1.5rem;">
+    <div class="section-header">
+      <span class="section-tag" data-i18n="arch_tag">Kernel &amp; Event Loop Architecture</span>
+      <h2 data-i18n="arch_title">Engineered for High-Concurrency Protocols</h2>
+      <p data-i18n="arch_subtitle">Built from the ground up on non-blocking asynchronous sockets with zero external dependencies in the hot path.</p>
     </div>
 
-  </main>
+    <div class="grid-3">
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 data-i18n="feat1_title">Protocol Agnostic Routing</h3>
+        <p data-i18n="feat1_desc">Full support for HTTP/1.1, HTTP/2 multiplexing, long-lived WebSockets, Server-Sent Events (SSE), and gRPC streaming.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 data-i18n="feat2_title">Active Circuit Breaking</h3>
+        <p data-i18n="feat2_desc">Detects consecutive 5xx errors or socket timeouts in milliseconds, instantly tripping degraded upstream backends out of the pool.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon-box">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </div>
+        <h3 data-i18n="feat3_title">Multi-Algorithm Balancing</h3>
+        <p data-i18n="feat3_desc">Select between Weighted Round-Robin, Smooth Least Connections, and Consistent IP Hash Rings for session sticky routing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Visualizer & Prometheus Telemetry Sparkline -->
+  <section class="simulator-section" id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="sim_tag">Interactive Testbench</span>
+        <h2 data-i18n="sim_title">Live Traffic &amp; Failover Visualizer</h2>
+        <p data-i18n="sim_subtitle">Observe how OpenBalancer dynamically distributes socket requests and reroutes traffic when an upstream node fails.</p>
+      </div>
+
+      <div class="simulator-container">
+        <!-- Live Real-Time Prometheus Sparkline Telemetry -->
+        <!-- Live Real-Time Prometheus Sparkline Telemetry -->
+        <div class="telemetry-chart-panel">
+          <div class="chart-header">
+            <div class="chart-title" data-i18n="sim_chart_title">Live Real-Time Ingress Telemetry (Prometheus Metric Stream)</div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <button type="button" class="sim-audio-toggle-btn" id="sim-audio-toggle" aria-label="Toggle Audio Micro-Feedback" title="Toggle Web Audio SFX">
+                <span class="audio-icon-unmuted" id="sim-audio-icon">🔊</span>
+                <span class="audio-toggle-text" id="sim-audio-label" data-i18n="sim_audio_toggle">Sound FX: ON</span>
+              </button>
+              <div class="chart-live-badge">
+                <span class="live-pulse-dot"></span>
+                <span data-i18n="sim_chart_live">LIVE STREAM</span>
+              </div>
+            </div>
+          </div>
+          <svg class="sparkline-svg" viewBox="0 0 800 60" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
+              </linearGradient>
+            </defs>
+            <path id="sparkline-area" fill="url(#chartGrad)" d="M0,50 L50,45 L100,48 L150,35 L200,40 L250,25 L300,30 L350,20 L400,28 L450,18 L500,22 L550,15 L600,25 L650,18 L700,22 L750,12 L800,16 L800,60 L0,60 Z"/>
+            <path id="sparkline-line" fill="none" stroke="#3b82f6" stroke-width="2" d="M0,50 L50,45 L100,48 L150,35 L200,40 L250,25 L300,30 L350,20 L400,28 L450,18 L500,22 L550,15 L600,25 L650,18 L700,22 L750,12 L800,16"/>
+          </svg>
+        </div>
+
+        <!-- Real-Time Latency Heatmap & Flamegraph Panel (#sim-latency-heatmap-card) -->
+        <div class="latency-heatmap-panel" id="sim-latency-heatmap-card">
+          <div class="latency-panel-header">
+            <div class="latency-title-box">
+              <div class="latency-title-row">
+                <span class="latency-pulse-indicator"></span>
+                <strong data-i18n="sim_heatmap_title">Real-Time Latency Heatmap &amp; Flamegraph</strong>
+                <span class="heatmap-live-badge" data-i18n="sim_heatmap_live">DYNAMIC 60FPS</span>
+              </div>
+              <div class="latency-view-switcher" role="tablist" aria-label="Latency View Mode">
+                <button type="button" class="view-switch-btn active" data-view="heatmap" id="sim-view-heatmap-btn" role="tab" aria-selected="true" data-i18n="sim_tab_heatmap">Distribution Heatmap</button>
+                <button type="button" class="view-switch-btn" data-view="flamegraph" id="sim-view-flamegraph-btn" role="tab" aria-selected="false" data-i18n="sim_tab_flamegraph">Flamegraph Waterfall</button>
+              </div>
+            </div>
+            
+            <div class="latency-percentiles-bar">
+              <div class="percentile-chip"><span class="pct-lbl">p50</span><span class="pct-val" id="sim-pct-p50">1.2ms</span></div>
+              <div class="percentile-chip"><span class="pct-lbl">p90</span><span class="pct-val" id="sim-pct-p90">8.4ms</span></div>
+              <div class="percentile-chip"><span class="pct-lbl">p99</span><span class="pct-val" id="sim-pct-p99">14.1ms</span></div>
+              <div class="percentile-chip"><span class="pct-lbl">p99.9</span><span class="pct-val" id="sim-pct-p999">26.8ms</span></div>
+            </div>
+          </div>
+
+          <!-- Heatmap View -->
+          <div class="heatmap-view-container" id="sim-heatmap-view">
+            <div class="heatmap-canvas-wrapper">
+              <canvas id="sim-latency-heatmap-canvas" class="latency-heatmap-canvas" width="800" height="120"></canvas>
+            </div>
+            <div class="heatmap-bucket-legend">
+              <div class="bucket-pill bucket-green">
+                <span class="bucket-dot"></span>
+                <span class="bucket-label" data-i18n="bucket_green">&lt;10ms (Optimal)</span>
+                <strong class="bucket-pct" id="sim-b0-pct">82%</strong>
+              </div>
+              <div class="bucket-pill bucket-cyan">
+                <span class="bucket-dot"></span>
+                <span class="bucket-label" data-i18n="bucket_cyan">10-50ms (Normal)</span>
+                <strong class="bucket-pct" id="sim-b1-pct">14%</strong>
+              </div>
+              <div class="bucket-pill bucket-yellow">
+                <span class="bucket-dot"></span>
+                <span class="bucket-label" data-i18n="bucket_yellow">50-200ms (Spike)</span>
+                <strong class="bucket-pct" id="sim-b2-pct">3%</strong>
+              </div>
+              <div class="bucket-pill bucket-red">
+                <span class="bucket-dot"></span>
+                <span class="bucket-label" data-i18n="bucket_red">&gt;200ms (Degraded)</span>
+                <strong class="bucket-pct" id="sim-b3-pct">1%</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Flamegraph View -->
+          <div class="flamegraph-view-container" id="sim-flamegraph-view" style="display: none;">
+            <div class="flamegraph-header">
+              <span class="fg-title" data-i18n="fg_title">Socket Pipeline Phase Execution &amp; TTFB Breakdown</span>
+              <span class="fg-total"><span data-i18n="fg_total_lbl">Total Time:</span> <strong id="sim-fg-total-ms">1.48 ms</strong></span>
+            </div>
+            <div class="flamegraph-bars-stack" id="sim-flamegraph-stack">
+              <div class="flamegraph-bar-row">
+                <span class="fg-phase-title" data-i18n="fg_phase_ingress">01. Ingress Socket Parse</span>
+                <div class="fg-bar-track"><div class="fg-bar-fill" id="sim-fg-bar-1" style="width: 12%; background: #34d399;"></div></div>
+                <span class="fg-time-val" id="sim-fg-val-1">0.12 ms</span>
+              </div>
+              <div class="flamegraph-bar-row">
+                <span class="fg-phase-title" data-i18n="fg_phase_ratelimit">02. Token Bucket Rate Check</span>
+                <div class="fg-bar-track"><div class="fg-bar-fill" id="sim-fg-bar-2" style="width: 5%; background: #38bdf8;"></div></div>
+                <span class="fg-time-val" id="sim-fg-val-2">0.04 ms</span>
+              </div>
+              <div class="flamegraph-bar-row">
+                <span class="fg-phase-title" data-i18n="fg_phase_routing">03. Dispatch Routing Strategy</span>
+                <div class="fg-bar-track"><div class="fg-bar-fill" id="sim-fg-bar-3" style="width: 7%; background: #a78bfa;"></div></div>
+                <span class="fg-time-val" id="sim-fg-val-3">0.06 ms</span>
+              </div>
+              <div class="flamegraph-bar-row">
+                <span class="fg-phase-title" data-i18n="fg_phase_tls">04. Upstream TCP &amp; TLS Pipe</span>
+                <div class="fg-bar-track"><div class="fg-bar-fill" id="sim-fg-bar-4" style="width: 32%; background: #60a5fa;"></div></div>
+                <span class="fg-time-val" id="sim-fg-val-4">0.48 ms</span>
+              </div>
+              <div class="flamegraph-bar-row">
+                <span class="fg-phase-title" data-i18n="fg_phase_ttfb">05. Upstream First Byte (TTFB)</span>
+                <div class="fg-bar-track"><div class="fg-bar-fill" id="sim-fg-bar-5" style="width: 58%; background: #fbbf24;"></div></div>
+                <span class="fg-time-val" id="sim-fg-val-5">0.85 ms</span>
+              </div>
+              <div class="flamegraph-bar-row">
+                <span class="fg-phase-title" data-i18n="fg_phase_flush">06. Zero-Copy Stream Flush</span>
+                <div class="fg-bar-track"><div class="fg-bar-fill" id="sim-fg-bar-6" style="width: 10%; background: #10b981;"></div></div>
+                <span class="fg-time-val" id="sim-fg-val-6">0.15 ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Protocol Stream Selector (#protocol-selector) -->
+        <div class="protocol-selector-bar" id="protocol-selector" role="tablist" aria-label="Protocol Stream Selector">
+          <div class="protocol-selector-info">
+            <span class="protocol-selector-label" data-i18n="proto_label">Active Protocol Stream:</span>
+            <span class="protocol-active-badge" id="protocol-active-badge">HTTP/1.1 (Keep-Alive)</span>
+          </div>
+          <div class="protocol-pills">
+            <button type="button" class="protocol-pill active" data-protocol="http1" id="proto-btn-http1" role="tab" aria-selected="true">
+              <span class="proto-dot"></span>
+              <span class="proto-name" data-i18n="proto_http1_name">HTTP/1.1</span>
+              <span class="proto-desc" data-i18n="proto_http1_desc">REST &amp; Keep-Alive</span>
+            </button>
+            <button type="button" class="protocol-pill" data-protocol="sse" id="proto-btn-sse" role="tab" aria-selected="false">
+              <span class="proto-dot"></span>
+              <span class="proto-name" data-i18n="proto_sse_name">SSE LLM Stream</span>
+              <span class="proto-desc" data-i18n="proto_sse_desc">Bufferless Token Pipe</span>
+            </button>
+            <button type="button" class="protocol-pill" data-protocol="ws" id="proto-btn-ws" role="tab" aria-selected="false">
+              <span class="proto-dot"></span>
+              <span class="proto-name" data-i18n="proto_ws_name">WebSockets</span>
+              <span class="proto-desc" data-i18n="proto_ws_desc">Duplex Socket Sync</span>
+            </button>
+            <button type="button" class="protocol-pill" data-protocol="grpc" id="proto-btn-grpc" role="tab" aria-selected="false">
+              <span class="proto-dot"></span>
+              <span class="proto-name" data-i18n="proto_grpc_name">gRPC (HTTP/2)</span>
+              <span class="proto-desc" data-i18n="proto_grpc_desc">Multiplexed Protobuf</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SSE LLM Live Bufferless Token Stream Inspector -->
+        <div class="sse-token-inspector" id="sse-token-inspector" style="display: none;">
+          <div class="sse-inspector-header">
+            <div class="sse-title-box">
+              <span class="sse-pulse-dot"></span>
+              <strong data-i18n="sse_inspector_title">SSE Live Bufferless Token Stream Inspector</strong>
+              <span class="sse-tag" data-i18n="sse_tag_bufferless">0ms Buffer Overhead</span>
+            </div>
+            <div class="sse-stats-chips">
+              <span class="sse-stat-chip"><span data-i18n="sse_stat_ttft">TTFT:</span> <strong id="sse-ttft-val">8.4 ms</strong></span>
+              <span class="sse-stat-chip"><span data-i18n="sse_stat_rate">Throughput:</span> <strong id="sse-rate-val">134 tok/s</strong></span>
+              <span class="sse-stat-chip"><span data-i18n="sse_stat_chunk">Kernel Transfer:</span> <strong data-i18n="sse_pipe_mode">Direct Zero-Copy Pipe</strong></span>
+            </div>
+          </div>
+          <div class="sse-token-stream-window">
+            <span class="sse-token-stream-prefix">event: token_chunk<br>data: {"tokens": [</span><span class="sse-tokens-container" id="sse-tokens-container"></span><span class="sse-cursor">_</span><span class="sse-token-stream-suffix">]}</span>
+          </div>
+        </div>
+
+        <div class="sim-controls">
+          <div class="sim-stats">
+            <div class="stat-item">
+              <span class="stat-label" data-i18n="sim_processed_reqs">Processed Requests</span>
+              <span class="stat-value" id="sim-req-count">142,850</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label" data-i18n="sim_observed_latency">Observed Latency</span>
+              <span class="stat-value healthy" id="sim-avg-latency">12 ms</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label" data-i18n="sim_dispatched_node">Dispatched Node</span>
+              <span class="stat-value" id="sim-active-node">srv-us-east-1</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label" data-i18n="sim_stat_protocol">Active Protocol</span>
+              <span class="stat-value" id="sim-protocol-indicator" style="color: #60a5fa; font-size: 1rem;">HTTP/1.1</span>
+            </div>
+          </div>
+          <div class="sim-actions-bar">
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-toggle-outage-btn" data-i18n="sim_btn_outage">Crash Node 2 (Failover)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-latency-spike-btn" data-i18n="sim_btn_latency">Inject 500ms Spike (Node 1)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-traffic-surge-btn" data-i18n="sim_btn_surge">Surge (1k Req/s)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-reset-cluster-btn" data-i18n="sim_btn_reset">Reset Cluster</button>
+            <button type="button" class="btn btn-primary btn-sm" id="sim-send-req-btn" data-i18n="sim_btn_send">Send Socket Request</button>
+          </div>
+        </div>
+
+        <!-- Real-Time Chaos & Failover Telemetry Event Log -->
+        <div class="sim-event-banner" id="sim-event-banner">
+          <span class="event-indicator healthy" id="sim-event-indicator"></span>
+          <span id="sim-event-text" data-i18n="sim_event_baseline">Cluster Status: All 3 upstream nodes online. Dynamic load distribution active.</span>
+        </div>
+
+        <!-- Live Topology Map Wrapper (#topology-canvas) -->
+        <div class="topology-wrapper" id="topology-wrapper">
+          <div class="topology-top-bar">
+            <div class="topology-legend">
+              <div class="legend-item"><span class="legend-dot green"></span><span data-i18n="leg_healthy">200 OK (Healthy)</span></div>
+              <div class="legend-item"><span class="legend-dot amber"></span><span data-i18n="leg_latency">500ms Latency Spike (Degraded)</span></div>
+              <div class="legend-item"><span class="legend-dot red"></span><span data-i18n="leg_outage">Node Outage / Circuit Breaker Drop</span></div>
+            </div>
+            <div class="topology-hint">
+              <span class="hint-icon">⚡</span>
+              <span data-i18n="sim_click_hint">Tip: Click canvas or send requests to spawn live particle streams</span>
+            </div>
+          </div>
+
+          <div class="topology-stage" id="topology-stage">
+            <canvas id="topology-canvas" class="topology-canvas"></canvas>
+            
+            <div class="sim-visualizer" id="sim-visualizer">
+              <!-- Client Ingestion -->
+              <div class="sim-client-node" id="sim-ingress-node">
+                <div class="node-badge-tag">INGRESS</div>
+                <h4 data-i18n="sim_client_ingress">Client Ingestion</h4>
+                <p data-i18n="sim_client_sub">TCP Sockets &amp; Webhooks</p>
+                <div class="ingress-meta-pill">Port 443 • TLS 1.3</div>
+              </div>
+
+              <!-- Balancer Engine -->
+              <div class="sim-balancer-node" id="sim-core-node">
+                <div class="node-badge-tag router">ASYNC ROUTER</div>
+                <div class="core-radar-ring"></div>
+                <h4 data-i18n="sim_core_title">OpenBalancer Core</h4>
+                <span class="core-algo-label" id="topo-algo-display" data-i18n="sim_core_sub">Weighted Round-Robin</span>
+                <div class="core-mode-badge" id="core-mode-badge">Non-Blocking Epoll</div>
+              </div>
+
+              <!-- Upstreams -->
+              <div class="sim-backends" id="sim-backends">
+                <div class="backend-card" id="backend-card-1" data-node-id="1">
+                  <div class="backend-card-main">
+                    <div class="backend-title-row">
+                      <span class="node-indicator-dot online" id="dot-1"></span>
+                      <strong>srv-us-east-1</strong>
+                    </div>
+                    <div class="backend-sub">AI Model Cluster A (Weight: 2)</div>
+                  </div>
+                  <span class="backend-status-pill up" id="status-pill-1" data-i18n="sim_circuit_healthy">HEALTHY</span>
+                </div>
+
+                <div class="backend-card" id="backend-card-2" data-node-id="2">
+                  <div class="backend-card-main">
+                    <div class="backend-title-row">
+                      <span class="node-indicator-dot online" id="dot-2"></span>
+                      <strong>srv-eu-west-1</strong>
+                    </div>
+                    <div class="backend-sub">API Primary Node (Weight: 1)</div>
+                  </div>
+                  <span class="backend-status-pill up" id="status-pill-2" data-i18n="sim_circuit_healthy">HEALTHY</span>
+                </div>
+
+                <div class="backend-card" id="backend-card-3" data-node-id="3">
+                  <div class="backend-card-main">
+                    <div class="backend-title-row">
+                      <span class="node-indicator-dot online" id="dot-3"></span>
+                      <strong>srv-ap-southeast-1</strong>
+                    </div>
+                    <div class="backend-sub">Failover Redundancy Pool</div>
+                  </div>
+                  <span class="backend-status-pill up" id="status-pill-3" data-i18n="sim_circuit_healthy">HEALTHY</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Infrastructure Comparison Matrix Section -->
+  <section class="comparison-section" id="matrix">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="matrix_tag">Open Source Benchmark Matrix</span>
+        <h2 data-i18n="matrix_title">OpenBalancer vs Traditional Edge Proxies</h2>
+        <p data-i18n="matrix_subtitle">Architected specifically for low-overhead async AI inference routing and mission-critical microservice clusters.</p>
+      </div>
+
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th data-i18n="col_feature">Feature / Capability</th>
+              <th class="highlight-col" data-i18n="col_openbalancer">OpenBalancer v1.4</th>
+              <th data-i18n="col_nginx">NGINX Community</th>
+              <th data-i18n="col_haproxy">HAProxy Community</th>
+              <th data-i18n="col_traefik">Traefik Proxy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="m_f1">Async Non-Blocking Core</td>
+              <td class="highlight-col"><span class="check-icon">✓ Zero-Copy Epoll</span></td>
+              <td><span class="check-icon">✓ Worker Pool</span></td>
+              <td><span class="check-icon">✓ Event-driven</span></td>
+              <td><span class="check-icon">✓ Go Goroutines</span></td>
+            </tr>
+            <tr>
+              <td data-i18n="m_f2">LLM Token Stream &amp; SSE Passthrough</td>
+              <td class="highlight-col"><span class="check-icon">✓ Native Zero-Buffer</span></td>
+              <td><span class="cross-icon">Requires Buffering Tuning</span></td>
+              <td><span class="check-icon">✓ Supported</span></td>
+              <td><span class="check-icon">✓ Supported</span></td>
+            </tr>
+            <tr>
+              <td data-i18n="m_f3">Active Health Probing &amp; Circuit Breaking</td>
+              <td class="highlight-col"><span class="check-icon">✓ Built-in Free</span></td>
+              <td><span class="cross-icon">NGINX Plus Only ($$$)</span></td>
+              <td><span class="check-icon">✓ Basic Probes</span></td>
+              <td><span class="check-icon">✓ Built-in</span></td>
+            </tr>
+            <tr>
+              <td data-i18n="m_f4">Memory Footprint (RSS)</td>
+              <td class="highlight-col"><span class="check-icon">~18 MB</span></td>
+              <td>~35 MB</td>
+              <td>~25 MB</td>
+              <td>~65 MB</td>
+            </tr>
+            <tr>
+              <td data-i18n="m_f5">Sub-millisecond p99 Routing Overhead</td>
+              <td class="highlight-col"><span class="check-icon">&lt; 0.38 ms</span></td>
+              <td>&lt; 0.45 ms</td>
+              <td>&lt; 0.40 ms</td>
+              <td>&lt; 0.85 ms</td>
+            </tr>
+            <tr>
+              <td data-i18n="m_f6">Guaranteed B2B 99.9% Uptime SLA Backing</td>
+              <td class="highlight-col"><span class="check-icon">✓ INCONTROL PLUS MSA</span></td>
+              <td><span class="cross-icon">Community Support</span></td>
+              <td><span class="cross-icon">Enterprise Only</span></td>
+              <td><span class="cross-icon">Enterprise Only</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Cluster Configuration Generator -->
+  <section class="config-section" id="config-generator">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="cfg_tag">Interactive Config Playground</span>
+        <h2 data-i18n="cfg_title">Cluster Configuration Generator</h2>
+        <p data-i18n="cfg_subtitle">Customize your cluster parameters, upstream weights, and health probes with instant JSON validation and 1-click download.</p>
+      </div>
+
+      <div class="config-builder-card">
+        <!-- Controls Panel -->
+        <div class="config-controls-panel">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cfg-algo" data-i18n="cfg_lbl_algo">Routing Algorithm</label>
+              <select id="cfg-algo" class="form-control">
+                <option value="weighted_round_robin">Weighted Round-Robin</option>
+                <option value="least_connections">Least Connections</option>
+                <option value="ip_hash">Consistent IP Hash</option>
+                <option value="power_of_two_choices">Power-of-Two Random Choices</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cfg-port" data-i18n="cfg_lbl_port">Listen Port</label>
+              <input type="number" id="cfg-port" class="form-control" value="8080" min="80" max="65535">
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span data-i18n="cfg_lbl_probe">Health Check Interval</span>
+              <span class="slider-val" id="cfg-probe-val">3s</span>
+            </div>
+            <input type="range" id="cfg-probe-interval" min="1" max="30" value="3" aria-label="Health Check Interval in seconds">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span data-i18n="cfg_lbl_cb">Circuit Breaker Threshold</span>
+              <span class="slider-val" id="cfg-cb-val">5 fails</span>
+            </div>
+            <input type="range" id="cfg-cb-threshold" min="1" max="20" value="5" aria-label="Circuit Breaker Failure Threshold">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <span data-i18n="cfg_lbl_timeout">Socket Connection Timeout</span>
+              <span class="slider-val" id="cfg-timeout-val">250ms</span>
+            </div>
+            <input type="range" id="cfg-timeout" min="50" max="2000" step="50" value="250" aria-label="Socket Connection Timeout in milliseconds">
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <label style="font-size: 0.85rem; font-weight: 500; color: #e2e8f0;" data-i18n="cfg_lbl_upstreams">Configured Upstream Backends</label>
+              <button type="button" class="btn btn-secondary btn-sm" id="cfg-add-upstream-btn" data-i18n="cfg_btn_add">+ Add Backend Node</button>
+            </div>
+            <div class="upstream-list" id="cfg-upstreams-list">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Code Preview Panel -->
+        <div class="config-preview-panel">
+          <div class="config-preview-header">
+            <span>openbalancer.json (Validated JSON)</span>
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="btn btn-secondary btn-sm" id="cfg-copy-btn" data-i18n="cfg_btn_copy">Copy Config</button>
+              <button type="button" class="btn btn-primary btn-sm" id="cfg-download-btn" data-i18n="cfg_btn_download">Download openbalancer.json</button>
+            </div>
+          </div>
+          <pre class="config-preview-code"><code id="config-code-preview"></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enterprise B2B Services Section -->
+  <section class="container" id="enterprise" style="padding: 5rem 1.5rem;">
+    <div class="feature-card" style="background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, var(--bg-surface) 100%); border-color: #334155; padding: 2.5rem;">
+      <span class="section-tag" data-i18n="ent_tag">Enterprise SLA Backing</span>
+      <h2 data-i18n="ent_title">Production Infrastructure &amp; SLA Management</h2>
+      <p style="font-size: 1.05rem; max-width: 840px; margin-top: 0.5rem; margin-bottom: 2rem;" data-i18n="ent_p1">
+        OpenBalancer is backed and operated by <strong>INCONTROL PLUS ЕООД</strong>. We provide formal B2B Master Services Agreements (MSA), guaranteed 99.9% uptime SLAs, and sub-15 minute emergency incident response for corporate engineering teams.
+      </p>
+
+      <div class="grid-3">
+        <div style="background: var(--bg-subtle); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <strong style="color: #f8fafc; font-size: 0.95rem;" data-i18n="ent_highlight1_title">99.9% Uptime Guarantee</strong>
+          <p style="font-size: 0.85rem; margin-top: 0.35rem;" data-i18n="ent_highlight1_desc">Contractual SLA with automated service credits for downtime under 99.9%.</p>
+        </div>
+        <div style="background: var(--bg-subtle); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <strong style="color: #f8fafc; font-size: 0.95rem;" data-i18n="ent_highlight2_title">Sub-15 Min Critical Incident SLA</strong>
+          <p style="font-size: 0.85rem; margin-top: 0.35rem;" data-i18n="ent_highlight2_desc">24/7 direct escalation hotline to senior infrastructure architects.</p>
+        </div>
+        <div style="background: var(--bg-subtle); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <strong style="color: #f8fafc; font-size: 0.95rem;" data-i18n="ent_highlight3_title">Net-14 Corporate Invoicing</strong>
+          <p style="font-size: 0.85rem; margin-top: 0.35rem;" data-i18n="ent_highlight3_desc">EU VAT compliant invoicing processed securely via Stripe Invoicing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing / Retainers -->
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="pricing_tag">Pricing &amp; Retainers</span>
+        <h2 data-i18n="pricing_title">Transparent Licensing &amp; B2B Support Tiers</h2>
+        <p data-i18n="pricing_subtitle">Deploy OpenBalancer for free under the MIT license, or partner with INCONTROL PLUS for guaranteed B2B SLAs.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Community Open Source -->
+        <div class="pricing-card">
+          <h3 data-i18n="plan1_title">Community Open-Source</h3>
+          <p style="font-size: 0.85rem;" data-i18n="plan1_desc">For developers and self-hosted environments.</p>
+          <div class="pricing-price">€0 <span style="font-size: 0.9rem; font-weight: 400; color: var(--text-dim);">/ forever</span></div>
+          <ul class="pricing-features">
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan1_f1">Full Core Routing Engine (MIT)</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan1_f2">Round-robin &amp; Weighted Algorithms</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan1_f3">Active Health Probing &amp; Metrics</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan1_f4">Docker Swarm &amp; K8s Support</span></li>
+          </ul>
+          <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="btn btn-secondary" data-i18n="plan1_btn">Download Community Core</a>
+        </div>
+
+        <!-- B2B Pro SLA Retainer -->
+        <div class="pricing-card featured">
+          <span class="popular-badge" data-i18n="plan2_popular">Corporate SLA</span>
+          <h3 data-i18n="plan2_title">B2B Pro SLA Retainer</h3>
+          <p style="font-size: 0.85rem;" data-i18n="plan2_desc">For high-availability production clusters.</p>
+          <div class="pricing-price">€1,500 <span style="font-size: 0.9rem; font-weight: 400; color: var(--text-dim);">/ month</span></div>
+          <ul class="pricing-features">
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <strong data-i18n="plan2_f1">99.9% Contractual Uptime SLA</strong></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan2_f2">Sub-15 Min Critical Incident SLA</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan2_f3">Hardened Multi-Node Configuration</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan2_f4">Official B2B Invoice via Stripe</span></li>
+          </ul>
+          <button type="button" class="btn btn-primary" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer (€1,500/mo)" data-i18n="plan2_btn">Request SLA Contract</button>
+        </div>
+
+        <!-- Custom Enterprise -->
+        <div class="pricing-card">
+          <h3 data-i18n="plan3_title">Custom Enterprise SLA</h3>
+          <p style="font-size: 0.85rem;" data-i18n="plan3_desc">For multi-region and high-throughput systems.</p>
+          <div class="pricing-price">Custom <span style="font-size: 0.9rem; font-weight: 400; color: var(--text-dim);">/ retainer</span></div>
+          <ul class="pricing-features">
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan3_f1">Custom Master Services Agreement (MSA)</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan3_f2">Custom AI LLM Dispatcher Plugins</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan3_f3">Dedicated Senior DevOps Lead</span></li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan3_f4">Net-30 Corporate Terms</span></li>
+          </ul>
+          <button type="button" class="btn btn-secondary" data-action="enterprise-inquiry" data-plan="Custom Enterprise Architecture" data-i18n="plan3_btn">Contact Sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical & B2B FAQ Accordion Section -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-header" style="text-align: center;">
+        <span class="section-tag" data-i18n="faq_tag">Operational &amp; B2B FAQ</span>
+        <h2 data-i18n="faq_title">Frequently Asked Questions</h2>
+        <p data-i18n="faq_subtitle" style="margin: 0 auto; max-width: 680px;">Everything you need to know regarding licensing, SLA guarantees, invoicing, and technical deployment.</p>
+      </div>
+
+      <div class="faq-list">
+        <!-- FAQ 1 -->
+        <div class="faq-item active">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq_q1">How does the contractual 99.9% uptime SLA compensation work?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq_a1">Under our Master Services Agreement (MSA), if your cluster uptime falls below 99.9% in a calendar month, INCONTROL PLUS automatically applies contractual service credits calculated per minute of downtime, credited directly against your next Stripe invoice.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq_q2">How are corporate EU VAT invoices and payments handled via Stripe?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq_a2">All corporate retainers are invoiced securely through Stripe Invoicing with automated EU VAT reverse-charge calculation. We support SEPA B2B direct bank transfers, corporate cards (Visa, Mastercard, AMEX), and Net-14 payment terms.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq_q3">How does OpenBalancer handle LLM token streams (SSE) without buffer bloat?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq_a3">OpenBalancer streams chunks directly via zero-copy kernel socket piping and disables internal proxy response buffering for `text/event-stream` and `application/grpc` headers. Memory consumption remains strictly constant (O(1)) regardless of stream length.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq_q4">Can we deploy OpenBalancer on-premises in isolated/air-gapped networks?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq_a4">Yes. OpenBalancer is 100% self-contained and has zero external telemetry requirements. You can run it as a standalone Linux binary, a Docker container, or inside a Kubernetes cluster completely isolated from the public internet.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            <span data-i18n="faq_q5">What is your refund and SLA cancellation policy?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq_a5">We offer a 30-day initial trial window on SLA retainers. If our response times or failover performance do not meet your technical expectations, you can cancel with full refund of the current retainer period.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment & Security Trust Bar -->
+  <section class="container" style="padding-bottom: 5rem;">
+    <div class="payment-trust-bar">
+      <div class="payment-trust-item">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <div>
+          <strong style="display: block; font-size: 0.9rem;" data-i18n="trust_title">Secured B2B Invoicing &amp; Retainers</strong>
+          <span style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="trust_desc">Encrypted 256-bit TLS payments processed via Stripe with Net-14 corporate invoicing terms.</span>
+        </div>
+      </div>
+      <div class="payment-card-icons">
+        <span class="card-badge">VISA</span>
+        <span class="card-badge">MASTERCARD</span>
+        <span class="card-badge">AMEX</span>
+        <span class="card-badge">SEPA</span>
+        <span class="card-badge" style="background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.3); color: #60a5fa;">STRIPE VERIFIED</span>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/10 bg-[#090a0f] py-8 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <img src="assets/logo.svg" alt="OpenBalancer" class="brand-logo-img" style="width:20px;height:20px;">
-        <span>&copy; 2026 Open Balancer. Оператор: ИНКОНТРОЛ ПЛЮС ЕООД. Всички права запазени.</span>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand -->
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
+            <span>OpenBalancer</span>
+          </div>
+          <p style="margin-top: 0.85rem; font-size: 0.85rem;" data-i18n="footer_desc">
+            OpenBalancer is an intelligent open-source load balancing and API reverse proxy system operated and supported by INCONTROL PLUS ЕООД.
+          </p>
+        </div>
+
+        <!-- Col 2: Documentation -->
+        <div class="footer-col">
+          <h4 data-i18n="footer_col_arch">Architecture</h4>
+          <ul class="footer-links">
+            <li><a href="#architecture">Event Loop Engine</a></li>
+            <li><a href="#benchmarks">Latency Benchmarks</a></li>
+            <li><a href="#simulator">Live Visualizer</a></li>
+            <li><a href="#matrix">Comparison Matrix</a></li>
+            <li><a href="#config-generator">Config Generator</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener">GitHub Repository</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Legal & Policies -->
+        <div class="footer-col">
+          <h4 data-i18n="footer_col_comp">Compliance</h4>
+          <ul class="footer-links">
+            <li><a href="terms.html" data-i18n="footer_tos">Terms of Service (ToS)</a></li>
+            <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy (GDPR)</a></li>
+            <li><a href="refunds.html" data-i18n="footer_refunds">Refund &amp; SLA Policy</a></li>
+            <li><a href="contact.html" data-i18n="footer_verify">Company Verification</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Verified Merchant Details -->
+        <div class="footer-col">
+          <h4 data-i18n="footer_col_entity">Operating Entity</h4>
+          <div class="footer-compliance-card">
+            <div><strong>Operator:</strong> INCONTROL PLUS ЕООД</div>
+            <div style="margin-top: 0.3rem;"><strong>Address:</strong> р-н Овча купел, Кукуряк, 28-Б, ет. 7, ап. 1-А, София 1000, Bulgaria</div>
+            <div style="margin-top: 0.3rem;"><strong>Phone:</strong> +359 87 725 3017</div>
+            <div style="margin-top: 0.3rem;"><strong>Email:</strong> <a href="mailto:support@openbalancer.com">support@openbalancer.com</a></div>
+          </div>
+        </div>
       </div>
-      <div class="flex items-center gap-4 text-slate-400">
-        <a href="privacy.html" class="hover:text-white transition-colors">Поверителност</a>
-        <a href="terms.html" class="hover:text-white transition-colors">Условия</a>
-        <a href="https://dashboard.openbalancer.com" class="hover:text-white transition-colors">Мониторинг</a>
-        <a href="https://cashflow.openbalancer.com" class="hover:text-white transition-colors">Cashflow</a>
+
+      <div class="footer-bottom">
+        <div data-i18n="footer_rights">
+          © 2026 INCONTROL PLUS ЕООД. All rights reserved. OpenBalancer™ is a trademark of INCONTROL PLUS.
+        </div>
+        <div>
+          Corporate &amp; Billing Inquiries: <a href="mailto:billing@openbalancer.com">billing@openbalancer.com</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
-    });
-  </script>
+  <!-- Interactive B2B Consultation & SLA Modal -->
+  <div class="modal-backdrop" id="b2b-modal">
+    <div class="modal-dialog">
+      <button type="button" class="modal-close" id="modal-close-btn">&times;</button>
+      <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem;" id="modal-title" data-i18n="modal_title">Request Enterprise SLA &amp; Invoicing</h3>
+      <p style="font-size: 0.85rem; margin-bottom: 1.25rem;" data-i18n="modal_subtitle">
+        Direct engagement with <strong>INCONTROL PLUS ЕООД</strong>. Receive a formal B2B proposal and SLA terms within 2 hours.
+      </p>
+
+      <form id="b2b-inquiry-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="company_name" data-i18n="modal_lbl_company">Company Legal Name *</label>
+            <input type="text" id="company_name" class="form-control" placeholder="Acme Corp Ltd" required>
+          </div>
+          <div class="form-group">
+            <label for="vat_number" data-i18n="modal_lbl_vat">VAT / Registry ID</label>
+            <input type="text" id="vat_number" class="form-control" placeholder="BG123456789">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="work_email" data-i18n="modal_lbl_email">Work Email *</label>
+            <input type="email" id="work_email" class="form-control" placeholder="alex@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone_number" data-i18n="modal_lbl_phone">Corporate Phone</label>
+            <input type="tel" id="phone_number" class="form-control" placeholder="+359 88 123 4567">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="selected_plan" data-i18n="modal_lbl_plan">Selected Retainer / SLA *</label>
+          <select id="selected_plan" class="form-control" required>
+            <option value="B2B Pro SLA Retainer (€1,500/mo)">B2B Pro SLA Retainer (€1,500/month)</option>
+            <option value="Custom Enterprise Architecture">Custom Enterprise Architecture</option>
+            <option value="Turnkey AI Cluster Setup">Turnkey AI Cluster Setup</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="modal_lbl_payment_method">Preferred Billing &amp; Payment Method</label>
+          <div class="payment-method-selector">
+            <label class="payment-radio-label">
+              <input type="radio" name="payment_pref" value="invoice" checked>
+              <span>
+                <strong data-i18n="modal_opt_invoice">Corporate Net-14 Invoicing</strong>
+                <small data-i18n="modal_opt_invoice_sub">SEPA Bank Transfer / VAT Reverse Charge</small>
+              </span>
+            </label>
+            <label class="payment-radio-label">
+              <input type="radio" name="payment_pref" value="stripe_card">
+              <span>
+                <strong data-i18n="modal_opt_card">Instant Stripe Card Checkout</strong>
+                <small data-i18n="modal_opt_card_sub">Corporate Credit / Debit Card &amp; Apple Pay</small>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" id="submit-inquiry-btn" data-i18n="modal_btn_submit">
+          Submit B2B Inquiry &amp; Request Invoicing
+        </button>
+      </form>
+
+      <div class="form-success-box" id="form-success-box">
+        <h4 data-i18n="modal_success_title">Inquiry Registered Successfully</h4>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #e2e8f0;">
+          <span data-i18n="modal_success_desc">Our senior infrastructure lead at INCONTROL PLUS will review your specifications and send an official B2B proposal and Net-14 invoicing schedule to</span> <strong id="success-email" style="color: #60a5fa;"></strong>.
+        </p>
+        <button type="button" class="btn btn-secondary btn-sm" id="close-success-btn" style="margin-top: 1rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GDPR Cookie Consent Banner -->
+  <div class="cookie-banner" id="cookie-banner">
+    <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">
+      <span data-i18n="cookie_text"><strong>GDPR Notice:</strong> OpenBalancer uses strictly necessary cookies for telemetry routing and secure B2B session handling. See</span> <a href="privacy.html" style="text-decoration: underline; color: #60a5fa;">Privacy Policy</a>.
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+      <button type="button" class="btn btn-primary btn-sm" id="accept-cookies-btn" data-i18n="cookie_accept">Accept All</button>
+      <button type="button" class="btn btn-secondary btn-sm" id="dismiss-cookies-btn" data-i18n="cookie_dismiss">Essential Only</button>
+    </div>
+  </div>
+
+  <!-- Scripts with cache busting -->
+  <script src="js/i18n.js?v=3.1.0"></script>
+  <script src="js/main.js?v=3.1.0"></script>
 </body>
 </html>
