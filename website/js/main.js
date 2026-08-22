@@ -535,6 +535,10 @@ function initThemeSwitcher() {
     if (saved === 'dark' || saved === 'light') {
       return saved;
     }
+    // Explicitly purge legacy green matrix theme if previously saved
+    if (saved === 'matrix' || saved === 'theme-matrix') {
+      try { localStorage.removeItem('openbalancer_theme'); } catch (e) {}
+    }
     return getSystemPreference();
   }
 
@@ -569,11 +573,11 @@ function initThemeSwitcher() {
     if (isDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
       document.body.classList.add('theme-dark');
-      document.body.classList.remove('theme-light');
+      document.body.classList.remove('theme-light', 'theme-matrix', 'matrix');
     } else {
       document.documentElement.removeAttribute('data-theme');
       document.body.classList.add('theme-light');
-      document.body.classList.remove('theme-dark');
+      document.body.classList.remove('theme-dark', 'theme-matrix', 'matrix');
     }
 
     updateButtonLabels(theme);

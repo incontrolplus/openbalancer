@@ -1040,7 +1040,7 @@ export default {
     const headers = new Headers(assetResp.headers);
     headers.set('Content-Security-Policy', "default-src 'self' https: http: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https: http: ws: wss:;");
     headers.set('Access-Control-Allow-Origin', '*');
-    if (url.pathname.endsWith('.html') || url.pathname === '/dashboard' || url.pathname === '/cashflow' || url.pathname === '/') {
+    if (url.pathname.endsWith('.html') || url.pathname.endsWith('.css') || url.pathname.endsWith('.js') || url.pathname === '/dashboard' || url.pathname === '/cashflow' || url.pathname === '/') {
       headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     }
     return new Response(assetResp.body, {
