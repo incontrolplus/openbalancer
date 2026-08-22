@@ -1,29 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3b82f6" />
+    <linearGradient id="lensGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55" />
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.30" />
+    </linearGradient>
+    <linearGradient id="lensGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.70" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.40" />
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
       <stop offset="100%" stop-color="#10b981" />
     </linearGradient>
-    <linearGradient id="shieldFill" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f172a" />
-      <stop offset="100%" stop-color="#090d16" />
-    </linearGradient>
-    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
   </defs>
+
+  <!-- Dark Background Container -->
+  <rect width="64" height="64" rx="16" fill="#080c14" />
   
-  <!-- Rounded Base Badge -->
-  <rect width="64" height="64" rx="16" fill="#080c14" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1.5" />
+  <!-- Outer Concentric Aperture Lens -->
+  <circle cx="32" cy="32" r="26" fill="url(#lensGrad1)" />
   
-  <!-- Outer Hexagon Shield -->
-  <polygon points="32,8 56,22 56,42 32,56 8,42 8,22" 
-           stroke="url(#logoGrad)" stroke-width="3" fill="url(#shieldFill)" stroke-linejoin="round" />
+  <!-- Inner Concentric Balancing Lens -->
+  <circle cx="32" cy="32" r="18" fill="url(#lensGrad2)" />
   
-  <!-- Glowing Center Power Hub -->
-  <circle cx="32" cy="32" r="9" fill="url(#logoGrad)" filter="url(#logoGlow)" />
-  
-  <!-- Sharp Central Lightning Bolt -->
-  <path d="M32 23L26 32H33L29 41L38 30H32L32 23Z" fill="#ffffff" />
+  <!-- Center Core Hub Node -->
+  <circle cx="32" cy="32" r="8" fill="url(#coreGrad)" />
+  <circle cx="32" cy="32" r="3.5" fill="#ffffff" />
 </svg>
