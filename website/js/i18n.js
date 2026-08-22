@@ -104,7 +104,9 @@
       // Cookie Banner
 
       // Hero
-      "hero_tag": "Core Engine: Async Socket Event Loop • v1.4.0-stable • MIT License",
+      "hero_badge_new": "NEW",
+      "hero_announcement": "<strong>v1.5.0 Enterprise AI Gateway:</strong> Non-blocking gRPC &amp; LLM Token Stream routing. Learn more &rarr;",
+      "hero_tag": "Core Engine: Async Socket Event Loop • v1.5.0-stable • MIT License",
       "hero_title": "High-Throughput Asynchronous Load Balancer & Reverse Proxy",
       "hero_subtitle": "Distribute mission-critical API traffic, LLM token streams, and microservice workloads with sub-millisecond overhead, active health probing, and automated circuit breaking.",
       "hero_cta_simulator": "Launch Live Visualizer",
@@ -488,7 +490,9 @@
       // Cookie Banner
 
       // Hero
-      "hero_tag": "Ядро: Асинхронен сокет цикъл • v1.4.0-stable • MIT Лиценз",
+      "hero_badge_new": "НОВО",
+      "hero_announcement": "<strong>v1.5.0 Enterprise AI Gateway:</strong> Неблокиращ gRPC &amp; LLM Token Stream роутинг. Научете повече &rarr;",
+      "hero_tag": "Ядро: Асинхронен сокет цикъл • v1.5.0-stable • MIT Лиценз",
       "hero_title": "Високопроизводителен асинхронен балансьор на натоварването & Reverse Proxy",
       "hero_subtitle": "Разпределяйте критичен API трафик, LLM токен потоци и микросървиси с подмилисекундно забавяне, активен health probing и автоматичен circuit breaker.",
       "hero_cta_simulator": "Стартирай симулатора",
