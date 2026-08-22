@@ -97,7 +97,7 @@
   <link rel="apple-touch-icon" href="assets/favicon.svg">
 
   <!-- Stylesheet & Typography (Full Engineering Design System) -->
-  <link rel="stylesheet" href="css/style.css?v=4.0.1">
+  <link rel="stylesheet" href="css/style.css?v=4.1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -131,6 +131,7 @@
       <nav>
         <ul class="nav-links">
           <li><a href="#benchmarks" data-i18n="nav_benchmarks">Benchmarks</a></li>
+          <li><a href="#parameters" data-i18n="nav_parameters">Parameters</a></li>
           <li><a href="#architecture" data-i18n="nav_architecture">Architecture</a></li>
           <li><a href="#simulator" data-i18n="nav_simulator">Live Visualizer</a></li>
           <li><a href="#matrix" data-i18n="nav_matrix">Comparison Matrix</a></li>
@@ -204,49 +205,66 @@
     </div>
   </aside>
 
-  <!-- Hero Section -->
+  <!-- Hero Section (CompanyBook Design System Architecture) -->
   <section class="hero-section">
-    <div class="container">
-      <div class="technical-release-tag" data-i18n="hero_tag">
-        <span>Core Engine: Async Socket Event Loop</span>
-        <span>•</span>
-        <span>v1.4.0-stable</span>
-        <span>•</span>
-        <span>MIT License</span>
-      </div>
+    <div class="container" style="text-align: center;">
+      <!-- Announcement Banner -->
+      <a href="blog.html" class="cb-announcement-banner">
+        <span class="cb-badge-new">НОВО</span>
+        <span><strong>v1.5.0 Enterprise AI Gateway:</strong> Неблокиращ gRPC &amp; LLM Token Stream роутинг. Научете повече &rarr;</span>
+      </a>
 
-      <h1 class="hero-title" data-i18n="hero_title">High-Throughput Asynchronous Load Balancer &amp; Reverse Proxy</h1>
-      <p class="hero-subtitle" data-i18n="hero_subtitle">
+      <h1 class="hero-title" style="margin-left: auto; margin-right: auto;" data-i18n="hero_title">High-Throughput Asynchronous Load Balancer &amp; Reverse Proxy</h1>
+      <p class="hero-subtitle" style="margin-left: auto; margin-right: auto;" data-i18n="hero_subtitle">
         Distribute mission-critical API traffic, LLM token streams, and microservice workloads with sub-millisecond overhead, active health probing, and automated circuit breaking.
       </p>
-      
-      <div class="hero-cta">
+
+      <!-- Central Live Proxy Probe & Search Bar (CompanyBook Signature Pattern) -->
+      <div class="cb-search-container">
+        <div class="cb-search-bar">
+          <svg class="cb-search-icon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="proxy-probe-input" class="cb-search-input" placeholder="Търсете API Endpoint, AI Модел (vLLM, Ollama) или gRPC Socket..." aria-label="Търсете API Endpoint, AI Модел или gRPC Socket">
+          <button type="button" class="cb-search-btn" onclick="window.location.href='#simulator'">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Тествай Прокси</span>
+          </button>
+        </div>
+        <div class="cb-search-tags">
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Параметри за маршрутизиране:</span>
+          <a href="#parameters" class="cb-search-tag">По AI Модел URI</a>
+          <a href="#parameters" class="cb-search-tag">По Токен Бюджет</a>
+          <a href="#parameters" class="cb-search-tag">По Latency SLA</a>
+          <a href="#parameters" class="cb-search-tag">По CUDA OOM Failover</a>
+        </div>
+      </div>
+
+      <!-- 3-Column Large Stat Counters -->
+      <div class="cb-stats-row" id="benchmarks">
+        <div class="cb-stat-box">
+          <div class="cb-stat-number">240,000+</div>
+          <div class="cb-stat-label" data-i18n="bench_req_sec">Req / Sec Пропусквателна Способност</div>
+        </div>
+        <div class="cb-stat-box">
+          <div class="cb-stat-number" style="color: #34d399;">&lt; 0.38 ms</div>
+          <div class="cb-stat-label" data-i18n="bench_latency">p99 Маршрутизационна Латентност</div>
+        </div>
+        <div class="cb-stat-box">
+          <div class="cb-stat-number">65,535+</div>
+          <div class="cb-stat-label" data-i18n="bench_conns">Едновременни Асинхронни Връзки</div>
+        </div>
+        <div class="cb-stat-box">
+          <div class="cb-stat-number" style="color: #60a5fa;">18 MB</div>
+          <div class="cb-stat-label" data-i18n="bench_rss">Базов RSS Памет Footprint</div>
+        </div>
+      </div>
+
+      <div class="hero-cta" style="margin-bottom: 2.5rem;">
         <a href="#simulator" class="btn btn-primary" data-i18n="hero_cta_simulator">Launch Live Visualizer</a>
         <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="btn btn-secondary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           <span data-i18n="hero_cta_github">View Source on GitHub</span>
         </a>
         <a href="#enterprise" class="btn btn-outline" data-action="enterprise-inquiry" data-plan="Custom Enterprise SLA" data-i18n="hero_cta_audit">Enterprise Architecture Audit</a>
-      </div>
-
-      <!-- Real Benchmark Strip -->
-      <div class="benchmark-strip" id="benchmarks">
-        <div class="benchmark-item">
-          <span class="benchmark-val">240,000</span>
-          <span class="benchmark-label" data-i18n="bench_req_sec">Req / Sec Throughput</span>
-        </div>
-        <div class="benchmark-item">
-          <span class="benchmark-val" style="color: #34d399;">&lt; 0.38 ms</span>
-          <span class="benchmark-label" data-i18n="bench_latency">p99 Routing Latency</span>
-        </div>
-        <div class="benchmark-item">
-          <span class="benchmark-val">65,535</span>
-          <span class="benchmark-label" data-i18n="bench_conns">Max Concurrent Conns</span>
-        </div>
-        <div class="benchmark-item">
-          <span class="benchmark-val" style="color: #60a5fa;">18 MB</span>
-          <span class="benchmark-label" data-i18n="bench_rss">Core RSS Footprint</span>
-        </div>
       </div>
 
       <!-- Interactive Tabbed Terminal Switcher -->
@@ -315,6 +333,40 @@
   <span style="color: #7ee787;">"circuit_breaker"</span>: <span style="color: #a5d6ff;">"CLOSED"</span>
 }</code></pre>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Parameter Breakdown Section (CompanyBook Layout Principle) -->
+  <section class="section" id="parameters" style="padding: 4rem 0 2rem 0;">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <span class="section-tag">Интелигентен Анализ &amp; Routing</span>
+        <h2 style="font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text-main); margin-top: 0.5rem; letter-spacing: -0.03em;">По какви параметри се балансира трафикът</h2>
+        <p style="color: var(--text-muted); max-width: 680px; margin: 0.5rem auto 0 auto; font-size: 1rem;">Автоматично неблокиращо разпределяне на заявки към AI модели, микросървиси и бекенд клъстери в реално време.</p>
+      </div>
+
+      <div class="cb-bento-grid">
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО AI МОДЕЛ &amp; КОНТЕКСТ</span>
+          <h3 class="cb-bento-title">vLLM &amp; Token Context Routing</h3>
+          <p class="cb-bento-desc">Анализира дължината на промпта и наличната GPU VRAM памет, пренасочвайки заявката към нода с най-оптимален KV кеш без латентност.</p>
+        </div>
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО ТОКЕН БЮДЖЕТ &amp; RATE LIMIT</span>
+          <h3 class="cb-bento-title">Token-Bucket Rate Limiting</h3>
+          <p class="cb-bento-desc">Стриктно следене на консумацията на токени в секунда per-client/per-tenant, елиминирайки претоварването на AI инференс клаудите.</p>
+        </div>
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО LATENCY SLA &amp; HEALTH PROBE</span>
+          <h3 class="cb-bento-title">Active Health Probing &lt; 0.24ms</h3>
+          <p class="cb-bento-desc">Непрекъснато асинхронно тестване на здравето на сокетите през фонови таскове с нулева пауза при failover превключване.</p>
+        </div>
+        <div class="cb-bento-card">
+          <span class="cb-bento-tag">ПО CUDA OOM FAILOVER</span>
+          <h3 class="cb-bento-title">Автоматичен GPU Fallback</h3>
+          <p class="cb-bento-desc">При възникване на HTTP 500/503 или GPU Out-Of-Memory грешка, заявката мигновено се повтаря към резервен клъстерен нод.</p>
         </div>
       </div>
     </div>
@@ -748,7 +800,7 @@
               <span data-i18n="cfg_lbl_probe">Health Check Interval</span>
               <span class="slider-val" id="cfg-probe-val">3s</span>
             </div>
-            <input type="range" id="cfg-probe-interval" min="1" max="30" value="3">
+            <input type="range" id="cfg-probe-interval" min="1" max="30" value="3" aria-label="Health Check Interval in seconds">
           </div>
 
           <div class="slider-group">
@@ -756,7 +808,7 @@
               <span data-i18n="cfg_lbl_cb">Circuit Breaker Threshold</span>
               <span class="slider-val" id="cfg-cb-val">5 fails</span>
             </div>
-            <input type="range" id="cfg-cb-threshold" min="1" max="20" value="5">
+            <input type="range" id="cfg-cb-threshold" min="1" max="20" value="5" aria-label="Circuit Breaker Failure Threshold">
           </div>
 
           <div class="slider-group">
@@ -764,7 +816,7 @@
               <span data-i18n="cfg_lbl_timeout">Socket Connection Timeout</span>
               <span class="slider-val" id="cfg-timeout-val">250ms</span>
             </div>
-            <input type="range" id="cfg-timeout" min="50" max="2000" step="50" value="250">
+            <input type="range" id="cfg-timeout" min="50" max="2000" step="50" value="250" aria-label="Socket Connection Timeout in milliseconds">
           </div>
 
           <div>
@@ -1114,7 +1166,7 @@
   </div>
 
   <!-- Scripts with cache busting -->
-  <script src="js/i18n.js?v=2.0.4"></script>
-  <script src="js/main.js?v=2.0.4"></script>
+  <script src="js/i18n.js?v=3.1.0"></script>
+  <script src="js/main.js?v=3.1.0"></script>
 </body>
 </html>

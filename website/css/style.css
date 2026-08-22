@@ -287,9 +287,14 @@ a:hover {
   border: none;
   color: var(--text-dim);
   font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  min-height: 36px;
+  min-width: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 16px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -605,7 +610,11 @@ a:hover {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--text-dim);
-  padding: 0.4rem 0.75rem;
+  padding: 0.55rem 0.95rem;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-xs);
   cursor: pointer;
   white-space: nowrap;
@@ -3275,3 +3284,217 @@ input[type="range"]::-webkit-slider-thumb {
 
 
 .theme-btn-text { display: none; }
+
+/* ==========================================================================
+   CompanyBook Design Principles & Ergonomics for OpenBalancer
+   ========================================================================== */
+
+.cb-announcement-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(14, 20, 34, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid #f59e0b;
+  border-radius: var(--radius-sm);
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  color: var(--text-main);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.cb-announcement-banner:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  transform: translateY(-1px);
+}
+
+.cb-badge-new {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #f59e0b;
+  letter-spacing: 0.05em;
+}
+
+.cb-search-container {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto 2rem auto;
+  position: relative;
+}
+
+.cb-search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.35rem 0.35rem 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  transition: all var(--transition-fast);
+}
+
+.cb-search-bar:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25), 0 12px 30px -5px rgba(0, 0, 0, 0.6);
+}
+
+.cb-search-icon {
+  color: var(--text-dim);
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.cb-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-size: 1rem;
+  outline: none;
+  font-family: var(--font-sans);
+  min-height: 44px;
+}
+
+.cb-search-input::placeholder {
+  color: var(--text-dim);
+}
+
+.cb-search-btn {
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  transition: all var(--transition-fast);
+}
+
+.cb-search-btn:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.cb-search-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.cb-search-tags {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.85rem;
+}
+
+.cb-search-tag {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.cb-search-tag:hover {
+  color: var(--text-main);
+  border-color: var(--primary);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* 3-Column Large Stat Counters */
+.cb-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0 4rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cb-stat-box {
+  text-align: center;
+}
+
+.cb-stat-number {
+  font-size: clamp(2.2rem, 3.5vw, 3rem);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  font-family: var(--font-sans);
+}
+
+.cb-stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 0.4rem;
+}
+
+/* Bento Parameter Breakdown Cards */
+.cb-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 2.5rem 0;
+}
+
+.cb-bento-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.cb-bento-card:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.cb-bento-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-xs);
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.cb-bento-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.cb-bento-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}

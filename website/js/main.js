@@ -1384,11 +1384,11 @@ function initConfigBuilder() {
       const row = document.createElement('div');
       row.className = 'upstream-item';
       row.innerHTML = `
-        <input type="text" class="u-id" value="${item.id}" style="width: 80px;" placeholder="ID">
-        <input type="text" class="u-url" value="${item.url}" style="flex-grow: 1;" placeholder="URL">
+        <input type="text" class="u-id" value="${item.id}" style="width: 80px;" placeholder="ID" aria-label="Backend Node ID ${index + 1}">
+        <input type="text" class="u-url" value="${item.url}" style="flex-grow: 1;" placeholder="URL" aria-label="Backend Node URL ${index + 1}">
         <span style="color: var(--text-dim);">W:</span>
-        <input type="number" class="u-weight" value="${item.weight}" min="1" max="10" style="width: 45px;">
-        <button type="button" class="btn-remove-upstream" data-index="${index}" title="Remove Upstream">&times;</button>
+        <input type="number" class="u-weight" value="${item.weight}" min="1" max="10" style="width: 45px;" aria-label="Backend Node Weight ${index + 1}">
+        <button type="button" class="btn-remove-upstream" data-index="${index}" title="Remove Upstream" aria-label="Remove Backend Node ${index + 1}">&times;</button>
       `;
       upstreamsList.appendChild(row);
     });
