@@ -63,3 +63,14 @@ nohup /usr/bin/python3 -m websockify --web /path/to/novnc 0.0.0.0:8006 127.0.0.1
 ```
 - Local URL: `http://<node-ip>:8006/vnc.html?autoconnect=true`
 - Ingress Portal: `https://win.openbalancer.com/vnc.html?autoconnect=true`
+
+### 6. Display Wakeup & Rapid Screendump Telemetry
+If the QEMU guest screen enters sleep or low-power state:
+```bash
+# Send wakeup keystroke to guest and capture immediate frame
+echo 'sendkey space' | nc -U /tmp/qemu-monitor.sock
+sleep 0.5
+echo 'screendump /tmp/vm_screen.ppm' | nc -U /tmp/qemu-monitor.sock
+sips -s format png /tmp/vm_screen.ppm --out /tmp/vm_screen.png
+```
+
