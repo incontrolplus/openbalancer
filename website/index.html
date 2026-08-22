@@ -96,10 +96,8 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/favicon.svg">
 
-  <!-- Stylesheet & Typography -->
-  <!-- Stylesheet & Typography (100% Self-Hosted & CSP Compliant) -->
-  <link rel="stylesheet" href="css/tailwind.min.css">
-  <link rel="stylesheet" href="css/style.css?v=3.2.0">
+  <!-- Stylesheet & Typography (Full Engineering Design System) -->
+  <link rel="stylesheet" href="css/style.css?v=4.0.1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -119,21 +117,19 @@
     .brand-logo-img, img[src*="logo.svg"] { width: 36px !important; height: 36px !important; max-width: 36px !important; max-height: 36px !important; object-fit: contain !important; display: inline-block !important; }
     .mobile-drawer { display: none; }
     .mobile-drawer.active { display: flex !important; }
-    img { max-width: 100%; }
-    header img, nav img { max-height: 36px !important; width: auto !important; }
   </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-200 antialiased font-sans min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+<body>
 
   <!-- Navigation -->
-  <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-[#0b0f19]/80 backdrop-blur-lg border-b border-gray-800/60">
-    <div class="container flex items-center justify-between mx-auto">
-      <a href="index.html" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 hover:to-white transition-all">
-        <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img" width="36" height="36" style="width:36px;height:36px;max-width:36px;max-height:36px;object-fit:contain;">
-        <span class="text-white">OpenBalancer</span>
+  <header class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
+        <span>OpenBalancer</span>
       </a>
       <nav>
-        <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+        <ul class="nav-links">
           <li><a href="#benchmarks" data-i18n="nav_benchmarks">Benchmarks</a></li>
           <li><a href="#architecture" data-i18n="nav_architecture">Architecture</a></li>
           <li><a href="#simulator" data-i18n="nav_simulator">Live Visualizer</a></li>
@@ -146,7 +142,7 @@
           <li><a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
       </nav>
-      <div class="flex items-center gap-4">
+      <div class="nav-actions">
         <!-- Theme Switcher (Deep Space Dark vs Matrix Console) -->
         <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme Mode" title="Toggle Theme (Deep Space / Matrix Terminal)" data-i18n-title="nav_theme_toggle">
           <svg class="theme-icon-dark" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -161,7 +157,7 @@
         </div>
 
         <a href="#pricing" class="btn btn-outline btn-sm" data-i18n="nav_retainers">Retainers</a>
-        <a href="#enterprise" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
+        <a href="#enterprise" class="btn btn-primary btn-sm" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
 
         <!-- Mobile Hamburger Button -->
         <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Navigation Menu">
@@ -175,7 +171,7 @@
   <div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
   <aside class="mobile-drawer" id="mobile-drawer">
     <div class="mobile-drawer-header">
-      <div class="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 hover:to-white transition-all">
+      <div class="nav-brand">
         <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
         <span>OpenBalancer</span>
       </div>
@@ -204,7 +200,7 @@
       </li>
     </ul>
     <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
-      <a href="#enterprise" class="px-5 py-2.5 rounded-lg font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-all duration-300 active:scale-95" style="width: 100%;" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
+      <a href="#enterprise" class="btn btn-primary" style="width: 100%;" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
     </div>
   </aside>
 
@@ -225,8 +221,8 @@
       </p>
       
       <div class="hero-cta">
-        <a href="#simulator" class="px-5 py-2.5 rounded-lg font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-all duration-300 active:scale-95" data-i18n="hero_cta_simulator">Launch Live Visualizer</a>
-        <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-lg font-semibold text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white border border-gray-700 transition-all duration-300 active:scale-95">
+        <a href="#simulator" class="btn btn-primary" data-i18n="hero_cta_simulator">Launch Live Visualizer</a>
+        <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="btn btn-secondary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           <span data-i18n="hero_cta_github">View Source on GitHub</span>
         </a>
@@ -333,7 +329,7 @@
     </div>
 
     <div class="grid-3">
-      <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 hover:bg-gray-800/50 hover:border-brand-500/50 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 flex flex-col gap-4 relative overflow-hidden group">
+      <div class="feature-card">
         <div class="feature-icon-box">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
@@ -341,7 +337,7 @@
         <p data-i18n="feat1_desc">Full support for HTTP/1.1, HTTP/2 multiplexing, long-lived WebSockets, Server-Sent Events (SSE), and gRPC streaming.</p>
       </div>
 
-      <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 hover:bg-gray-800/50 hover:border-brand-500/50 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 flex flex-col gap-4 relative overflow-hidden group">
+      <div class="feature-card">
         <div class="feature-icon-box">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
         </div>
@@ -349,7 +345,7 @@
         <p data-i18n="feat2_desc">Detects consecutive 5xx errors or socket timeouts in milliseconds, instantly tripping degraded upstream backends out of the pool.</p>
       </div>
 
-      <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 hover:bg-gray-800/50 hover:border-brand-500/50 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 flex flex-col gap-4 relative overflow-hidden group">
+      <div class="feature-card">
         <div class="feature-icon-box">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7"/></svg>
         </div>
@@ -559,11 +555,11 @@
             </div>
           </div>
           <div class="sim-actions-bar">
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="sim-toggle-outage-btn" data-i18n="sim_btn_outage">Crash Node 2 (Failover)</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="sim-latency-spike-btn" data-i18n="sim_btn_latency">Inject 500ms Spike (Node 1)</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="sim-traffic-surge-btn" data-i18n="sim_btn_surge">Surge (1k Req/s)</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="sim-reset-cluster-btn" data-i18n="sim_btn_reset">Reset Cluster</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="sim-send-req-btn" data-i18n="sim_btn_send">Send Socket Request</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-toggle-outage-btn" data-i18n="sim_btn_outage">Crash Node 2 (Failover)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-latency-spike-btn" data-i18n="sim_btn_latency">Inject 500ms Spike (Node 1)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-traffic-surge-btn" data-i18n="sim_btn_surge">Surge (1k Req/s)</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="sim-reset-cluster-btn" data-i18n="sim_btn_reset">Reset Cluster</button>
+            <button type="button" class="btn btn-primary btn-sm" id="sim-send-req-btn" data-i18n="sim_btn_send">Send Socket Request</button>
           </div>
         </div>
 
@@ -732,18 +728,18 @@
         <!-- Controls Panel -->
         <div class="config-controls-panel">
           <div class="form-row">
-            <div class="mb-4">
+            <div class="form-group">
               <label for="cfg-algo" data-i18n="cfg_lbl_algo">Routing Algorithm</label>
-              <select id="cfg-algo" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
+              <select id="cfg-algo" class="form-control">
                 <option value="weighted_round_robin">Weighted Round-Robin</option>
                 <option value="least_connections">Least Connections</option>
                 <option value="ip_hash">Consistent IP Hash</option>
                 <option value="power_of_two_choices">Power-of-Two Random Choices</option>
               </select>
             </div>
-            <div class="mb-4">
+            <div class="form-group">
               <label for="cfg-port" data-i18n="cfg_lbl_port">Listen Port</label>
-              <input type="number" id="cfg-port" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" value="8080" min="80" max="65535">
+              <input type="number" id="cfg-port" class="form-control" value="8080" min="80" max="65535">
             </div>
           </div>
 
@@ -774,7 +770,7 @@
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
               <label style="font-size: 0.85rem; font-weight: 500; color: #e2e8f0;" data-i18n="cfg_lbl_upstreams">Configured Upstream Backends</label>
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="cfg-add-upstream-btn" data-i18n="cfg_btn_add">+ Add Backend Node</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="cfg-add-upstream-btn" data-i18n="cfg_btn_add">+ Add Backend Node</button>
             </div>
             <div class="upstream-list" id="cfg-upstreams-list">
               <!-- Dynamically rendered -->
@@ -787,8 +783,8 @@
           <div class="config-preview-header">
             <span>openbalancer.json (Validated JSON)</span>
             <div style="display: flex; gap: 0.5rem;">
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="cfg-copy-btn" data-i18n="cfg_btn_copy">Copy Config</button>
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="cfg-download-btn" data-i18n="cfg_btn_download">Download openbalancer.json</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="cfg-copy-btn" data-i18n="cfg_btn_copy">Copy Config</button>
+              <button type="button" class="btn btn-primary btn-sm" id="cfg-download-btn" data-i18n="cfg_btn_download">Download openbalancer.json</button>
             </div>
           </div>
           <pre class="config-preview-code"><code id="config-code-preview"></code></pre>
@@ -799,7 +795,7 @@
 
   <!-- Enterprise B2B Services Section -->
   <section class="container" id="enterprise" style="padding: 5rem 1.5rem;">
-    <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 hover:-translate-y-2 hover:bg-gray-800/50 hover:border-brand-500/50 hover:shadow-2xl hover:shadow-brand-500/10 transition-all duration-300 flex flex-col gap-4 relative overflow-hidden group" style="background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, var(--bg-surface) 100%); border-color: #334155; padding: 2.5rem;">
+    <div class="feature-card" style="background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, var(--bg-surface) 100%); border-color: #334155; padding: 2.5rem;">
       <span class="section-tag" data-i18n="ent_tag">Enterprise SLA Backing</span>
       <h2 data-i18n="ent_title">Production Infrastructure &amp; SLA Management</h2>
       <p style="font-size: 1.05rem; max-width: 840px; margin-top: 0.5rem; margin-bottom: 2rem;" data-i18n="ent_p1">
@@ -844,7 +840,7 @@
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan1_f3">Active Health Probing &amp; Metrics</span></li>
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan1_f4">Docker Swarm &amp; K8s Support</span></li>
           </ul>
-          <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-lg font-semibold text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white border border-gray-700 transition-all duration-300 active:scale-95" data-i18n="plan1_btn">Download Community Core</a>
+          <a href="https://github.com/incontrolplus/openbalancer" target="_blank" rel="noopener" class="btn btn-secondary" data-i18n="plan1_btn">Download Community Core</a>
         </div>
 
         <!-- B2B Pro SLA Retainer -->
@@ -859,7 +855,7 @@
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan2_f3">Hardened Multi-Node Configuration</span></li>
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan2_f4">Official B2B Invoice via Stripe</span></li>
           </ul>
-          <button type="button" class="px-5 py-2.5 rounded-lg font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-all duration-300 active:scale-95" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer (€1,500/mo)" data-i18n="plan2_btn">Request SLA Contract</button>
+          <button type="button" class="btn btn-primary" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer (€1,500/mo)" data-i18n="plan2_btn">Request SLA Contract</button>
         </div>
 
         <!-- Custom Enterprise -->
@@ -873,7 +869,7 @@
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan3_f3">Dedicated Senior DevOps Lead</span></li>
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="plan3_f4">Net-30 Corporate Terms</span></li>
           </ul>
-          <button type="button" class="px-5 py-2.5 rounded-lg font-semibold text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white border border-gray-700 transition-all duration-300 active:scale-95" data-action="enterprise-inquiry" data-plan="Custom Enterprise Architecture" data-i18n="plan3_btn">Contact Sales</button>
+          <button type="button" class="btn btn-secondary" data-action="enterprise-inquiry" data-plan="Custom Enterprise Architecture" data-i18n="plan3_btn">Contact Sales</button>
         </div>
       </div>
     </div>
@@ -968,12 +964,12 @@
   </section>
 
   <!-- Footer -->
-  <footer class="mt-auto border-t border-gray-800 bg-[#070a11] pt-16 pb-8">
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <!-- Col 1: Brand -->
         <div class="footer-brand">
-          <div class="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 hover:to-white transition-all">
+          <div class="nav-brand">
             <img src="assets/logo.svg" alt="OpenBalancer Logo" class="brand-logo-img">
             <span>OpenBalancer</span>
           </div>
@@ -983,7 +979,7 @@
         </div>
 
         <!-- Col 2: Documentation -->
-        <div class="flex flex-col gap-4">
+        <div class="footer-col">
           <h4 data-i18n="footer_col_arch">Architecture</h4>
           <ul class="footer-links">
             <li><a href="#architecture">Event Loop Engine</a></li>
@@ -997,7 +993,7 @@
         </div>
 
         <!-- Col 3: Legal & Policies -->
-        <div class="flex flex-col gap-4">
+        <div class="footer-col">
           <h4 data-i18n="footer_col_comp">Compliance</h4>
           <ul class="footer-links">
             <li><a href="terms.html" data-i18n="footer_tos">Terms of Service (ToS)</a></li>
@@ -1008,7 +1004,7 @@
         </div>
 
         <!-- Col 4: Verified Merchant Details -->
-        <div class="flex flex-col gap-4">
+        <div class="footer-col">
           <h4 data-i18n="footer_col_entity">Operating Entity</h4>
           <div class="footer-compliance-card">
             <div><strong>Operator:</strong> INCONTROL PLUS ЕООД</div>
@@ -1019,7 +1015,7 @@
         </div>
       </div>
 
-      <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-4">
+      <div class="footer-bottom">
         <div data-i18n="footer_rights">
           © 2026 INCONTROL PLUS ЕООД. All rights reserved. OpenBalancer™ is a trademark of INCONTROL PLUS.
         </div>
@@ -1031,8 +1027,8 @@
   </footer>
 
   <!-- Interactive B2B Consultation & SLA Modal -->
-  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity" id="b2b-modal">
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-lg p-6 relative shadow-2xl scale-95 transition-transform">
+  <div class="modal-backdrop" id="b2b-modal">
+    <div class="modal-dialog">
       <button type="button" class="modal-close" id="modal-close-btn">&times;</button>
       <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem;" id="modal-title" data-i18n="modal_title">Request Enterprise SLA &amp; Invoicing</h3>
       <p style="font-size: 0.85rem; margin-bottom: 1.25rem;" data-i18n="modal_subtitle">
@@ -1041,48 +1037,48 @@
 
       <form id="b2b-inquiry-form">
         <div class="form-row">
-          <div class="mb-4">
+          <div class="form-group">
             <label for="company_name" data-i18n="modal_lbl_company">Company Legal Name *</label>
-            <input type="text" id="company_name" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Acme Corp Ltd" required>
+            <input type="text" id="company_name" class="form-control" placeholder="Acme Corp Ltd" required>
           </div>
-          <div class="mb-4">
+          <div class="form-group">
             <label for="vat_number" data-i18n="modal_lbl_vat">VAT / Registry ID</label>
-            <input type="text" id="vat_number" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="BG123456789">
+            <input type="text" id="vat_number" class="form-control" placeholder="BG123456789">
           </div>
         </div>
 
         <div class="form-row">
-          <div class="mb-4">
+          <div class="form-group">
             <label for="work_email" data-i18n="modal_lbl_email">Work Email *</label>
-            <input type="email" id="work_email" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="alex@company.com" required>
+            <input type="email" id="work_email" class="form-control" placeholder="alex@company.com" required>
           </div>
-          <div class="mb-4">
+          <div class="form-group">
             <label for="phone_number" data-i18n="modal_lbl_phone">Corporate Phone</label>
-            <input type="tel" id="phone_number" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="+359 88 123 4567">
+            <input type="tel" id="phone_number" class="form-control" placeholder="+359 88 123 4567">
           </div>
         </div>
 
-        <div class="mb-4">
+        <div class="form-group">
           <label for="selected_plan" data-i18n="modal_lbl_plan">Selected Retainer / SLA *</label>
-          <select id="selected_plan" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" required>
+          <select id="selected_plan" class="form-control" required>
             <option value="B2B Pro SLA Retainer (€1,500/mo)">B2B Pro SLA Retainer (€1,500/month)</option>
             <option value="Custom Enterprise Architecture">Custom Enterprise Architecture</option>
             <option value="Turnkey AI Cluster Setup">Turnkey AI Cluster Setup</option>
           </select>
         </div>
 
-        <div class="mb-4">
+        <div class="form-group">
           <label data-i18n="modal_lbl_payment_method">Preferred Billing &amp; Payment Method</label>
           <div class="payment-method-selector">
             <label class="payment-radio-label">
-              <input type="radio" id="payment_pref_invoice" name="payment_pref" value="invoice" aria-label="Corporate Net-14 Invoicing" checked>
+              <input type="radio" name="payment_pref" value="invoice" checked>
               <span>
                 <strong data-i18n="modal_opt_invoice">Corporate Net-14 Invoicing</strong>
                 <small data-i18n="modal_opt_invoice_sub">SEPA Bank Transfer / VAT Reverse Charge</small>
               </span>
             </label>
             <label class="payment-radio-label">
-              <input type="radio" id="payment_pref_stripe" name="payment_pref" value="stripe_card" aria-label="Instant Stripe Card Checkout">
+              <input type="radio" name="payment_pref" value="stripe_card">
               <span>
                 <strong data-i18n="modal_opt_card">Instant Stripe Card Checkout</strong>
                 <small data-i18n="modal_opt_card_sub">Corporate Credit / Debit Card &amp; Apple Pay</small>
@@ -1091,7 +1087,7 @@
           </div>
         </div>
 
-        <button type="submit" class="px-5 py-2.5 rounded-lg font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-all duration-300 active:scale-95" style="width: 100%; margin-top: 0.5rem;" id="submit-inquiry-btn" data-i18n="modal_btn_submit">
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" id="submit-inquiry-btn" data-i18n="modal_btn_submit">
           Submit B2B Inquiry &amp; Request Invoicing
         </button>
       </form>
@@ -1101,7 +1097,7 @@
         <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #e2e8f0;">
           <span data-i18n="modal_success_desc">Our senior infrastructure lead at INCONTROL PLUS will review your specifications and send an official B2B proposal and Net-14 invoicing schedule to</span> <strong id="success-email" style="color: #60a5fa;"></strong>.
         </p>
-        <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="close-success-btn" style="margin-top: 1rem;">Close</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="close-success-btn" style="margin-top: 1rem;">Close</button>
       </div>
     </div>
   </div>
@@ -1112,13 +1108,13 @@
       <span data-i18n="cookie_text"><strong>GDPR Notice:</strong> OpenBalancer uses strictly necessary cookies for telemetry routing and secure B2B session handling. See</span> <a href="privacy.html" style="text-decoration: underline; color: #60a5fa;">Privacy Policy</a>.
     </div>
     <div style="display: flex; gap: 0.5rem;">
-      <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="accept-cookies-btn" data-i18n="cookie_accept">Accept All</button>
-      <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="dismiss-cookies-btn" data-i18n="cookie_dismiss">Essential Only</button>
+      <button type="button" class="btn btn-primary btn-sm" id="accept-cookies-btn" data-i18n="cookie_accept">Accept All</button>
+      <button type="button" class="btn btn-secondary btn-sm" id="dismiss-cookies-btn" data-i18n="cookie_dismiss">Essential Only</button>
     </div>
   </div>
 
   <!-- Scripts with cache busting -->
-  <script src="js/i18n.js?v=3.0.0"></script>
-  <script src="js/main.js?v=3.0.0"></script>
+  <script src="js/i18n.js?v=2.0.4"></script>
+  <script src="js/main.js?v=2.0.4"></script>
 </body>
 </html>
