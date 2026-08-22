@@ -32,8 +32,8 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   
-  --font-brand: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-sans: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-brand: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
   
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -2692,15 +2692,15 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .docs-nav-link:hover {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--primary);
+  background: var(--bg-card-hover);
 }
 
 .docs-nav-link.active {
-  color: #60a5fa;
-  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary);
+  background: var(--bg-subtle);
   border-left-color: var(--primary);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .docs-nav-badge {
@@ -2885,7 +2885,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Code Snippet Cards with 1-Click Copy */
 .docs-code-block {
-  background: #05080f;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   margin: 1.5rem 0;
@@ -2897,7 +2897,7 @@ input[type="range"]::-webkit-slider-thumb {
   justify-content: space-between;
   align-items: center;
   padding: 0.55rem 1rem;
-  background: rgba(14, 20, 34, 0.95);
+  background: var(--bg-subtle);
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -2911,7 +2911,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .btn-copy-snippet {
-  background: transparent;
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   font-family: var(--font-mono);
@@ -2926,8 +2926,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .btn-copy-snippet:hover {
-  background: var(--bg-subtle);
-  color: var(--text-main);
+  background: var(--bg-card-hover);
+  color: var(--primary);
   border-color: var(--border-focus);
 }
 
@@ -2943,7 +2943,7 @@ input[type="range"]::-webkit-slider-thumb {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   line-height: 1.6;
-  color: #f1f5f9;
+  color: var(--text-main);
 }
 
 /* Feature Matrix & Badges */
