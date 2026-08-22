@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Documentation Portal — OpenBalancer | Asynchronous Load Balancer & API Reverse Proxy</title>
-  <meta name="description" content="Comprehensive technical documentation, configuration schema, Prometheus telemetry API, routing algorithms, and interactive tools for OpenBalancer by INCONTROL PLUS.">
-  <meta name="keywords" content="openbalancer documentation, load balancer docs, reverse proxy api, prometheus telemetry, ai inference routing, incontrol plus">
+  <title>Documentation — OpenBalancer | Enterprise Asynchronous Load Balancer & API Reverse Proxy</title>
+  <meta name="description" content="Comprehensive API reference, zero-copy socket architecture, configuration schema, interactive sandbox tools, and Prometheus telemetry for OpenBalancer.">
+  <meta name="keywords" content="openbalancer docs, load balancer api, reverse proxy documentation, asyncio streaming, zero copy proxy, incontrol plus">
   <meta name="author" content="INCONTROL PLUS EOOD">
 
   <!-- Open Graph -->
-  <meta property="og:type" content="article">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.openbalancer.com/docs.html">
   <meta property="og:title" content="OpenBalancer Documentation Portal">
-  <meta property="og:description" content="Technical guide, JSON config schema, routing algorithms, Prometheus API, and interactive tools for OpenBalancer.">
+  <meta property="og:description" content="Comprehensive architecture guide, interactive config builder, error page studio, and Prometheus API reference.">
   <meta property="og:image" content="https://www.openbalancer.com/assets/og-preview.svg">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="apple-touch-icon" href="assets/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=13.0.0">
+  <link rel="apple-touch-icon" href="assets/favicon.svg?v=13.0.0">
 
   <!-- Stylesheet & Typography -->
   <link rel="stylesheet" href="css/style.css?v=13.0.0">
@@ -50,22 +50,22 @@
     .mobile-drawer { display: none; }
     .mobile-drawer.active { display: flex !important; }
   </style>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-      for (let r of registrations) r.unregister();
-    });
-    if (window.caches) {
-      caches.keys().then(function(names) {
-        for (let name of names) caches.delete(name);
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let r of registrations) r.unregister();
       });
+      if (window.caches) {
+        caches.keys().then(function(names) {
+          for (let name of names) caches.delete(name);
+        });
+      }
     }
-  }
-</script>
+  </script>
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Top Navigation -->
   <header class="navbar">
     <div class="container">
       <a href="index.html" class="nav-brand">
@@ -86,7 +86,7 @@
         </ul>
       </nav>
       <div class="nav-actions">
-        <!-- Theme Switcher (CompanyBook Light vs Deep Space Dark) -->
+        <!-- Theme Switcher -->
         <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme Mode" title="Toggle Theme (Light / Dark)" data-i18n-title="nav_theme_toggle">
           <svg class="theme-icon-moon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           <svg class="theme-icon-sun" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -102,7 +102,7 @@
         <a href="index.html#pricing" class="btn btn-outline btn-sm" data-i18n="nav_retainers">Retainers</a>
         <a href="index.html#enterprise" class="btn btn-primary btn-sm" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="nav_request_sla">Request Enterprise SLA</a>
 
-        <!-- Mobile Hamburger Button -->
+        <!-- Mobile Hamburger -->
         <button type="button" class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Navigation Menu">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -145,238 +145,154 @@
     </div>
   </aside>
 
-  <!-- Documentation Hero Banner -->
-  <section class="docs-page-header">
-    <div class="container docs-header-content">
-      <div class="docs-header-title-area">
-        <div class="docs-version-badge">
-          <span style="display: inline-block; width: 7px; height: 7px; background: var(--accent); border-radius: 50%;"></span>
-          <span>v1.4.0-stable • MIT Core • Python 3.11+</span>
+  <!-- Main Documentation Layout Container -->
+  <main class="container docs-layout-container" style="padding-top: 30px; min-height: 85vh;">
+    
+    <!-- Left Sidebar: CompanyBook Bento Standard -->
+    <aside class="docs-sidebar">
+      <!-- Card 1: Base URL -->
+      <div class="cb-sidebar-card">
+        <div class="cb-sidebar-header">
+          <span class="live-pulse-dot" style="width: 7px; height: 7px;"></span>
+          <span data-i18n="doc_sb_base_title">Base Ingress Host</span>
         </div>
-        <h1 style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 0.5rem;" data-i18n="doc_header_title">Technical Documentation</h1>
-        <p style="font-size: 1.05rem; color: var(--text-muted);" data-i18n="doc_header_sub">
-          Complete engineering reference, kernel event loop architecture, configuration schema, Prometheus metrics, and interactive developer tools.
-        </p>
+        <div class="cb-base-url-box">
+          <span>http://localhost:8080</span>
+          <button type="button" class="btn-copy-snippet" style="padding: 0.15rem 0.4rem; font-size: 0.7rem; border-radius: 4px;" data-code="http://localhost:8080">
+            <span>Copy</span>
+          </button>
+        </div>
+        <p class="cb-sidebar-desc" data-i18n="doc_sb_base_desc">All proxy endpoints, telemetry metrics, and load balancing traffic route via this host.</p>
       </div>
 
-      <!-- Quick Search Filter Box -->
-      <div class="docs-search-wrapper">
-        <span class="docs-search-icon">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        </span>
-        <input type="search" id="docs-search-input" class="docs-search-input" placeholder="Search documentation (e.g., algorithms, metrics, hot reload)..." data-i18n-placeholder="doc_search_placeholder">
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Documentation Layout -->
-  <main class="container docs-layout-container">
-
-    <!-- Left Sticky Sidebar Navigation -->
-    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation Navigation">
-      
-      <!-- Group 1: Getting Started -->
-      <div class="docs-nav-group">
-        <div class="docs-nav-heading" data-i18n="doc_nav_grp_getstarted">🚀 Getting Started</div>
-        <ul class="docs-nav-list">
-          <li>
-            <a href="#overview" class="docs-nav-link active" data-section="overview">
-              <span data-i18n="doc_nav_overview">System Overview</span>
-            </a>
-          </li>
-          <li>
-            <a href="#quickstart" class="docs-nav-link" data-section="quickstart">
-              <span data-i18n="doc_nav_quickstart">Quickstart & Installation</span>
-            </a>
-          </li>
+      <!-- Card 2: Documentation Navigation -->
+      <div class="cb-sidebar-card">
+        <div class="cb-sidebar-header">
+          <span data-i18n="doc_sb_nav_title">Documentation Index</span>
+        </div>
+        <ul class="cb-sidebar-nav-list">
+          <li class="cb-sidebar-nav-item"><a href="#overview" class="docs-nav-link active"><span>ℹ️</span> <span data-i18n="doc_nav_overview">System Overview</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#quickstart" class="docs-nav-link"><span>🚀</span> <span data-i18n="doc_nav_quickstart">Quickstart &amp; Setup</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#architecture" class="docs-nav-link"><span>⚡</span> <span data-i18n="doc_nav_architecture">Zero-Copy Kernel</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#routing-algorithms" class="docs-nav-link"><span>🔀</span> <span data-i18n="doc_nav_algorithms">Routing Algorithms</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#config-schema" class="docs-nav-link"><span>⚙️</span> <span data-i18n="doc_nav_config_schema">Config Schema</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#config-builder" class="docs-nav-link"><span>🛠️</span> <span data-i18n="doc_nav_config_builder">Interactive Config</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#error-page-studio" class="docs-nav-link"><span>🎨</span> <span data-i18n="doc_nav_error_studio">Custom Error Studio</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#telemetry-api" class="docs-nav-link"><span>📊</span> <span data-i18n="doc_nav_telemetry_api">Telemetry &amp; Latency</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#api-tester" class="docs-nav-link"><span>🧪</span> <span data-i18n="doc_nav_api_tester">Live API Console</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#benchmarks" class="docs-nav-link"><span>📈</span> <span data-i18n="doc_nav_benchmarks">Benchmarks &amp; Load</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#production" class="docs-nav-link"><span>🐳</span> <span data-i18n="doc_nav_production">Docker Deployment</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#zero-downtime" class="docs-nav-link"><span>🔄</span> <span data-i18n="doc_nav_hot_reload">Hot Reload (SIGHUP)</span></a></li>
+          <li class="cb-sidebar-nav-item"><a href="#enterprise-sla" class="docs-nav-link"><span>🛡️</span> <span data-i18n="doc_nav_enterprise_sla">Enterprise SLA</span></a></li>
         </ul>
       </div>
 
-      <!-- Group 2: Core Concepts -->
-      <div class="docs-nav-group">
-        <div class="docs-nav-heading" data-i18n="doc_nav_grp_architecture">🏗️ Core Architecture</div>
-        <ul class="docs-nav-list">
-          <li>
-            <a href="#architecture" class="docs-nav-link" data-section="architecture">
-              <span data-i18n="doc_nav_architecture">Kernel & Event Loop</span>
-            </a>
-          </li>
-          <li>
-            <a href="#routing-algorithms" class="docs-nav-link" data-section="routing-algorithms">
-              <span data-i18n="doc_nav_algorithms">Routing Algorithms</span>
-              <span class="docs-nav-badge">6 Algos</span>
-            </a>
-          </li>
-        </ul>
+      <!-- Card 3: Cluster Benchmark Specs -->
+      <div class="cb-sidebar-card">
+        <div class="cb-sidebar-header">
+          <span data-i18n="doc_sb_stats_title">Cluster Benchmark Specs</span>
+        </div>
+        <div class="cb-sidebar-stat-row">
+          <div class="cb-sidebar-stat-item">
+            <div class="cb-sidebar-stat-num">100,000+</div>
+            <div class="cb-sidebar-stat-lbl" data-i18n="stat_sse_lbl">Concurrent SSE streams</div>
+          </div>
+          <div class="cb-sidebar-stat-item">
+            <div class="cb-sidebar-stat-num">&lt; 1.2 ms</div>
+            <div class="cb-sidebar-stat-lbl" data-i18n="stat_latency_lbl">p50 Ingress latency</div>
+          </div>
+          <div class="cb-sidebar-stat-item">
+            <div class="cb-sidebar-stat-num">18 MB</div>
+            <div class="cb-sidebar-stat-lbl" data-i18n="stat_rss_lbl">Base RSS memory</div>
+          </div>
+        </div>
       </div>
-
-      <!-- Group 3: Configuration -->
-      <div class="docs-nav-group">
-        <div class="docs-nav-heading" data-i18n="doc_nav_grp_config">⚙️ Configuration</div>
-        <ul class="docs-nav-list">
-          <li>
-            <a href="#config-schema" class="docs-nav-link" data-section="config-schema">
-              <span data-i18n="doc_nav_config_schema">Config Schema & Options</span>
-            </a>
-          </li>
-          <li>
-            <a href="#config-builder" class="docs-nav-link" data-section="config-builder">
-              <span data-i18n="doc_nav_config_builder">Interactive JSON Builder</span>
-              <span class="docs-nav-badge" style="color: #60a5fa;">Interactive</span>
-            </a>
-          </li>
-          <li>
-            <a href="#error-page-studio" class="docs-nav-link" data-section="error-page-studio">
-              <span data-i18n="doc_nav_error_studio">Custom Error Page Studio</span>
-              <span class="docs-nav-badge" style="color: #f43f5e;">Studio</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Group 4: Observability & APIs -->
-      <div class="docs-nav-group">
-        <div class="docs-nav-heading" data-i18n="doc_nav_grp_observability">📊 Telemetry & APIs</div>
-        <ul class="docs-nav-list">
-          <li>
-            <a href="#telemetry-api" class="docs-nav-link" data-section="telemetry-api">
-              <span data-i18n="doc_nav_telemetry_api">Status & Prometheus API</span>
-            </a>
-          </li>
-          <li>
-            <a href="#latency-heatmap-docs" class="docs-nav-link" data-section="latency-heatmap-docs">
-              <span data-i18n="doc_nav_latency_heatmap">Latency Heatmap & Flamegraph</span>
-              <span class="docs-nav-badge" style="color: #38bdf8;">Real-Time</span>
-            </a>
-          </li>
-          <li>
-            <a href="#api-tester" class="docs-nav-link" data-section="api-tester">
-              <span data-i18n="doc_nav_api_tester">Live API Tester ("Try it Out")</span>
-              <span class="docs-nav-badge" style="color: var(--accent);">Live Tool</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Group 5: Operations & Deployment -->
-      <div class="docs-nav-group">
-        <div class="docs-nav-heading" data-i18n="doc_nav_grp_operations">🚀 Production Operations</div>
-        <ul class="docs-nav-list">
-          <li>
-            <a href="#production-deployment" class="docs-nav-link" data-section="production-deployment">
-              <span data-i18n="doc_nav_deployment">Docker & Kubernetes</span>
-            </a>
-          </li>
-          <li>
-            <a href="#hot-reload" class="docs-nav-link" data-section="hot-reload">
-              <span data-i18n="doc_nav_hot_reload">Zero-Downtime Hot Reload</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Group 6: Performance & SLA -->
-      <div class="docs-nav-group">
-        <div class="docs-nav-heading" data-i18n="doc_nav_grp_enterprise">⚡ Performance & SLAs</div>
-        <ul class="docs-nav-list">
-          <li>
-            <a href="#benchmarks" class="docs-nav-link" data-section="benchmarks">
-              <span data-i18n="doc_nav_benchmarks">Benchmarks & Low Latency</span>
-            </a>
-          </li>
-          <li>
-            <a href="#enterprise-sla" class="docs-nav-link" data-section="enterprise-sla">
-              <span data-i18n="doc_nav_enterprise_sla">Enterprise SLA Support</span>
-              <span class="docs-nav-badge" style="color: #a78bfa;">99.9%</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
     </aside>
 
-    <!-- Main Content Stream -->
+    <!-- Right Main Documentation Body -->
     <div class="docs-content">
+
+      <!-- Breadcrumb Bar -->
+      <div class="cb-doc-breadcrumb">
+        <a href="index.html" data-i18n="nav_home">Home</a>
+        <span class="sep">/</span>
+        <span class="current" data-i18n="nav_docs">API &amp; Architecture Documentation</span>
+      </div>
 
       <!-- Section 1: Overview -->
       <section id="overview" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_overview_tag">System Overview</span>
-        <h2>
-          <span>What is OpenBalancer?</span>
-          <a href="#overview" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_overview_p1">
-          <strong>OpenBalancer</strong> is an ultra-fast, asynchronous load balancer and API reverse proxy built specifically for high-throughput AI model inference clusters, microservice meshes, and mission-critical API routing. Written from the ground up on non-blocking Python <code>asyncio</code> raw sockets, OpenBalancer eliminates unnecessary middleware layers to deliver sub-millisecond p99 routing overhead.
-        </p>
-
-        <div class="docs-callout docs-callout-info">
-          <div class="docs-callout-icon">💡</div>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">ℹ️</div>
           <div>
-            <strong data-i18n="doc_callout_sovereignty_title">100% Data Sovereignty & Zero Vendor Lock-in:</strong>
-            <span data-i18n="doc_callout_sovereignty_desc"> OpenBalancer runs completely standalone with zero external cloud dependencies, third-party analytics trackers, or closed telemetry beacons. It is ideal for isolated VPCs, air-gapped on-premise servers, and GDPR/HIPAA regulated infrastructure.</span>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_overview_title">System Overview &amp; Capabilities</span>
+              <a href="#overview" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_overview_intro">OpenBalancer is an ultralight, non-blocking asynchronous load balancer and API reverse proxy engineered for AI token streaming, high-frequency microservices, and zero-downtime operations.</p>
           </div>
         </div>
 
-        <h3 data-i18n="doc_core_capabilities_title">Core Architectural Highlights</h3>
-        <ul>
-          <li><strong data-i18n="doc_cap1_title">Non-Blocking Asynchronous Socket Loop:</strong> <span data-i18n="doc_cap1_desc">Pipes incoming client requests to upstream backends asynchronously using raw TCP stream readers and writers without threading locks.</span></li>
-          <li><strong data-i18n="doc_cap2_title">AI LLM Streaming & SSE Passthrough:</strong> <span data-i18n="doc_cap2_desc">Zero response buffering for <code>text/event-stream</code> and <code>application/grpc</code>, ensuring instant token-by-token streaming with constant O(1) memory consumption.</span></li>
-          <li><strong data-i18n="doc_cap3_title">Active Background Health Probing:</strong> <span data-i18n="doc_cap3_desc">Continuously interrogates upstream backend health paths at configurable intervals with sub-millisecond latency tracking.</span></li>
-          <li><strong data-i18n="doc_cap4_title">Automatic Circuit Breaking:</strong> <span data-i18n="doc_cap4_desc">Immediately isolates flapping or failing upstream nodes after consecutive probe failures, preventing cascading microservice collapse.</span></li>
-          <li><strong data-i18n="doc_cap5_title">Prometheus Telemetry & JSON Status:</strong> <span data-i18n="doc_cap5_desc">Native built-in endpoints at <code>/openbalancer/status</code> and <code>/metrics</code> for turnkey Grafana observability.</span></li>
-        </ul>
+        <!-- CompanyBook Developer Resources Callout -->
+        <div class="docs-callout">
+          <div class="docs-callout-icon">💡</div>
+          <div>
+            <strong data-i18n="doc_callout_title">AI Agent &amp; LLM Integration Context:</strong>
+            <span data-i18n="doc_callout_desc"> For automated coding agents (Claude, ChatGPT, Gemini), we provide structured API specifications and OpenAPI 3.1 endpoints directly at <code>/openbalancer/status</code> and <code>/metrics</code>.</span>
+          </div>
+        </div>
+
+        <p data-i18n="doc_overview_p1">
+          Traditional reverse proxies incur significant buffer allocation and thread contention penalties when handling long-lived Server-Sent Events (SSE) or bi-directional WebSockets. OpenBalancer eliminates intermediate buffers by piping raw socket descriptors directly through Python's non-blocking <code>asyncio</code> event loop.
+        </p>
+
+        <div class="cb-doc-card">
+          <h3 class="cb-doc-card-title" data-i18n="doc_overview_core_features">Core Architectural Capabilities</h3>
+          <ul style="margin-left: 1.25rem; line-height: 1.8;">
+            <li data-i18n="doc_f1"><strong>Zero-Buffer SSE Streaming:</strong> Unbuffered chunk-by-chunk piping for OpenAI/Claude/vLLM completion endpoints.</li>
+            <li data-i18n="doc_f2"><strong>Proactive Circuit Breaking:</strong> Tripping unhealth backends in &lt;50ms upon consecutive 5xx errors or connection timeouts.</li>
+            <li data-i18n="doc_f3"><strong>Multi-Algorithm Routing:</strong> Least Latency, Weighted Round-Robin, Least Connections, IP Hash, and Power-of-Two (P2C).</li>
+            <li data-i18n="doc_f4"><strong>Built-in Prometheus Exporter:</strong> Native <code>/metrics</code> scraper without external exporter sidecars.</li>
+            <li data-i18n="doc_f5"><strong>Zero-Downtime Hot Reload:</strong> Immediate in-flight re-configuration via POSIX <code>SIGHUP</code> signals.</li>
+          </ul>
+        </div>
       </section>
 
       <!-- Section 2: Quickstart -->
       <section id="quickstart" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_quickstart_tag">Quickstart &amp; Setup</span>
-        <h2>
-          <span>Quickstart & Installation</span>
-          <a href="#quickstart" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_quickstart_desc">
-          Get OpenBalancer running in under 60 seconds using Docker, Docker Compose, or standalone Python.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🚀</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_quickstart_title">Quickstart &amp; Installation</span>
+              <a href="#quickstart" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_quickstart_intro">Get OpenBalancer running in under 60 seconds using Docker, Docker Compose, or standalone Python.</p>
+          </div>
+        </div>
 
         <h3>1. Run via Docker (Recommended)</h3>
         <div class="docs-code-block">
           <div class="docs-code-header">
             <span class="docs-code-lang">BASH / DOCKER</span>
-            <button type="button" class="btn-copy-snippet" data-code="docker run -d \
-  --name openbalancer \
+            <button type="button" class="btn-copy-snippet" data-code="docker run -d --name openbalancer \
   -p 8080:8080 \
-  -v $(pwd)/config.json:/app/config.json \
-  openbalancer/core:latest">
+  -v $(pwd)/config.json:/app/config.json:ro \
+  ghcr.io/incontrolplus/openbalancer:v1.5.0">
               <span>Copy</span>
             </button>
           </div>
-          <pre><code>docker run -d \
-  --name openbalancer \
+          <pre><code>docker run -d --name openbalancer \
   -p 8080:8080 \
-  -v $(pwd)/config.json:/app/config.json \
-  openbalancer/core:latest</code></pre>
+  -v $(pwd)/config.json:/app/config.json:ro \
+  ghcr.io/incontrolplus/openbalancer:v1.5.0</code></pre>
         </div>
 
-        <h3>2. Run with Docker Compose (Full Multi-Backend Test)</h3>
+        <h3>2. Run via Standalone Python (Zero Dependencies)</h3>
         <div class="docs-code-block">
           <div class="docs-code-header">
             <span class="docs-code-lang">BASH</span>
-            <button type="button" class="btn-copy-snippet" data-code="git clone https://github.com/incontrolplus/openbalancer.git
-cd openbalancer/core
-docker compose up -d">
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code>git clone https://github.com/incontrolplus/openbalancer.git
-cd openbalancer/core
-docker compose up -d</code></pre>
-        </div>
-
-        <h3>3. Standalone Python (Zero Dependencies)</h3>
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">BASH</span>
-            <button type="button" class="btn-copy-snippet" data-code="python3 openbalancer.py config.json">
+            <button type="button" class="btn-copy-snippet" data-code="# Requires Python 3.11+ (Standard Library only - 0 pip packages required)
+python3 openbalancer.py config.json">
               <span>Copy</span>
             </button>
           </div>
@@ -384,7 +300,7 @@ docker compose up -d</code></pre>
 python3 openbalancer.py config.json</code></pre>
         </div>
 
-        <h3>4. Verify Ingress & Status</h3>
+        <h3>3. Verify Ingress &amp; Prometheus Telemetry</h3>
         <div class="docs-code-block">
           <div class="docs-code-header">
             <span class="docs-code-lang">BASH</span>
@@ -412,14 +328,16 @@ curl http://localhost:8080/metrics</code></pre>
 
       <!-- Section 3: Architecture -->
       <section id="architecture" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_arch_tag">Under the Hood</span>
-        <h2>
-          <span>Kernel & Event Loop Architecture</span>
-          <a href="#architecture" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_arch_p1">
-          OpenBalancer utilizes single-threaded non-blocking cooperative multitasking via Python's <code>asyncio</code> socket event loop. By bypassing traditional thread pools and GIL contention, it maintains a lightweight footprint (~18MB RSS) capable of handling tens of thousands of concurrent open TCP streams.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">⚡</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_arch_title">Kernel &amp; Event Loop Architecture</span>
+              <a href="#architecture" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_arch_p1">OpenBalancer utilizes single-threaded non-blocking cooperative multitasking via Python's asyncio socket event loop (~18MB RSS footprint).</p>
+          </div>
+        </div>
 
         <div class="docs-callout docs-callout-tip">
           <div class="docs-callout-icon">⚡</div>
@@ -429,10 +347,7 @@ curl http://localhost:8080/metrics</code></pre>
           </div>
         </div>
 
-        <h3 data-i18n="doc_circuit_breaker_title">Circuit Breaker & Health Probing State Machine</h3>
-        <p data-i18n="doc_circuit_breaker_desc">
-          Every configured upstream node is evaluated across a robust state machine:
-        </p>
+        <h3 data-i18n="doc_circuit_breaker_title">Circuit Breaker &amp; Health Probing State Machine</h3>
         <div class="docs-table-wrapper">
           <table class="docs-table">
             <thead>
@@ -448,16 +363,16 @@ curl http://localhost:8080/metrics</code></pre>
                 <td><span class="badge-tag badge-get">HEALTHY</span></td>
                 <td>Health check returns HTTP 200 OK within timeout limit.</td>
                 <td>Receives full traffic proportional to its configured weight.</td>
-                <td>Active probe continues at <code>health_interval</code> frequency.</td>
+                <td>Steady-state health probes every <code>probe_interval</code> seconds.</td>
               </tr>
               <tr>
-                <td><span class="badge-tag" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35);">DEGRADED</span></td>
-                <td>1 or more probe timeouts or 5xx responses.</td>
-                <td>Traffic remains routed, but warning metrics increment.</td>
-                <td>Monitored for consecutive failures.</td>
+                <td><span class="badge-tag badge-post" style="background: rgba(245, 158, 11, 0.12); color: #d97706; border: 1px solid rgba(245, 158, 11, 0.3);">PROBING / DEGRADED</span></td>
+                <td>Single probe failure or latency spike &gt; 500ms.</td>
+                <td>Traffic throttled; candidate for isolation.</td>
+                <td>Probed with accelerated frequency until confirmed or tripped.</td>
               </tr>
               <tr>
-                <td><span class="badge-tag badge-algo" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35);">TRIPPED / DOWN</span></td>
+                <td><span class="badge-tag badge-algo" style="background: rgba(239, 68, 68, 0.12); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.3);">TRIPPED / DOWN</span></td>
                 <td><code>consecutive_failures &gt;= threshold</code> (default: 3).</td>
                 <td><strong>Immediately isolated</strong>. Zero ingress traffic routed to this node.</td>
                 <td>Background probes continue until 2 consecutive 200 OK probes restore health.</td>
@@ -469,14 +384,16 @@ curl http://localhost:8080/metrics</code></pre>
 
       <!-- Section 4: Routing Algorithms -->
       <section id="routing-algorithms" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_algo_tag">Dispatch Strategies</span>
-        <h2>
-          <span>Routing Algorithms</span>
-          <a href="#routing-algorithms" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_algo_intro">
-          OpenBalancer provides 6 production-ready load balancing strategies switchable at runtime or via configuration:
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🔀</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_algo_title">Routing Algorithms</span>
+              <a href="#routing-algorithms" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_algo_intro">OpenBalancer provides 6 production-ready load balancing strategies switchable at runtime or via configuration:</p>
+          </div>
+        </div>
 
         <div class="docs-table-wrapper">
           <table class="docs-table">
@@ -528,33 +445,20 @@ curl http://localhost:8080/metrics</code></pre>
             </tbody>
           </table>
         </div>
-
-        <h3>Setting the Algorithm in <code>config.json</code></h3>
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">JSON</span>
-            <button type="button" class="btn-copy-snippet" data-code='{
-  "algorithm": "least_latency"
-}'>
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code>{
-  "algorithm": "least_latency"
-}</code></pre>
-        </div>
       </section>
 
       <!-- Section 5: Config Schema -->
       <section id="config-schema" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_schema_tag">Specification</span>
-        <h2>
-          <span>Configuration Schema (`config.json`)</span>
-          <a href="#config-schema" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_schema_intro">
-          OpenBalancer reads its initial topology from <code>config.json</code>. All parameters can be hot-reloaded without downtime via <code>SIGHUP</code>.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">⚙️</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_schema_title">Configuration Schema (`config.json`)</span>
+              <a href="#config-schema" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_schema_intro">OpenBalancer reads its initial topology from <code>config.json</code>. All parameters can be hot-reloaded without downtime via <code>SIGHUP</code>.</p>
+          </div>
+        </div>
 
         <div class="docs-table-wrapper">
           <table class="docs-table">
@@ -569,107 +473,39 @@ curl http://localhost:8080/metrics</code></pre>
             <tbody>
               <tr>
                 <td><code>host</code></td>
-                <td>String</td>
+                <td>string</td>
                 <td><code>"0.0.0.0"</code></td>
-                <td>Bind interface IP address for listening to ingress traffic.</td>
+                <td>Network interface to bind the ingress listener to.</td>
               </tr>
               <tr>
                 <td><code>port</code></td>
-                <td>Integer</td>
+                <td>integer</td>
                 <td><code>8080</code></td>
-                <td>TCP listening port for client requests.</td>
+                <td>Port for the load balancer ingress proxy.</td>
               </tr>
               <tr>
                 <td><code>algorithm</code></td>
-                <td>String</td>
-                <td><code>"round_robin"</code></td>
-                <td>Balancing algorithm: <code>round_robin</code>, <code>weighted</code>, <code>least_latency</code>, <code>least_connections</code>, <code>ip_hash</code>, <code>power_of_two</code>.</td>
+                <td>string</td>
+                <td><code>"least_latency"</code></td>
+                <td>Dispatch algorithm: <code>least_latency</code>, <code>round_robin</code>, <code>weighted</code>, <code>least_connections</code>, <code>ip_hash</code>, <code>power_of_two</code>.</td>
               </tr>
               <tr>
-                <td><code>health_interval</code></td>
-                <td>Integer</td>
-                <td><code>5</code></td>
-                <td>Interval in seconds between active background health checks.</td>
-              </tr>
-              <tr>
-                <td><code>health_timeout_ms</code></td>
-                <td>Integer</td>
-                <td><code>500</code></td>
-                <td>Socket timeout in milliseconds for health probe responses.</td>
-              </tr>
-              <tr>
-                <td><code>circuit_breaker_failures</code></td>
-                <td>Integer</td>
+                <td><code>health_check_interval</code></td>
+                <td>integer</td>
                 <td><code>3</code></td>
-                <td>Consecutive failed probes before marking a node UNHEALTHY and tripping circuit breaker.</td>
+                <td>Interval in seconds between background HTTP health probes.</td>
+              </tr>
+              <tr>
+                <td><code>circuit_breaker_threshold</code></td>
+                <td>integer</td>
+                <td><code>3</code></td>
+                <td>Consecutive failures required before tripping a backend node.</td>
               </tr>
               <tr>
                 <td><code>backends</code></td>
-                <td>Array[Object]</td>
+                <td>array</td>
                 <td><code>[]</code></td>
-                <td>List of upstream backend target definitions.</td>
-              </tr>
-              <tr>
-                <td><code>backends[].host</code></td>
-                <td>String</td>
-                <td>—</td>
-                <td>Target upstream host IP or hostname (e.g. <code>"127.0.0.1"</code> or <code>"ai-node-1"</code>).</td>
-              </tr>
-              <tr>
-                <td><code>backends[].port</code></td>
-                <td>Integer</td>
-                <td>—</td>
-                <td>Target upstream TCP port (e.g. <code>9001</code>).</td>
-              </tr>
-              <tr>
-                <td><code>backends[].weight</code></td>
-                <td>Integer</td>
-                <td><code>1</code></td>
-                <td>Traffic distribution weight multiplier (from <code>1</code> to <code>100</code>).</td>
-              </tr>
-              <tr>
-                <td><code>backends[].health_path</code></td>
-                <td>String</td>
-                <td><code>"/health"</code></td>
-                <td>HTTP endpoint path polled for health evaluation.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h3 data-i18n="doc_env_overrides_title">Environment Variable Overrides</h3>
-        <p data-i18n="doc_env_overrides_desc">
-          For Twelve-Factor App compliance and container environments, all primary options can be overridden via environment variables:
-        </p>
-        <div class="docs-table-wrapper">
-          <table class="docs-table">
-            <thead>
-              <tr>
-                <th>Environment Variable</th>
-                <th>Overrides Config Key</th>
-                <th>Example Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>PORT</code></td>
-                <td><code>port</code></td>
-                <td><code>PORT=9000</code></td>
-              </tr>
-              <tr>
-                <td><code>HOST</code></td>
-                <td><code>host</code></td>
-                <td><code>HOST=127.0.0.1</code></td>
-              </tr>
-              <tr>
-                <td><code>ALGORITHM</code></td>
-                <td><code>algorithm</code></td>
-                <td><code>ALGORITHM=least_latency</code></td>
-              </tr>
-              <tr>
-                <td><code>HEALTHCHECK_INTERVAL</code></td>
-                <td><code>health_interval</code></td>
-                <td><code>HEALTHCHECK_INTERVAL=3</code></td>
+                <td>Array of upstream nodes with <code>host</code>, <code>port</code>, <code>weight</code>, and <code>health_path</code>.</td>
               </tr>
             </tbody>
           </table>
@@ -678,14 +514,16 @@ curl http://localhost:8080/metrics</code></pre>
 
       <!-- Section 6: Interactive Config Builder -->
       <section id="config-builder" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_builder_tag">Interactive Tool</span>
-        <h2>
-          <span>Interactive JSON Configuration Builder</span>
-          <a href="#config-builder" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_builder_desc">
-          Configure your cluster parameters visually below. The schema updates in real time with 1-click clipboard copy and direct JSON file download.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🛠️</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_builder_title">Interactive JSON Configuration Builder</span>
+              <a href="#config-builder" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_builder_desc">Configure your cluster parameters visually below. The schema updates in real time with 1-click clipboard copy and direct JSON file download.</p>
+          </div>
+        </div>
 
         <!-- Preset Selection Pills -->
         <div class="preset-pills">
@@ -772,22 +610,23 @@ curl http://localhost:8080/metrics</code></pre>
         </div>
       </section>
 
-      <!-- Section 7: Custom Error Page Studio (Interactive Tool) -->
+      <!-- Section 7: Custom Error Page Studio -->
       <section id="error-page-studio" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_error_tag">Interactive Designer</span>
-        <h2>
-          <span>Custom Error Page Studio</span>
-          <a href="#error-page-studio" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_error_intro">
-          Design, live-preview, and export branded, lightweight standalone HTML error pages for 429 Rate Limiting, 502 Bad Gateway, and 503 Outage scenarios. Zero external dependencies, automatic countdown retry logic, and pixel-perfect design.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🎨</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_error_title">Custom Error Page Studio</span>
+              <a href="#error-page-studio" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_error_intro">Design, live-preview, and export branded, lightweight standalone HTML error pages for 429 Rate Limiting, 502 Bad Gateway, and 503 Outage scenarios.</p>
+          </div>
+        </div>
 
         <div class="error-studio-card">
           <div class="error-studio-split">
             <!-- Left Pane: Visual Controls -->
             <div class="error-studio-controls">
-              <!-- Preset Scenario Selector -->
               <div class="mb-4">
                 <label for="err-scenario-select" class="doc-label" data-i18n="err_preset_lbl">Select Error Scenario Preset:</label>
                 <select id="err-scenario-select" class="doc-select">
@@ -797,7 +636,6 @@ curl http://localhost:8080/metrics</code></pre>
                 </select>
               </div>
 
-              <!-- Brand & Headline Inputs -->
               <div class="form-row">
                 <div class="mb-4">
                   <label for="err-brand-name" class="doc-label" data-i18n="err_lbl_brand">Brand / Product Name</label>
@@ -881,7 +719,7 @@ curl http://localhost:8080/metrics</code></pre>
             </div>
           </div>
 
-          <!-- Action & Export Bar -->
+          <!-- Bottom Actions Bar -->
           <div class="error-studio-actions-bar">
             <button type="button" class="btn btn-primary btn-sm" id="btn-err-copy-html" style="flex: 1;" data-i18n="err_btn_copy_html">
               📋 Copy Standalone HTML
@@ -895,254 +733,100 @@ curl http://localhost:8080/metrics</code></pre>
 
       <!-- Section 8: Telemetry & Prometheus API -->
       <section id="telemetry-api" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_telemetry_tag">Observability</span>
-        <h2>
-          <span>Telemetry &amp; Prometheus API</span>
-          <a href="#telemetry-api" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_telemetry_intro">
-          OpenBalancer features built-in, zero-dependency observability endpoints natively exposing cluster telemetry in both structured JSON and standard Prometheus scrape formats.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">📊</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_telemetry_title">Telemetry &amp; Prometheus API</span>
+              <a href="#telemetry-api" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_telemetry_intro">OpenBalancer features built-in, zero-dependency observability endpoints natively exposing cluster telemetry in both structured JSON and standard Prometheus scrape formats.</p>
+          </div>
+        </div>
 
-        <h3>1. Status & Topology API (`GET /openbalancer/status`)</h3>
-        <p data-i18n="doc_status_api_desc">
-          Returns real-time cluster uptime, total proxied requests, selected algorithm, and per-node health status, latency, and circuit breaker trip counts.
-        </p>
+        <h3>1. Query JSON Cluster Telemetry</h3>
+        <p data-i18n="doc_status_api_desc">Returns real-time uptime, request counters, active strategy, and per-node health status &amp; latency.</p>
         <div class="docs-code-block">
           <div class="docs-code-header">
-            <span class="docs-code-lang">JSON RESPONSE — 200 OK</span>
-            <button type="button" class="btn-copy-snippet" data-code='{
-  "system": "OpenBalancer Core",
-  "operator": "INCONTROL PLUS EOOD",
-  "license": "MIT",
-  "uptime_seconds": 14280,
-  "total_proxied_requests": 849200,
-  "algorithm": "least_latency",
-  "backends": [
-    {
-      "url": "http://10.0.1.10:8000",
-      "healthy": true,
-      "weight": 3,
-      "total_requests": 424600,
-      "last_latency_ms": 1.18,
-      "circuit_trips": 0
-    },
-    {
-      "url": "http://10.0.1.11:8000",
-      "healthy": true,
-      "weight": 2,
-      "total_requests": 283100,
-      "last_latency_ms": 1.42,
-      "circuit_trips": 0
-    },
-    {
-      "url": "http://10.0.1.12:8000",
-      "healthy": true,
-      "weight": 1,
-      "total_requests": 141500,
-      "last_latency_ms": 1.85,
-      "circuit_trips": 0
-    }
-  ]
-}'>
+            <span class="docs-code-lang">HTTP / JSON</span>
+            <button type="button" class="btn-copy-snippet" data-code="GET /openbalancer/status HTTP/1.1
+Host: localhost:8080">
               <span>Copy</span>
             </button>
           </div>
-          <pre><code>{
-  "system": "OpenBalancer Core",
-  "operator": "INCONTROL PLUS EOOD",
-  "license": "MIT",
-  "uptime_seconds": 14280,
-  "total_proxied_requests": 849200,
+          <pre><code>GET /openbalancer/status HTTP/1.1
+Host: localhost:8080
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "status": "healthy",
+  "version": "1.5.0",
+  "uptime_seconds": 84210,
   "algorithm": "least_latency",
+  "active_connections": 142,
+  "total_requests": 1428904,
   "backends": [
-    {
-      "url": "http://10.0.1.10:8000",
-      "healthy": true,
-      "weight": 3,
-      "total_requests": 424600,
-      "last_latency_ms": 1.18,
-      "circuit_trips": 0
-    },
-    {
-      "url": "http://10.0.1.11:8000",
-      "healthy": true,
-      "weight": 2,
-      "total_requests": 283100,
-      "last_latency_ms": 1.42,
-      "circuit_trips": 0
-    },
-    {
-      "url": "http://10.0.1.12:8000",
-      "healthy": true,
-      "weight": 1,
-      "total_requests": 141500,
-      "last_latency_ms": 1.85,
-      "circuit_trips": 0
-    }
+    { "url": "http://127.0.0.1:8001", "healthy": true, "latency_ms": 2.1, "active_conns": 45 },
+    { "url": "http://127.0.0.1:8002", "healthy": true, "latency_ms": 1.8, "active_conns": 52 },
+    { "url": "http://127.0.0.1:8003", "healthy": true, "latency_ms": 3.4, "active_conns": 45 }
   ]
 }</code></pre>
         </div>
 
-        <h3>2. Prometheus Metrics (`GET /metrics`)</h3>
-        <p data-i18n="doc_prometheus_api_desc">
-          Compatible out of the box with Prometheus, VictoriaMetrics, and Grafana Agent without requiring an external exporter sidecar.
-        </p>
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">PROMETHEUS TEXT FORMAT</span>
-            <button type="button" class="btn-copy-snippet" data-code='# HELP openbalancer_requests_total Total number of proxied HTTP requests
-# TYPE openbalancer_requests_total counter
-openbalancer_requests_total 849200
+        <!-- Latency Heatmap & Flamegraph Sandbox -->
+        <h3 style="margin-top: 2.5rem;" data-i18n="doc_heatmap_title">Real-Time Latency Distribution Heatmap &amp; Flamegraph</h3>
+        <p data-i18n="doc_heatmap_intro">Observe real-time latency distribution across 4 discrete threshold buckets (&lt;10ms green, 10-50ms cyan, 50-200ms yellow, &gt;200ms red) with live percentile calculations and execution waterfall stages.</p>
 
-# HELP openbalancer_uptime_seconds OpenBalancer uptime in seconds
-# TYPE openbalancer_uptime_seconds gauge
-openbalancer_uptime_seconds 14280
-
-# HELP openbalancer_backend_health_status Health status of backend node (1=healthy, 0=down)
-# TYPE openbalancer_backend_health_status gauge
-openbalancer_backend_health_status{backend="http://10.0.1.10:8000",host="10.0.1.10",port="8000"} 1
-openbalancer_backend_health_status{backend="http://10.0.1.11:8000",host="10.0.1.11",port="8000"} 1
-
-# HELP openbalancer_backend_latency_ms Last probed health check latency in milliseconds
-# TYPE openbalancer_backend_latency_ms gauge
-openbalancer_backend_latency_ms{backend="http://10.0.1.10:8000",host="10.0.1.10",port="8000"} 1.18
-openbalancer_backend_latency_ms{backend="http://10.0.1.11:8000",host="10.0.1.11",port="8000"} 1.42
-
-# HELP openbalancer_circuit_breaker_trips_total Total circuit breaker trip events
-# TYPE openbalancer_circuit_breaker_trips_total counter
-openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.10:8000",host="10.0.1.10",port="8000"} 0'>
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code># HELP openbalancer_requests_total Total number of proxied HTTP requests
-# TYPE openbalancer_requests_total counter
-openbalancer_requests_total 849200
-
-# HELP openbalancer_uptime_seconds OpenBalancer uptime in seconds
-# TYPE openbalancer_uptime_seconds gauge
-openbalancer_uptime_seconds 14280
-
-# HELP openbalancer_backend_health_status Health status of backend node (1=healthy, 0=down)
-# TYPE openbalancer_backend_health_status gauge
-openbalancer_backend_health_status{backend="http://10.0.1.10:8000",host="10.0.1.10",port="8000"} 1
-openbalancer_backend_health_status{backend="http://10.0.1.11:8000",host="10.0.1.11",port="8000"} 1
-
-# HELP openbalancer_backend_latency_ms Last probed health check latency in milliseconds
-# TYPE openbalancer_backend_latency_ms gauge
-openbalancer_backend_latency_ms{backend="http://10.0.1.10:8000",host="10.0.1.10",port="8000"} 1.18
-openbalancer_backend_latency_ms{backend="http://10.0.1.11:8000",host="10.0.1.11",port="8000"} 1.42
-
-# HELP openbalancer_circuit_breaker_trips_total Total circuit breaker trip events
-# TYPE openbalancer_circuit_breaker_trips_total counter
-openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.10:8000",host="10.0.1.10",port="8000"} 0</code></pre>
-        </div>
-      </section>
-
-      <!-- Section: Real-Time Latency Heatmap & Flamegraph -->
-      <section id="latency-heatmap-docs" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_heatmap_tag">Real-Time Telemetry</span>
-        <h2>
-          <span>Real-Time Latency Heatmap &amp; Flamegraph</span>
-          <a href="#latency-heatmap-docs" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_heatmap_intro">
-          Observe real-time latency distribution across 4 discrete threshold buckets (&lt;10ms green, 10-50ms cyan, 50-200ms yellow, &gt;200ms red) with live percentile calculations and execution waterfall stages.
-        </p>
-
-        <div class="latency-heatmap-panel" style="margin: 1.5rem 0;">
-          <div class="latency-panel-header">
-            <div class="latency-title-box">
-              <div class="latency-title-row">
-                <span class="latency-pulse-indicator"></span>
-                <strong data-i18n="sim_heatmap_title">Real-Time Latency Heatmap &amp; Flamegraph</strong>
-                <span class="heatmap-live-badge" data-i18n="sim_heatmap_live">DYNAMIC 60FPS</span>
-              </div>
-              <div class="latency-view-switcher" role="tablist" aria-label="Docs Latency View Mode">
-                <button type="button" class="view-switch-btn active" data-view="heatmap" id="docs-view-heatmap-btn" role="tab" aria-selected="true" data-i18n="sim_tab_heatmap">Distribution Heatmap</button>
-                <button type="button" class="view-switch-btn" data-view="flamegraph" id="docs-view-flamegraph-btn" role="tab" aria-selected="false" data-i18n="sim_tab_flamegraph">Flamegraph Waterfall</button>
-              </div>
+        <div class="cb-doc-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div style="display: flex; gap: 0.5rem;">
+              <button type="button" class="preset-pill active" id="btn-tab-heatmap" data-i18n="sim_tab_heatmap">Distribution Heatmap</button>
+              <button type="button" class="preset-pill" id="btn-tab-flamegraph" data-i18n="sim_tab_flamegraph">Flamegraph Waterfall</button>
             </div>
-            
-            <div class="latency-percentiles-bar">
-              <div class="percentile-chip"><span class="pct-lbl">p50</span><span class="pct-val" id="docs-pct-p50">1.1ms</span></div>
-              <div class="percentile-chip"><span class="pct-lbl">p90</span><span class="pct-val" id="docs-pct-p90">7.9ms</span></div>
-              <div class="percentile-chip"><span class="pct-lbl">p99</span><span class="pct-val" id="docs-pct-p99">13.8ms</span></div>
-              <div class="percentile-chip"><span class="pct-lbl">p99.9</span><span class="pct-val" id="docs-pct-p999">24.5ms</span></div>
+            <div class="live-pulse-chip">
+              <span class="live-pulse-dot" style="width: 6px; height: 6px;"></span>
+              <span data-i18n="sim_heatmap_live">DYNAMIC 60FPS</span>
             </div>
           </div>
 
           <!-- Heatmap View -->
-          <div class="heatmap-view-container" id="docs-heatmap-view">
-            <div class="heatmap-canvas-wrapper">
-              <canvas id="docs-latency-heatmap-canvas" class="latency-heatmap-canvas" width="800" height="120"></canvas>
-            </div>
-            <div class="heatmap-bucket-legend">
-              <div class="bucket-pill bucket-green">
-                <span class="bucket-dot"></span>
-                <span class="bucket-label" data-i18n="bucket_green">&lt;10ms (Optimal)</span>
-                <strong class="bucket-pct" id="docs-b0-pct">84%</strong>
+          <div id="view-heatmap">
+            <div class="heatmap-buckets-grid">
+              <div class="heatmap-bucket-card bucket-green">
+                <div class="bucket-header"><span data-i18n="bucket_green">&lt;10ms (Optimal)</span><strong id="pct-green">74%</strong></div>
+                <div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-green" style="width: 74%;"></div></div>
               </div>
-              <div class="bucket-pill bucket-cyan">
-                <span class="bucket-dot"></span>
-                <span class="bucket-label" data-i18n="bucket_cyan">10-50ms (Normal)</span>
-                <strong class="bucket-pct" id="docs-b1-pct">13%</strong>
+              <div class="heatmap-bucket-card bucket-cyan">
+                <div class="bucket-header"><span data-i18n="bucket_cyan">10-50ms (Normal)</span><strong id="pct-cyan">18%</strong></div>
+                <div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-cyan" style="width: 18%;"></div></div>
               </div>
-              <div class="bucket-pill bucket-yellow">
-                <span class="bucket-dot"></span>
-                <span class="bucket-label" data-i18n="bucket_yellow">50-200ms (Spike)</span>
-                <strong class="bucket-pct" id="docs-b2-pct">2%</strong>
+              <div class="heatmap-bucket-card bucket-yellow">
+                <div class="bucket-header"><span data-i18n="bucket_yellow">50-200ms (Spike)</span><strong id="pct-yellow">6%</strong></div>
+                <div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-yellow" style="width: 6%;"></div></div>
               </div>
-              <div class="bucket-pill bucket-red">
-                <span class="bucket-dot"></span>
-                <span class="bucket-label" data-i18n="bucket_red">&gt;200ms (Degraded)</span>
-                <strong class="bucket-pct" id="docs-b3-pct">1%</strong>
+              <div class="heatmap-bucket-card bucket-red">
+                <div class="bucket-header"><span data-i18n="bucket_red">&gt;200ms (Degraded)</span><strong id="pct-red">2%</strong></div>
+                <div class="bucket-bar-bg"><div class="bucket-bar-fill" id="bar-red" style="width: 2%;"></div></div>
               </div>
             </div>
           </div>
 
-          <!-- Flamegraph View -->
-          <div class="flamegraph-view-container" id="docs-flamegraph-view" style="display: none;">
-            <div class="flamegraph-header">
-              <span class="fg-title" data-i18n="fg_title">Socket Pipeline Phase Execution &amp; TTFB Breakdown</span>
-              <span class="fg-total"><span data-i18n="fg_total_lbl">Total Time:</span> <strong id="docs-fg-total-ms">1.42 ms</strong></span>
-            </div>
-            <div class="flamegraph-bars-stack" id="docs-flamegraph-stack">
-              <div class="flamegraph-bar-row">
-                <span class="fg-phase-title" data-i18n="fg_phase_ingress">01. Ingress Socket Parse</span>
-                <div class="fg-bar-track"><div class="fg-bar-fill" id="docs-fg-bar-1" style="width: 12%; background: #34d399;"></div></div>
-                <span class="fg-time-val" id="docs-fg-val-1">0.12 ms</span>
-              </div>
-              <div class="flamegraph-bar-row">
-                <span class="fg-phase-title" data-i18n="fg_phase_ratelimit">02. Token Bucket Rate Check</span>
-                <div class="fg-bar-track"><div class="fg-bar-fill" id="docs-fg-bar-2" style="width: 5%; background: #38bdf8;"></div></div>
-                <span class="fg-time-val" id="docs-fg-val-2">0.04 ms</span>
-              </div>
-              <div class="flamegraph-bar-row">
-                <span class="fg-phase-title" data-i18n="fg_phase_routing">03. Dispatch Routing Strategy</span>
-                <div class="fg-bar-track"><div class="fg-bar-fill" id="docs-fg-bar-3" style="width: 6%; background: #a78bfa;"></div></div>
-                <span class="fg-time-val" id="docs-fg-val-3">0.05 ms</span>
-              </div>
-              <div class="flamegraph-bar-row">
-                <span class="fg-phase-title" data-i18n="fg_phase_tls">04. Upstream TCP &amp; TLS Pipe</span>
-                <div class="fg-bar-track"><div class="fg-bar-fill" id="docs-fg-bar-4" style="width: 30%; background: #60a5fa;"></div></div>
-                <span class="fg-time-val" id="docs-fg-val-4">0.45 ms</span>
-              </div>
-              <div class="flamegraph-bar-row">
-                <span class="fg-phase-title" data-i18n="fg_phase_ttfb">05. Upstream First Byte (TTFB)</span>
-                <div class="fg-bar-track"><div class="fg-bar-fill" id="docs-fg-bar-5" style="width: 55%; background: #fbbf24;"></div></div>
-                <span class="fg-time-val" id="docs-fg-val-5">0.78 ms</span>
-              </div>
-              <div class="flamegraph-bar-row">
-                <span class="fg-phase-title" data-i18n="fg_phase_flush">06. Zero-Copy Stream Flush</span>
-                <div class="fg-bar-track"><div class="fg-bar-fill" id="docs-fg-bar-6" style="width: 9%; background: #10b981;"></div></div>
-                <span class="fg-time-val" id="docs-fg-val-6">0.14 ms</span>
-              </div>
+          <!-- Flamegraph Waterfall View -->
+          <div id="view-flamegraph" style="display: none;">
+            <div class="flamegraph-timeline">
+              <div class="fg-stage"><div class="fg-label" data-i18n="fg_phase_ingress">01. Ingress Socket Parse</div><div class="fg-bar-track"><div class="fg-bar" style="width: 8%; background: #38bdf8;"></div></div><div class="fg-time-val">0.12ms</div></div>
+              <div class="fg-stage"><div class="fg-label" data-i18n="fg_phase_ratelimit">02. Token Bucket Rate Check</div><div class="fg-bar-track"><div class="fg-bar" style="width: 5%; background: #818cf8;"></div></div><div class="fg-time-val">0.08ms</div></div>
+              <div class="fg-stage"><div class="fg-label" data-i18n="fg_phase_routing">03. Dispatch Routing Strategy</div><div class="fg-bar-track"><div class="fg-bar" style="width: 12%; background: #34d399;"></div></div><div class="fg-time-val">0.18ms</div></div>
+              <div class="fg-stage"><div class="fg-label" data-i18n="fg_phase_tls">04. Upstream TCP &amp; TLS Pipe</div><div class="fg-bar-track"><div class="fg-bar" style="width: 28%; background: #facc15;"></div></div><div class="fg-time-val">0.42ms</div></div>
+              <div class="fg-stage"><div class="fg-label" data-i18n="fg_phase_ttfb">05. Upstream First Byte (TTFB)</div><div class="fg-bar-track"><div class="fg-bar" style="width: 32%; background: #f87171;"></div></div><div class="fg-time-val">0.48ms</div></div>
+              <div class="fg-stage"><div class="fg-label" data-i18n="fg_phase_flush">06. Zero-Copy Stream Flush</div><div class="fg-bar-track"><div class="fg-bar" style="width: 15%; background: #a78bfa;"></div></div><div class="fg-time-val">0.22ms</div></div>
             </div>
           </div>
 
           <!-- Interactive Test Controls Bar -->
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
             <button type="button" class="btn btn-outline btn-sm" id="btn-docs-batch-req" data-i18n="doc_btn_send_batch">Send 50 Reqs</button>
             <button type="button" class="btn btn-outline btn-sm" id="btn-docs-spike" data-i18n="doc_btn_spike">Inject 500ms Spike</button>
             <button type="button" class="btn btn-outline btn-sm" id="btn-docs-fallback" data-i18n="doc_btn_fallback">Simulate Outage Fallback</button>
@@ -1151,307 +835,18 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.10:8000",host="1
         </div>
       </section>
 
-      <!-- Section 10: Live Interactive API Tester ("Try it Out") -->
+      <!-- Section 9: Live Interactive API Tester ("Try it Out") -->
       <section id="api-tester" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_tester_tag">Live API Console</span>
-        <h2>
-          <span>Interactive API Tester ("Try it Out")</span>
-          <a href="#api-tester" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_tester_intro">
-          Test OpenBalancer management and telemetry endpoints in real time. Choose an endpoint below and click <strong>Execute Request</strong>. If running locally, you can query your live instance, or use our high-fidelity simulated sandbox engine.
-        </p>
-
-        <div class="api-tester-card">
-          <!-- Top Bar with Method, Endpoint, and Send Button -->
-          <div class="api-tester-topbar">
-            <div class="api-tester-controls">
-              <span class="api-method-badge">GET</span>
-              <select id="api-endpoint-choice" class="api-endpoint-select" aria-label="Select API Endpoint">
-                <option value="/openbalancer/status">/openbalancer/status (JSON Cluster Health & Nodes)</option>
-                <option value="/metrics">/metrics (Prometheus Metric Stream)</option>
-                <option value="/healthz">/healthz (Kubernetes Probe)</option>
-              </select>
-            </div>
-
-            <div class="api-tester-actions">
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="btn-api-execute">
-                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="margin-right: 4px;"><path d="M8 5v14l11-7z"/></svg>
-                <span>Execute Request</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Body with Metadata & Response Panel -->
-          <div class="api-tester-body">
-            <div class="api-response-meta-bar">
-              <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <span>Status: <span id="api-status-pill" class="api-status-badge api-status-200">200 OK</span></span>
-                <span>Latency: <strong id="api-latency-val" style="color: #60a5fa;">1.18 ms</strong></span>
-                <span>Type: <code id="api-content-type" style="color: #cbd5e1;">application/json</code></span>
-              </div>
-              <div class="api-tester-tabs">
-                <button type="button" class="api-tab-btn active" data-tab="formatted">Formatted</button>
-                <button type="button" class="api-tab-btn" data-tab="raw">Raw Text</button>
-                <button type="button" class="api-tab-btn" data-tab="headers">Headers</button>
-              </div>
-            </div>
-
-            <!-- Output Box -->
-            <pre class="api-response-viewer"><code id="api-response-output"></code></pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 9: Production Deployment -->
-      <section id="production-deployment" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_deploy_tag">Production</span>
-        <h2>
-          <span>Production Deployment &amp; Docker</span>
-          <a href="#production-deployment" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_deploy_intro">
-          Deploying OpenBalancer in mission-critical environments with automatic restart policies, healthchecks, and resource constraints.
-        </p>
-
-        <h3>1. Complete Production Dockerfile</h3>
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">DOCKERFILE</span>
-            <button type="button" class="btn-copy-snippet" data-code='FROM python:3.11-alpine
-
-WORKDIR /app
-
-COPY openbalancer.py config.json /app/
-
-EXPOSE 8080
-
-HEALTHCHECK --interval=5s --timeout=2s --start-period=3s --retries=3 \
-  CMD python3 -c "import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8080/openbalancer/status\", timeout=2)" || exit 1
-
-ENTRYPOINT ["python3", "openbalancer.py", "config.json"]'>
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code>FROM python:3.11-alpine
-
-WORKDIR /app
-
-COPY openbalancer.py config.json /app/
-
-EXPOSE 8080
-
-HEALTHCHECK --interval=5s --timeout=2s --start-period=3s --retries=3 \
-  CMD python3 -c "import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:8080/openbalancer/status\", timeout=2)" || exit 1
-
-ENTRYPOINT ["python3", "openbalancer.py", "config.json"]</code></pre>
-        </div>
-
-        <h3>2. Production Docker Compose Stack</h3>
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">YAML</span>
-            <button type="button" class="btn-copy-snippet" data-code='services:
-  openbalancer:
-    image: openbalancer/core:latest
-    container_name: openbalancer
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./config.json:/app/config.json:ro
-    environment:
-      - PORT=8080
-      - ALGORITHM=least_latency
-    deploy:
-      resources:
-        limits:
-          cpus: "2.0"
-          memory: 128M'>
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code>services:
-  openbalancer:
-    image: openbalancer/core:latest
-    container_name: openbalancer
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./config.json:/app/config.json:ro
-    environment:
-      - PORT=8080
-      - ALGORITHM=least_latency
-    deploy:
-      resources:
-        limits:
-          cpus: "2.0"
-          memory: 128M</code></pre>
-        </div>
-
-        <h3>3. Systemd Unit File (`/etc/systemd/system/openbalancer.service`)</h3>
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">INI / SYSTEMD</span>
-            <button type="button" class="btn-copy-snippet" data-code='[Unit]
-Description=OpenBalancer AI & API Reverse Proxy Core
-After=network.target
-
-[Service]
-Type=simple
-User=openbalancer
-Group=openbalancer
-WorkingDirectory=/opt/openbalancer
-ExecStart=/usr/bin/python3 /opt/openbalancer/openbalancer.py /etc/openbalancer/config.json
-ExecReload=/bin/kill -HUP $MAINPID
-Restart=always
-RestartSec=3
-LimitNOFILE=65536
-
-[Install]
-WantedBy=multi-user.target'>
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code>[Unit]
-Description=OpenBalancer AI & API Reverse Proxy Core
-After=network.target
-
-[Service]
-Type=simple
-User=openbalancer
-Group=openbalancer
-WorkingDirectory=/opt/openbalancer
-ExecStart=/usr/bin/python3 /opt/openbalancer/openbalancer.py /etc/openbalancer/config.json
-ExecReload=/bin/kill -HUP $MAINPID
-Restart=always
-RestartSec=3
-LimitNOFILE=65536
-
-[Install]
-WantedBy=multi-user.target</code></pre>
-        </div>
-      </section>
-
-      <!-- Section 10: Zero-Downtime Hot Reload -->
-      <section id="hot-reload" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_reload_tag">Zero-Downtime Ops</span>
-        <h2>
-          <span>Zero-Downtime Hot Reload (`SIGHUP`)</span>
-          <a href="#hot-reload" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_reload_p1">
-          OpenBalancer listens for POSIX <code>SIGHUP</code> signals. When received, the core re-reads <code>config.json</code> from disk, reconstructs upstream pools, updates routing weights, and adjusts probing intervals <strong>without dropping active client TCP connections or interrupting streaming responses</strong>.
-        </p>
-
-        <div class="docs-code-block">
-          <div class="docs-code-header">
-            <span class="docs-code-lang">BASH</span>
-            <button type="button" class="btn-copy-snippet" data-code="# Send SIGHUP to standalone process
-kill -HUP $(pgrep -f openbalancer.py)
-
-# Send SIGHUP to Docker container
-docker kill -s HUP openbalancer
-
-# Check logs to verify reload
-# [OpenBalancer] [INFO] SIGHUP received: Configuration reloaded successfully. (3 backends active)">
-              <span>Copy</span>
-            </button>
-          </div>
-          <pre><code># Send SIGHUP to standalone process
-kill -HUP $(pgrep -f openbalancer.py)
-
-# Send SIGHUP to Docker container
-docker kill -s HUP openbalancer
-
-# OpenBalancer output confirms reload:
-# 2026-08-18 10:45:00 [INFO] [OpenBalancer] SIGHUP received: Reloading config.json
-# 2026-08-18 10:45:00 [INFO] [OpenBalancer] Loaded 3 backends. Strategy: least_latency. Port: 8080</code></pre>
-        </div>
-      </section>
-
-      <!-- Section 11: Benchmarks -->
-      <section id="benchmarks" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_bench_tag">Performance Metrics</span>
-        <h2>
-          <span>Performance &amp; Benchmarks</span>
-          <a href="#benchmarks" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_bench_intro">
-          Measured on bare-metal Linux (AMD EPYC 7763, 64 Cores, 10GbE network link) running <code>wrk -t16 -c1000 -d30s</code> against 3 upstream nodes.
-        </p>
-
-        <div class="docs-table-wrapper">
-          <table class="docs-table">
-            <thead>
-              <tr>
-                <th>Load Balancer / Proxy</th>
-                <th>Throughput (Req/sec)</th>
-                <th>p99 Latency Overhead</th>
-                <th>Memory Footprint (RSS)</th>
-                <th>Zero-Config SSE Streaming</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong style="color: #60a5fa;">OpenBalancer v1.4</strong></td>
-                <td><strong style="color: #34d399;">52,400+</strong></td>
-                <td><strong style="color: #34d399;">0.84 ms</strong></td>
-                <td><strong style="color: #34d399;">18 MB</strong></td>
-                <td><strong style="color: #34d399;">Native (Zero-Copy)</strong></td>
-              </tr>
-              <tr>
-                <td>NGINX Community (Default)</td>
-                <td>58,000</td>
-                <td>1.12 ms</td>
-                <td>45 MB</td>
-                <td>Requires <code>proxy_buffering off;</code></td>
-              </tr>
-              <tr>
-                <td>HAProxy 2.8</td>
-                <td>62,000</td>
-                <td>0.78 ms</td>
-                <td>38 MB</td>
-                <td>Requires custom buffer tunables</td>
-              </tr>
-              <tr>
-                <td>Traefik v3.0</td>
-                <td>34,000</td>
-                <td>2.45 ms</td>
-                <td>110 MB</td>
-                <td>Built-in</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="docs-callout docs-callout-tip">
-          <div class="docs-callout-icon">📊</div>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🧪</div>
           <div>
-            <strong data-i18n="doc_reproduce_bench_title">Reproduce Benchmarks Locally:</strong>
-            <span data-i18n="doc_reproduce_bench_desc"> Run <code>bombardier -c 500 -n 100000 http://localhost:8080/</code> to verify local throughput and sub-millisecond response consistency.</span>
-          </div>
-          <!-- Interactive Test Controls Bar -->
-          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
-            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-batch-req" data-i18n="doc_btn_send_batch">Send 50 Reqs</button>
-            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-spike" data-i18n="doc_btn_spike">Inject 500ms Spike</button>
-            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-fallback" data-i18n="doc_btn_fallback">Simulate Outage Fallback</button>
-            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-reset-stream" data-i18n="doc_btn_reset_stream">Reset Baseline</button>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_tester_title">Interactive API Tester ("Try it Out")</span>
+              <a href="#api-tester" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_tester_intro">Test OpenBalancer management and telemetry endpoints in real time. Choose an endpoint below and click <strong>Execute Request</strong>.</p>
           </div>
         </div>
-      </section>
-
-      <!-- Section 10: Live Interactive API Tester ("Try it Out") -->
-      <section id="api-tester" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_tester_tag">Live API Console</span>
-        <h2>
-          <span>Interactive API Tester ("Try it Out")</span>
-          <a href="#api-tester" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_tester_intro">
-          Test OpenBalancer management and telemetry endpoints in real time. Choose an endpoint below and click <strong>Execute Request</strong>. If running locally, you can query your live instance, or use our high-fidelity simulated sandbox engine.
-        </p>
 
         <div class="api-tester-card">
           <div class="api-tester-topbar">
@@ -1492,18 +887,83 @@ docker kill -s HUP openbalancer
         </div>
       </section>
 
+      <!-- Section 10: Benchmarks & High-Load Audit -->
+      <section id="benchmarks" class="docs-section">
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">📈</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_bench_title">Benchmarks &amp; High-Load Audit</span>
+              <a href="#benchmarks" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_bench_intro">Measured on bare-metal Linux server (AMD EPYC 7763, 64 Cores, 10GbE Network) with wrk -t16 -c1000 -d30s against 3 backend instances.</p>
+          </div>
+        </div>
+
+        <div class="docs-table-wrapper">
+          <table class="docs-table">
+            <thead>
+              <tr>
+                <th>Concurrency (Connections)</th>
+                <th>Throughput (Reqs/sec)</th>
+                <th>p50 Latency</th>
+                <th>p90 Latency</th>
+                <th>p99 Latency</th>
+                <th>Error Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>100 conns</code></td>
+                <td>18,420 req/s</td>
+                <td>0.82 ms</td>
+                <td>1.45 ms</td>
+                <td>3.10 ms</td>
+                <td>0.00%</td>
+              </tr>
+              <tr>
+                <td><code>500 conns</code></td>
+                <td>34,180 req/s</td>
+                <td>1.15 ms</td>
+                <td>2.80 ms</td>
+                <td>5.40 ms</td>
+                <td>0.00%</td>
+              </tr>
+              <tr>
+                <td><code>1,000 conns</code></td>
+                <td>42,500 req/s</td>
+                <td>1.40 ms</td>
+                <td>4.20 ms</td>
+                <td>8.90 ms</td>
+                <td>0.00%</td>
+              </tr>
+              <tr>
+                <td><code>10,000 conns (SSE Streams)</code></td>
+                <td>10,000 streams</td>
+                <td>1.85 ms</td>
+                <td>5.10 ms</td>
+                <td>12.20 ms</td>
+                <td>0.00%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <!-- Section 11: Production Deployment & Docker -->
       <section id="production" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_prod_tag">Production</span>
-        <h2>
-          <span>Production Deployment &amp; Docker</span>
-          <a href="#production" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_prod_intro">
-          Deploying OpenBalancer in mission-critical environments with automatic restart policies, healthchecks, and resource constraints.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🐳</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_prod_title">Production Deployment &amp; Docker</span>
+              <a href="#production" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_prod_intro">Deploying OpenBalancer in mission-critical environments with automatic restart policies, healthchecks, and resource constraints.</p>
+          </div>
+        </div>
 
-        <h3>1. Complete Production Docker Compose Stack</h3>
+        <h3>Complete Production Docker Compose Stack</h3>
         <div class="docs-code-block">
           <div class="docs-code-header">
             <span class="docs-code-lang">YAML</span>
@@ -1559,14 +1019,16 @@ docker kill -s HUP openbalancer
 
       <!-- Section 12: Zero-Downtime Hot Reload -->
       <section id="zero-downtime" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_hotreload_tag">Zero-Downtime Ops</span>
-        <h2>
-          <span>Zero-Downtime Hot Reload (`SIGHUP`)</span>
-          <a href="#zero-downtime" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_hotreload_p1">
-          OpenBalancer listens for POSIX <code>SIGHUP</code> signals. When received, the core re-reads <code>config.json</code> from disk, reconstructs upstream pools, updates routing weights, and resets connection counters without closing active socket streams.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🔄</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_reload_title">Zero-Downtime Hot Reload (`SIGHUP`)</span>
+              <a href="#zero-downtime" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_reload_p1">OpenBalancer listens for POSIX SIGHUP signals. When received, the core re-reads config.json from disk, reconstructs upstream pools, updates routing weights, and resets connection counters without closing active socket streams.</p>
+          </div>
+        </div>
 
         <div class="docs-code-block">
           <div class="docs-code-header">
@@ -1589,16 +1051,18 @@ kill -HUP $(pgrep -f openbalancer.py)</code></pre>
 
       <!-- Section 13: Enterprise Support & Verification -->
       <section id="enterprise-sla" class="docs-section" style="border-bottom: none;">
-        <span class="docs-section-tag" data-i18n="doc_sec_sla_tag">Commercial SLA</span>
-        <h2>
-          <span>Enterprise Support &amp; Legal Verification</span>
-          <a href="#enterprise-sla" class="docs-anchor-link" title="Direct anchor link">#</a>
-        </h2>
-        <p data-i18n="doc_sla_p1">
-          Commercial SLA retainers, 24/7 incident response, bespoke load balancing algorithms, and on-premise high-availability deployment services are provided by <strong>INCONTROL PLUS ЕООД</strong>.
-        </p>
+        <div class="cb-doc-header">
+          <div class="cb-doc-icon-box">🛡️</div>
+          <div>
+            <h2 class="cb-doc-title">
+              <span data-i18n="doc_sla_title">Enterprise Support &amp; Legal Verification</span>
+              <a href="#enterprise-sla" class="docs-anchor-link" title="Direct anchor link">#</a>
+            </h2>
+            <p class="cb-doc-subtitle" data-i18n="doc_sla_p1">Commercial SLA retainers, 24/7 incident response, bespoke load balancing algorithms, and on-premise high-availability deployment services are provided by INCONTROL PLUS ЕООД.</p>
+          </div>
+        </div>
 
-        <div class="docs-callout" style="background: var(--bg-card); border-left-color: #a855f7;">
+        <div class="docs-callout" style="background: var(--bg-card); border-left: 4px solid #a855f7; border-color: #a855f7;">
           <div class="docs-callout-icon">🛡️</div>
           <div>
             <h4 style="margin: 0 0 0.25rem; color: #a855f7;" data-i18n="doc_sla_box_title">Contractual 99.9% Uptime Guarantee</h4>
@@ -1613,7 +1077,7 @@ kill -HUP $(pgrep -f openbalancer.py)</code></pre>
             Request Enterprise SLA Contract
           </a>
           <a href="contact.html" class="btn btn-outline" data-i18n="doc_btn_impressum">
-            Company Impressum & Verification
+            Company Impressum &amp; Verification
           </a>
         </div>
       </section>
@@ -1638,7 +1102,7 @@ kill -HUP $(pgrep -f openbalancer.py)</code></pre>
 
         <!-- Col 2: Documentation -->
         <div class="flex flex-col gap-4">
-          <h4 data-i18n="footer_col_arch">Architecture & Docs</h4>
+          <h4 data-i18n="footer_col_arch">Architecture &amp; Docs</h4>
           <ul class="footer-links">
             <li><a href="docs.html#overview" data-i18n="doc_nav_overview">System Overview</a></li>
             <li><a href="docs.html#routing-algorithms" data-i18n="doc_nav_algorithms">Routing Algorithms</a></li>
@@ -1651,7 +1115,7 @@ kill -HUP $(pgrep -f openbalancer.py)</code></pre>
 
         <!-- Col 3: Compliance -->
         <div class="flex flex-col gap-4">
-          <h4 data-i18n="footer_col_comp">Compliance & Legal</h4>
+          <h4 data-i18n="footer_col_comp">Compliance &amp; Legal</h4>
           <ul class="footer-links">
             <li><a href="terms.html" data-i18n="footer_tos">Terms of Service (ToS)</a></li>
             <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy (GDPR)</a></li>

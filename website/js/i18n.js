@@ -211,6 +211,17 @@
       "fg_phase_flush": "06. Zero-Copy Stream Flush",
 
       // Documentation Latency Section
+      "doc_sb_base_title": "Base Ingress Host",
+      "doc_sb_base_desc": "All proxy endpoints, telemetry metrics, and load balancing traffic route via this host.",
+      "doc_sb_nav_title": "Documentation Index",
+      "doc_sb_stats_title": "Cluster Benchmark Specs",
+      "doc_nav_config_builder": "Interactive Config Studio",
+      "doc_nav_error_studio": "Custom Error Studio",
+      "doc_nav_hot_reload": "Zero-Downtime Hot Reload",
+      "doc_nav_enterprise_sla": "Enterprise SLA & Invoicing",
+      "stat_sse_lbl": "Concurrent SSE streams",
+      "stat_latency_lbl": "p50 Ingress latency",
+      "stat_rss_lbl": "Base RSS memory",
       "doc_sec_heatmap_tag": "Real-Time Telemetry",
       "doc_heatmap_title": "Real-Time Latency Distribution Heatmap & Flamegraph",
       "doc_heatmap_intro": "Observe real-time latency distribution across 4 discrete threshold buckets (<10ms green, 10-50ms cyan, 50-200ms yellow, >200ms red) with live percentile calculations and execution waterfall stages.",
@@ -508,6 +519,17 @@
       "doc_sla_box_desc": "Обезпечен с финансови компенсации за прекъсване под 99.9%. Поддържат се плащания по фактура (Net-14) и незабавно картово плащане през Stripe.",
       "doc_btn_request_sla": "Заяви Enterprise SLA Договор",
       "doc_btn_impressum": "Фирмена верификация & Импресум",
+      "doc_sb_base_title": "Базов Ingress Адрес",
+      "doc_sb_base_desc": "Всички прокси крайни точки, телеметрични метрики и входящ трафик минават през този хост.",
+      "doc_sb_nav_title": "Индекс на Документацията",
+      "doc_sb_stats_title": "Клъстерна Производителност",
+      "doc_nav_config_builder": "Интерактивен Конфигуратор",
+      "doc_nav_error_studio": "Студио за Грешки",
+      "doc_nav_hot_reload": "Горещо Презареждане (SIGHUP)",
+      "doc_nav_enterprise_sla": "Корпоративен SLA & Фактуриране",
+      "stat_sse_lbl": "Конкурентни SSE потока",
+      "stat_latency_lbl": "p50 Ingress латентност",
+      "stat_rss_lbl": "Базова RAM памет",
 
       // Cookie Banner
 

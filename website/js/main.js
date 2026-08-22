@@ -2195,15 +2195,17 @@ function initDocsConfigBuilder() {
  */
 function initInteractiveApiTester() {
   const endpointSelect = document.getElementById('api-endpoint-choice');
-  const executeBtn = document.getElementById('btn-api-execute');
-  const statusPill = document.getElementById('api-status-pill');
-  const latencyVal = document.getElementById('api-latency-val');
-  const contentTypeCode = document.getElementById('api-content-type');
+  const executeBtn = document.getElementById('btn-api-execute') || document.getElementById('api-tester-execute-btn');
+  const statusPill = document.getElementById('api-status-pill') || document.getElementById('api-status-badge');
+  const latencyVal = document.getElementById('api-latency-val') || document.getElementById('api-timing');
+  const contentTypeCode = document.getElementById('api-content-type') || document.getElementById('api-size');
   const responseOutput = document.getElementById('api-response-output');
   const tabButtons = document.querySelectorAll('.api-tester-tabs .api-tab-btn');
+  const hostButtons = document.querySelectorAll('.api-host-pills .api-host-btn');
 
   if (!executeBtn || !responseOutput) return;
 
+  let currentEp = '/openbalancer/status';
   let currentTab = 'formatted';
   let lastResponseData = {
     endpoint: '/openbalancer/status',
@@ -2212,7 +2214,7 @@ function initInteractiveApiTester() {
     latency: '1.18 ms',
     contentType: 'application/json; charset=utf-8',
     headers: {
-      'server': 'OpenBalancer/1.4 (INCONTROL PLUS)',
+      'server': 'OpenBalancer/1.5.0 (INCONTROL PLUS)',
       'content-type': 'application/json; charset=utf-8',
       'connection': 'close',
       'x-circuit-breaker': 'operational',
@@ -2221,35 +2223,15 @@ function initInteractiveApiTester() {
     json: {
       system: "OpenBalancer Core",
       operator: "INCONTROL PLUS EOOD",
+      version: "1.5.0",
       license: "MIT",
       uptime_seconds: 14280,
       total_proxied_requests: 849200,
       algorithm: "least_latency",
       backends: [
-        {
-          url: "http://10.0.1.10:8000",
-          healthy: true,
-          weight: 3,
-          total_requests: 424600,
-          last_latency_ms: 1.18,
-          circuit_trips: 0
-        },
-        {
-          url: "http://10.0.1.11:8000",
-          healthy: true,
-          weight: 2,
-          total_requests: 283100,
-          last_latency_ms: 1.42,
-          circuit_trips: 0
-        },
-        {
-          url: "http://10.0.1.12:8000",
-          healthy: true,
-          weight: 1,
-          total_requests: 141500,
-          last_latency_ms: 1.85,
-          circuit_trips: 0
-        }
+        { url: "http://10.0.1.10:8000", healthy: true, weight: 3, total_requests: 424600, last_latency_ms: 1.18, circuit_trips: 0 },
+        { url: "http://10.0.1.11:8000", healthy: true, weight: 2, total_requests: 283100, last_latency_ms: 1.42, circuit_trips: 0 },
+        { url: "http://10.0.1.12:8000", healthy: true, weight: 1, total_requests: 141500, last_latency_ms: 1.85, circuit_trips: 0 }
       ]
     },
     rawText: ''
@@ -2265,35 +2247,15 @@ function initInteractiveApiTester() {
       getJson: () => ({
         system: "OpenBalancer Core",
         operator: "INCONTROL PLUS EOOD",
+        version: "1.5.0",
         license: "MIT",
         uptime_seconds: Math.floor(14280 + Math.random() * 500),
         total_proxied_requests: Math.floor(849200 + Math.random() * 1000),
         algorithm: "least_latency",
         backends: [
-          {
-            url: "http://10.0.1.10:8000",
-            healthy: true,
-            weight: 3,
-            total_requests: 424600 + Math.floor(Math.random() * 500),
-            last_latency_ms: parseFloat((1.1 + Math.random() * 0.3).toFixed(2)),
-            circuit_trips: 0
-          },
-          {
-            url: "http://10.0.1.11:8000",
-            healthy: true,
-            weight: 2,
-            total_requests: 283100 + Math.floor(Math.random() * 300),
-            last_latency_ms: parseFloat((1.3 + Math.random() * 0.4).toFixed(2)),
-            circuit_trips: 0
-          },
-          {
-            url: "http://10.0.1.12:8000",
-            healthy: true,
-            weight: 1,
-            total_requests: 141500 + Math.floor(Math.random() * 200),
-            last_latency_ms: parseFloat((1.7 + Math.random() * 0.5).toFixed(2)),
-            circuit_trips: 0
-          }
+          { url: "http://10.0.1.10:8000", healthy: true, weight: 3, total_requests: 424600 + Math.floor(Math.random() * 500), last_latency_ms: parseFloat((1.1 + Math.random() * 0.3).toFixed(2)), circuit_trips: 0 },
+          { url: "http://10.0.1.11:8000", healthy: true, weight: 2, total_requests: 283100 + Math.floor(Math.random() * 300), last_latency_ms: parseFloat((1.3 + Math.random() * 0.4).toFixed(2)), circuit_trips: 0 },
+          { url: "http://10.0.1.12:8000", healthy: true, weight: 1, total_requests: 141500 + Math.floor(Math.random() * 200), last_latency_ms: parseFloat((1.7 + Math.random() * 0.5).toFixed(2)), circuit_trips: 0 }
         ]
       })
     },
@@ -2329,6 +2291,14 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.10:8000",host="1
 openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.11:8000",host="10.0.1.11",port="8000"} 0
 openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.12:8000",host="10.0.1.12",port="8000"} 0`
     },
+    '/health': {
+      status: 200,
+      statusText: 'OK',
+      latencyMin: 0.4,
+      latencyMax: 0.9,
+      contentType: 'application/json; charset=utf-8',
+      getJson: () => ({ status: "OK", cluster_health: "nominal", healthy_nodes: 3, total_nodes: 3 })
+    },
     '/healthz': {
       status: 200,
       statusText: 'OK',
@@ -2344,32 +2314,25 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.12:8000",host="1
       statusPill.textContent = `${lastResponseData.status} ${lastResponseData.statusText}`;
       statusPill.className = `api-status-badge ${lastResponseData.status === 200 ? 'api-status-200' : 'api-status-503'}`;
     }
-    if (latencyVal) latencyVal.textContent = lastResponseData.latency;
-    if (contentTypeCode) contentTypeCode.textContent = lastResponseData.contentType;
+    if (latencyVal) latencyVal.textContent = `Time: ${lastResponseData.latency}`;
+    if (contentTypeCode) contentTypeCode.textContent = lastResponseData.contentType.includes('json') ? 'Size: 480 B' : 'Size: 720 B';
 
-    if (currentTab === 'formatted') {
-      if (lastResponseData.json) {
-        responseOutput.textContent = JSON.stringify(lastResponseData.json, null, 2);
-      } else {
-        responseOutput.textContent = lastResponseData.rawText;
-      }
-    } else if (currentTab === 'raw') {
-      responseOutput.textContent = lastResponseData.rawText || JSON.stringify(lastResponseData.json, null, 2);
-    } else if (currentTab === 'headers') {
-      const headerLines = Object.entries(lastResponseData.headers).map(([k, v]) => `${k}: ${v}`).join('\n');
-      responseOutput.textContent = `HTTP/1.1 ${lastResponseData.status} ${lastResponseData.statusText}\n${headerLines}`;
+    if (lastResponseData.json) {
+      responseOutput.textContent = JSON.stringify(lastResponseData.json, null, 2);
+    } else {
+      responseOutput.textContent = lastResponseData.rawText;
     }
   }
 
   async function executeApiRequest() {
-    const ep = endpointSelect?.value || '/openbalancer/status';
+    const ep = currentEp || endpointSelect?.value || '/openbalancer/status';
     executeBtn.disabled = true;
-    executeBtn.innerHTML = '<span class="loading-spinner"></span><span>Executing...</span>';
+    executeBtn.innerHTML = '<span>Executing...</span>';
 
     const simulatedLatency = (Math.random() * 1.5 + 0.8).toFixed(2);
 
     setTimeout(() => {
-      const mock = mockPayloads[ep];
+      const mock = mockPayloads[ep] || mockPayloads['/openbalancer/status'];
       if (mock) {
         lastResponseData.endpoint = ep;
         lastResponseData.status = mock.status;
@@ -2377,7 +2340,7 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.12:8000",host="1
         lastResponseData.latency = `${simulatedLatency} ms`;
         lastResponseData.contentType = mock.contentType;
         lastResponseData.headers = {
-          'server': 'OpenBalancer/1.4 (INCONTROL PLUS)',
+          'server': 'OpenBalancer/1.5.0 (INCONTROL PLUS)',
           'content-type': mock.contentType,
           'date': new Date().toUTCString(),
           'connection': 'close',
@@ -2395,8 +2358,8 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.12:8000",host="1
 
       renderResponse();
       executeBtn.disabled = false;
-      executeBtn.innerHTML = '<svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" style="margin-right: 4px;"><path d="M8 5v14l11-7z"/></svg><span>Execute Request</span>';
-    }, 280);
+      executeBtn.innerHTML = '▶ Execute Request';
+    }, 150);
   }
 
   if (executeBtn) executeBtn.addEventListener('click', executeApiRequest);
@@ -2406,8 +2369,18 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.12:8000",host="1
     btn.addEventListener('click', () => {
       tabButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      currentTab = btn.getAttribute('data-tab');
-      renderResponse();
+      const epKey = btn.getAttribute('data-ep');
+      if (epKey === 'status') currentEp = '/openbalancer/status';
+      else if (epKey === 'metrics') currentEp = '/metrics';
+      else if (epKey === 'health') currentEp = '/health';
+      executeApiRequest();
+    });
+  });
+
+  hostButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      hostButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     });
   });
 
