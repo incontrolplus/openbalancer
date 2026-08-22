@@ -2888,20 +2888,37 @@ input[type="range"]::-webkit-slider-thumb {
 .docs-table td {
   padding: 0.85rem 1.15rem;
   border-bottom: 1px solid var(--border-subtle);
-  color: #cbd5e1;
+  color: var(--text-main);
+  line-height: 1.55;
 }
 
 .docs-table tr:last-child td {
   border-bottom: none;
 }
 
-.docs-table code {
+.docs-table tr:hover td {
+  background: var(--bg-card-hover);
+}
+
+.docs-table code,
+p code,
+li code {
   font-family: var(--font-mono);
   font-size: 0.82rem;
   padding: 0.15rem 0.45rem;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 3px;
-  color: #60a5fa;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .docs-table code,
+[data-theme="dark"] p code,
+[data-theme="dark"] li code {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
 }
 
 /* Code Snippet Cards with 1-Click Copy */
@@ -3502,15 +3519,54 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* ==========================================================================
+   Form Inputs & Controls in Documentation
+   ========================================================================== */
+.doc-input,
+.doc-select,
+.doc-textarea {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  outline: none;
+  transition: all var(--transition-fast);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.doc-input:focus,
+.doc-select:focus,
+.doc-textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--border-accent);
+}
+
+.doc-input::placeholder,
+.doc-textarea::placeholder {
+  color: var(--text-dim);
+}
+
+.doc-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+/* ==========================================================================
    Custom Error Page Studio (Interactive Tool)
    ========================================================================== */
 .error-studio-card {
-  background: var(--bg-surface);
+  background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   overflow: hidden;
   margin: 2rem 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--shadow-sm);
 }
 
 .error-studio-split {
@@ -3522,7 +3578,7 @@ input[type="range"]::-webkit-slider-thumb {
 .error-studio-controls {
   padding: 1.5rem;
   border-right: 1px solid var(--border-subtle);
-  background: var(--bg-subtle);
+  background: var(--bg-card);
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
@@ -3534,43 +3590,38 @@ input[type="range"]::-webkit-slider-thumb {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: #020617;
+  background: var(--bg-subtle);
   position: relative;
-}
-
-.preview-pane-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.preview-badge-chip {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  padding: 0.2rem 0.5rem;
-  border-radius: 3px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
 }
 
 .error-preview-frame {
   flex: 1;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #0a0f1d;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem 1.5rem;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
+}
+
+.error-preview-frame.theme-cyber {
+  background: #0f172a;
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+.error-preview-frame.theme-crimson {
+  background: #180d0d;
+  border-color: rgba(248, 113, 113, 0.2);
+}
+
+.error-preview-frame.theme-clean {
+  background: #ffffff;
+  border-color: #e2e8f0;
 }
 
 /* Error Page Inner Components (Rendered in live preview) */
@@ -3727,21 +3778,45 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .error-preview-frame.theme-clean {
-  background: #0f172a;
-  border-color: rgba(59, 130, 246, 0.3);
+  background: #ffffff;
+  border-color: #cbd5e1;
 }
 .error-preview-frame.theme-clean .err-icon-halo {
-  background: rgba(59, 130, 246, 0.15);
+  background: rgba(37, 99, 235, 0.1);
   border: 2px solid var(--primary);
 }
 .error-preview-frame.theme-clean .err-code-badge {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
-  border: 1px solid rgba(59, 130, 246, 0.4);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+.error-preview-frame.theme-clean .err-live-title {
+  color: #0f172a;
+}
+.error-preview-frame.theme-clean .err-live-desc {
+  color: #475569;
+}
+.error-preview-frame.theme-clean .err-countdown-pill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+.error-preview-frame.theme-clean .err-meta-row {
+  color: #64748b;
 }
 .error-preview-frame.theme-clean .err-retry-btn {
   background: var(--primary);
   color: #fff;
+}
+
+.err-meta-row {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .error-studio-actions-bar {
@@ -3749,10 +3824,10 @@ input[type="range"]::-webkit-slider-thumb {
   gap: 0.75rem;
   flex-wrap: wrap;
   padding: 1rem 1.5rem;
-  background: var(--bg-base);
+  background: var(--bg-card);
   border-top: 1px solid var(--border-subtle);
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .studio-theme-pills {

@@ -700,18 +700,18 @@ curl http://localhost:8080/metrics</code></pre>
           <div class="config-controls-panel">
             <div class="form-row">
               <div class="mb-4">
-                <label for="d-cfg-port" style="font-size: 0.85rem; color: #cbd5e1;">Listen Port</label>
-                <input type="number" id="d-cfg-port" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" value="8080" min="1024" max="65535">
+                <label for="d-cfg-port" class="doc-label">Listen Port</label>
+                <input type="number" id="d-cfg-port" class="doc-input" value="8080" min="1024" max="65535">
               </div>
               <div class="mb-4">
-                <label for="d-cfg-host" style="font-size: 0.85rem; color: #cbd5e1;">Bind Host</label>
-                <input type="text" id="d-cfg-host" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" value="0.0.0.0">
+                <label for="d-cfg-host" class="doc-label">Bind Host</label>
+                <input type="text" id="d-cfg-host" class="doc-input" value="0.0.0.0">
               </div>
             </div>
 
             <div class="mb-4">
-              <label for="d-cfg-algo" style="font-size: 0.85rem; color: #cbd5e1;">Routing Algorithm</label>
-              <select id="d-cfg-algo" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
+              <label for="d-cfg-algo" class="doc-label">Routing Algorithm</label>
+              <select id="d-cfg-algo" class="doc-select">
                 <option value="least_latency" selected>least_latency (Fastest Node Steering)</option>
                 <option value="weighted">weighted (Capacity Proportional)</option>
                 <option value="round_robin">round_robin (Uniform Sequence)</option>
@@ -739,8 +739,8 @@ curl http://localhost:8080/metrics</code></pre>
 
             <div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                <label style="font-size: 0.85rem; color: #cbd5e1; font-weight: 600;">Upstream Backends</label>
-                <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="d-cfg-add-node-btn" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;">+ Add Node</button>
+                <label class="doc-label" style="margin: 0;">Upstream Backends</label>
+                <button type="button" class="btn btn-outline btn-sm" id="d-cfg-add-node-btn" style="padding: 0.2rem 0.55rem; font-size: 0.75rem;">+ Add Node</button>
               </div>
               <div id="d-cfg-upstreams-list" class="upstream-list">
                 <!-- Dynamically Populated -->
@@ -754,17 +754,17 @@ curl http://localhost:8080/metrics</code></pre>
               <div class="terminal-dots">
                 <span></span><span></span><span></span>
               </div>
-              <div style="font-family: var(--font-mono); font-size: 0.78rem; color: #94a3b8;">
+              <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim);">
                 config.json (Live Validated)
               </div>
             </div>
             <pre class="terminal-code-view" style="flex: 1; min-height: 280px; max-height: 420px; overflow: auto; padding: 1.25rem; font-size: 0.82rem; border-radius: 0 0 var(--radius-sm) var(--radius-sm); border: 1px solid var(--border-subtle); border-top: none;"><code id="d-config-json-preview"></code></pre>
             
             <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="d-cfg-copy-btn" style="flex: 1;">
+              <button type="button" class="btn btn-primary btn-sm" id="d-cfg-copy-btn" style="flex: 1;">
                 📋 Copy Config JSON
               </button>
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="d-cfg-download-btn" style="flex: 1;">
+              <button type="button" class="btn btn-outline btn-sm" id="d-cfg-download-btn" style="flex: 1;">
                 💾 Download config.json
               </button>
             </div>
@@ -789,8 +789,8 @@ curl http://localhost:8080/metrics</code></pre>
             <div class="error-studio-controls">
               <!-- Preset Scenario Selector -->
               <div class="mb-4">
-                <label for="err-scenario-select" data-i18n="err_preset_lbl">Select Error Scenario Preset:</label>
-                <select id="err-scenario-select" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
+                <label for="err-scenario-select" class="doc-label" data-i18n="err_preset_lbl">Select Error Scenario Preset:</label>
+                <select id="err-scenario-select" class="doc-select">
                   <option value="429" selected data-i18n="err_opt_429">429 Too Many Requests (Rate Limited)</option>
                   <option value="502" data-i18n="err_opt_502">502 Bad Gateway (Upstream Unreachable)</option>
                   <option value="503" data-i18n="err_opt_503">503 Service Unavailable (Circuit Breaker Tripped)</option>
@@ -800,12 +800,12 @@ curl http://localhost:8080/metrics</code></pre>
               <!-- Brand & Headline Inputs -->
               <div class="form-row">
                 <div class="mb-4">
-                  <label for="err-brand-name" data-i18n="err_lbl_brand">Brand / Product Name</label>
-                  <input type="text" id="err-brand-name" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" value="OpenBalancer AI Edge">
+                  <label for="err-brand-name" class="doc-label" data-i18n="err_lbl_brand">Brand / Product Name</label>
+                  <input type="text" id="err-brand-name" class="doc-input" value="OpenBalancer AI Edge">
                 </div>
                 <div class="mb-4">
-                  <label for="err-retry-sec" data-i18n="err_lbl_retry_sec">Retry Countdown (Seconds)</label>
-                  <select id="err-retry-sec" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors">
+                  <label for="err-retry-sec" class="doc-label" data-i18n="err_lbl_retry_sec">Retry Countdown (Seconds)</label>
+                  <select id="err-retry-sec" class="doc-select">
                     <option value="5">5 Seconds</option>
                     <option value="15" selected>15 Seconds</option>
                     <option value="30">30 Seconds</option>
@@ -816,22 +816,22 @@ curl http://localhost:8080/metrics</code></pre>
               </div>
 
               <div class="mb-4">
-                <label for="err-headline" data-i18n="err_lbl_headline">Custom Error Headline</label>
-                <input type="text" id="err-headline" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" value="Rate Limit Exceeded (429)">
+                <label for="err-headline" class="doc-label" data-i18n="err_lbl_headline">Custom Error Headline</label>
+                <input type="text" id="err-headline" class="doc-input" value="Rate Limit Exceeded (429)">
               </div>
 
               <div class="mb-4">
-                <label for="err-message" data-i18n="err_lbl_message">Description / Guidance Message</label>
-                <textarea id="err-message" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" rows="2" style="font-size: 0.85rem;">Too many concurrent requests were received. Your token bucket will automatically refill shortly.</textarea>
+                <label for="err-message" class="doc-label" data-i18n="err_lbl_message">Description / Guidance Message</label>
+                <textarea id="err-message" class="doc-textarea" rows="2" style="font-size: 0.85rem;">Too many concurrent requests were received. Your token bucket will automatically refill shortly.</textarea>
               </div>
 
               <div class="form-row">
                 <div class="mb-4">
-                  <label for="err-support-link" data-i18n="err_lbl_support">Support Email or URL</label>
-                  <input type="text" id="err-support-link" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" value="support@openbalancer.com">
+                  <label for="err-support-link" class="doc-label" data-i18n="err_lbl_support">Support Email or URL</label>
+                  <input type="text" id="err-support-link" class="doc-input" value="support@openbalancer.com">
                 </div>
                 <div class="mb-4">
-                  <label data-i18n="err_lbl_theme">Color Theme Preset</label>
+                  <label class="doc-label" data-i18n="err_lbl_theme">Color Theme Preset</label>
                   <div class="studio-theme-pills">
                     <button type="button" class="studio-theme-btn active" data-theme="theme-cyber" data-i18n="err_theme_cyber">Cyber</button>
                     <button type="button" class="studio-theme-btn" data-theme="theme-crimson" data-i18n="err_theme_crimson">Crimson</button>
@@ -861,21 +861,20 @@ curl http://localhost:8080/metrics</code></pre>
                   <h3 class="err-live-title" id="err-preview-title">Rate Limit Exceeded (429)</h3>
                   <p class="err-live-desc" id="err-preview-desc">Too many concurrent requests were received. Your token bucket will automatically refill shortly.</p>
                   
-                  <div class="err-countdown-pill" id="err-preview-countdown-pill">
-                    <span>⏱️</span>
+                  <div class="err-countdown-pill" id="err-preview-countdown">
                     <span data-i18n="err_preview_countdown_prefix">Automatic reconnection in</span>
-                    <strong id="err-live-seconds-display">15</strong>
+                    <strong id="err-countdown-num" style="color: var(--primary);">15</strong>
                     <span data-i18n="err_preview_sec">seconds</span>
                   </div>
 
-                  <button type="button" class="err-retry-btn" id="err-preview-retry-action-btn">
-                    <span>🔄</span>
-                    <span data-i18n="err_preview_retry_btn">Retry Connection Now</span>
+                  <button type="button" class="btn btn-primary btn-sm" id="err-preview-btn" style="width: 100%; justify-content: center;" data-i18n="err_preview_retry_btn">
+                    Retry Connection Now
                   </button>
 
-                  <div class="err-ray-footer">
-                    <div><span data-i18n="err_preview_ray_id">Incident Ray ID:</span> <code id="err-preview-ray">ray_9x72b104a</code> • <span id="err-preview-brand-tag">OpenBalancer AI Edge</span></div>
-                    <div>Need assistance? Contact <a href="#" id="err-preview-contact-link">support@openbalancer.com</a></div>
+                  <div class="err-meta-row">
+                    <span>Ray ID: <code style="font-size: 0.72rem;">ob_9a8f2c3d</code></span>
+                    <span>•</span>
+                    <span id="err-preview-brand-tag">OpenBalancer AI Edge</span>
                   </div>
                 </div>
               </div>
@@ -884,17 +883,12 @@ curl http://localhost:8080/metrics</code></pre>
 
           <!-- Action & Export Bar -->
           <div class="error-studio-actions-bar">
-            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #94a3b8;">
-              <span>Zero external assets • Standalone self-contained HTML</span>
-            </div>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="btn-err-copy-html">
-                📋 <span data-i18n="err_btn_copy_html">Copy Standalone HTML</span>
-              </button>
-              <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="btn-err-download-html">
-                💾 <span data-i18n="err_btn_download">Download .html File</span>
-              </button>
-            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-err-copy-html" style="flex: 1;" data-i18n="err_btn_copy_html">
+              📋 Copy Standalone HTML
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-err-download-html" style="flex: 1;" data-i18n="err_btn_download">
+              💾 Download .html File
+            </button>
           </div>
         </div>
       </section>
@@ -1149,10 +1143,10 @@ openbalancer_circuit_breaker_trips_total{backend="http://10.0.1.10:8000",host="1
 
           <!-- Interactive Test Controls Bar -->
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="btn-docs-batch-req" data-i18n="doc_btn_send_batch">Send 50 Reqs</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="btn-docs-spike" data-i18n="doc_btn_spike">Inject 500ms Spike</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="btn-docs-fallback" data-i18n="doc_btn_fallback">Simulate Outage Fallback</button>
-            <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="btn-docs-reset-stream" data-i18n="doc_btn_reset_stream">Reset Baseline</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-batch-req" data-i18n="doc_btn_send_batch">Send 50 Reqs</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-spike" data-i18n="doc_btn_spike">Inject 500ms Spike</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-fallback" data-i18n="doc_btn_fallback">Simulate Outage Fallback</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-reset-stream" data-i18n="doc_btn_reset_stream">Reset Baseline</button>
           </div>
         </div>
       </section>
@@ -1438,35 +1432,187 @@ docker kill -s HUP openbalancer
             <strong data-i18n="doc_reproduce_bench_title">Reproduce Benchmarks Locally:</strong>
             <span data-i18n="doc_reproduce_bench_desc"> Run <code>bombardier -c 500 -n 100000 http://localhost:8080/</code> to verify local throughput and sub-millisecond response consistency.</span>
           </div>
+          <!-- Interactive Test Controls Bar -->
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-batch-req" data-i18n="doc_btn_send_batch">Send 50 Reqs</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-spike" data-i18n="doc_btn_spike">Inject 500ms Spike</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-fallback" data-i18n="doc_btn_fallback">Simulate Outage Fallback</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-docs-reset-stream" data-i18n="doc_btn_reset_stream">Reset Baseline</button>
+          </div>
         </div>
       </section>
 
-      <!-- Section 12: Enterprise SLA Support -->
-      <section id="enterprise-sla" class="docs-section">
-        <span class="docs-section-tag" data-i18n="doc_sec_sla_tag">Commercial Backing</span>
+      <!-- Section 10: Live Interactive API Tester ("Try it Out") -->
+      <section id="api-tester" class="docs-section">
+        <span class="docs-section-tag" data-i18n="doc_sec_tester_tag">Live API Console</span>
         <h2>
-          <span>Enterprise SLA &amp; Support</span>
+          <span>Interactive API Tester ("Try it Out")</span>
+          <a href="#api-tester" class="docs-anchor-link" title="Direct anchor link">#</a>
+        </h2>
+        <p data-i18n="doc_tester_intro">
+          Test OpenBalancer management and telemetry endpoints in real time. Choose an endpoint below and click <strong>Execute Request</strong>. If running locally, you can query your live instance, or use our high-fidelity simulated sandbox engine.
+        </p>
+
+        <div class="api-tester-card">
+          <div class="api-tester-topbar">
+            <!-- Tabs -->
+            <div class="api-tester-tabs">
+              <button type="button" class="api-tab-btn active" data-ep="status">GET /openbalancer/status</button>
+              <button type="button" class="api-tab-btn" data-ep="metrics">GET /metrics (Prometheus)</button>
+              <button type="button" class="api-tab-btn" data-ep="health">GET /openbalancer/health</button>
+            </div>
+
+            <!-- Host Target Switcher -->
+            <div class="api-tester-controls">
+              <span class="api-host-label" data-i18n="doc_lbl_env">Target Environment:</span>
+              <div class="api-host-pills">
+                <button type="button" class="api-host-btn active" data-host="sandbox" data-i18n="doc_btn_sandbox">Simulation Sandbox</button>
+                <button type="button" class="api-host-btn" data-host="local" data-i18n="doc_btn_local">Local (localhost:8080)</button>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" id="api-tester-execute-btn" data-i18n="doc_btn_exec">
+                ▶ Execute Request
+              </button>
+            </div>
+          </div>
+
+          <!-- Code / Response Viewer -->
+          <div class="api-response-viewer">
+            <div class="api-response-meta">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span class="api-status-badge" id="api-status-badge">200 OK</span>
+                <span class="api-timing" id="api-timing">Time: 1.2ms</span>
+                <span class="api-size" id="api-size">Size: 420 B</span>
+              </div>
+              <button type="button" class="btn-copy-snippet" id="api-copy-btn">
+                <span>Copy Response</span>
+              </button>
+            </div>
+            <pre class="api-response-code"><code id="api-response-output"></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 11: Production Deployment & Docker -->
+      <section id="production" class="docs-section">
+        <span class="docs-section-tag" data-i18n="doc_sec_prod_tag">Production</span>
+        <h2>
+          <span>Production Deployment &amp; Docker</span>
+          <a href="#production" class="docs-anchor-link" title="Direct anchor link">#</a>
+        </h2>
+        <p data-i18n="doc_prod_intro">
+          Deploying OpenBalancer in mission-critical environments with automatic restart policies, healthchecks, and resource constraints.
+        </p>
+
+        <h3>1. Complete Production Docker Compose Stack</h3>
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span class="docs-code-lang">YAML</span>
+            <button type="button" class="btn-copy-snippet" data-code='services:
+  openbalancer:
+    image: ghcr.io/incontrolplus/openbalancer:v1.5.0
+    container_name: openbalancer-core
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.json:/app/config.json:ro
+    environment:
+      - OPENBALANCER_LOG_LEVEL=INFO
+      - OPENBALANCER_WORKERS=1
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen(\"http://localhost:8080/openbalancer/health\", timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 256M'>
+              <span>Copy</span>
+            </button>
+          </div>
+          <pre><code>services:
+  openbalancer:
+    image: ghcr.io/incontrolplus/openbalancer:v1.5.0
+    container_name: openbalancer-core
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.json:/app/config.json:ro
+    environment:
+      - OPENBALANCER_LOG_LEVEL=INFO
+      - OPENBALANCER_WORKERS=1
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen(\"http://localhost:8080/openbalancer/health\", timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 256M</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 12: Zero-Downtime Hot Reload -->
+      <section id="zero-downtime" class="docs-section">
+        <span class="docs-section-tag" data-i18n="doc_sec_hotreload_tag">Zero-Downtime Ops</span>
+        <h2>
+          <span>Zero-Downtime Hot Reload (`SIGHUP`)</span>
+          <a href="#zero-downtime" class="docs-anchor-link" title="Direct anchor link">#</a>
+        </h2>
+        <p data-i18n="doc_hotreload_p1">
+          OpenBalancer listens for POSIX <code>SIGHUP</code> signals. When received, the core re-reads <code>config.json</code> from disk, reconstructs upstream pools, updates routing weights, and resets connection counters without closing active socket streams.
+        </p>
+
+        <div class="docs-code-block">
+          <div class="docs-code-header">
+            <span class="docs-code-lang">BASH</span>
+            <button type="button" class="btn-copy-snippet" data-code="# Send SIGHUP to running Docker container
+docker kill -s HUP openbalancer-core
+
+# Or via PID on standalone host:
+kill -HUP $(pgrep -f openbalancer.py)">
+              <span>Copy</span>
+            </button>
+          </div>
+          <pre><code># Send SIGHUP to running Docker container
+docker kill -s HUP openbalancer-core
+
+# Or via PID on standalone host:
+kill -HUP $(pgrep -f openbalancer.py)</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 13: Enterprise Support & Verification -->
+      <section id="enterprise-sla" class="docs-section" style="border-bottom: none;">
+        <span class="docs-section-tag" data-i18n="doc_sec_sla_tag">Commercial SLA</span>
+        <h2>
+          <span>Enterprise Support &amp; Legal Verification</span>
           <a href="#enterprise-sla" class="docs-anchor-link" title="Direct anchor link">#</a>
         </h2>
         <p data-i18n="doc_sla_p1">
-          OpenBalancer is maintained and commercially backed by <strong>INCONTROL PLUS ЕООД</strong>. For production enterprise deployments requiring guaranteed uptime, sub-15 minute emergency incident escalation, and custom AI dispatcher integrations, we provide contractual B2B Master Services Agreements (MSAs).
+          Commercial SLA retainers, 24/7 incident response, bespoke load balancing algorithms, and on-premise high-availability deployment services are provided by <strong>INCONTROL PLUS ЕООД</strong>.
         </p>
 
-        <div class="docs-callout docs-callout-enterprise">
+        <div class="docs-callout" style="background: var(--bg-card); border-left-color: #a855f7;">
           <div class="docs-callout-icon">🛡️</div>
           <div>
-            <h4 style="margin: 0 0 0.25rem; color: #c084fc;" data-i18n="doc_sla_box_title">Contractual 99.9% Uptime Guarantee</h4>
-            <p style="margin: 0; font-size: 0.88rem;" data-i18n="doc_sla_box_desc">
+            <h4 style="margin: 0 0 0.25rem; color: #a855f7;" data-i18n="doc_sla_box_title">Contractual 99.9% Uptime Guarantee</h4>
+            <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);" data-i18n="doc_sla_box_desc">
               Backed by formal contractual service credits for any monthly downtime below 99.9%. Net-14 corporate invoicing and instant Stripe Card checkout supported.
             </p>
           </div>
         </div>
 
         <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-          <a href="index.html#enterprise" class="px-5 py-2.5 rounded-lg font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-all duration-300 active:scale-95" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="doc_btn_request_sla">
+          <a href="index.html#enterprise" class="btn btn-primary" data-action="enterprise-inquiry" data-plan="B2B Pro SLA Retainer" data-i18n="doc_btn_request_sla">
             Request Enterprise SLA Contract
           </a>
-          <a href="contact.html" class="px-5 py-2.5 rounded-lg font-semibold text-gray-300 bg-gray-800 hover:bg-gray-700 hover:text-white border border-gray-700 transition-all duration-300 active:scale-95" data-i18n="doc_btn_impressum">
+          <a href="contact.html" class="btn btn-outline" data-i18n="doc_btn_impressum">
             Company Impressum & Verification
           </a>
         </div>
@@ -1481,7 +1627,7 @@ docker kill -s HUP openbalancer
       <div class="footer-grid">
         <!-- Col 1: Brand -->
         <div class="footer-brand">
-          <div class="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 hover:to-white transition-all">
+          <div class="nav-brand">
             <img src="assets/logo.svg?v=13.0.0" width="36" height="36" style="width:36px!important;height:36px!important;max-width:36px!important;max-height:36px!important;object-fit:contain!important;" alt="OpenBalancer Logo" class="brand-logo-img">
             <span>OpenBalancer</span>
           </div>
@@ -1526,7 +1672,7 @@ docker kill -s HUP openbalancer
         </div>
       </div>
 
-      <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-4">
+      <div class="footer-bottom">
         <div data-i18n="footer_rights">
           © 2026 INCONTROL PLUS ЕООД. All rights reserved. OpenBalancer™ is a trademark of INCONTROL PLUS.
         </div>
@@ -1538,40 +1684,40 @@ docker kill -s HUP openbalancer
   </footer>
 
   <!-- Interactive B2B Consultation & SLA Modal -->
-  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 opacity-0 transition-opacity" id="b2b-modal">
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-lg p-6 relative shadow-2xl scale-95 transition-transform">
+  <div class="modal-overlay" id="b2b-modal">
+    <div class="modal-container">
       <button type="button" class="modal-close" id="modal-close-btn">&times;</button>
       <h3 style="font-size: 1.4rem; margin-bottom: 0.4rem;" id="modal-title" data-i18n="modal_title">Request Enterprise SLA &amp; Invoicing</h3>
-      <p style="font-size: 0.85rem; margin-bottom: 1.25rem;" data-i18n="modal_subtitle">
+      <p style="font-size: 0.85rem; margin-bottom: 1.25rem; color: var(--text-muted);" data-i18n="modal_subtitle">
         Direct engagement with <strong>INCONTROL PLUS ЕООД</strong>. Receive a formal B2B proposal and SLA terms within 2 hours.
       </p>
 
       <form id="b2b-inquiry-form">
         <div class="form-row">
           <div class="mb-4">
-            <label for="company_name" data-i18n="modal_lbl_company">Company Legal Name *</label>
-            <input type="text" id="company_name" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="Acme Corp Ltd" required>
+            <label for="company_name" class="doc-label" data-i18n="modal_lbl_company">Company Legal Name *</label>
+            <input type="text" id="company_name" class="doc-input" placeholder="Acme Corp Ltd" required>
           </div>
           <div class="mb-4">
-            <label for="vat_number" data-i18n="modal_lbl_vat">VAT / Registry ID</label>
-            <input type="text" id="vat_number" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="BG123456789">
+            <label for="vat_number" class="doc-label" data-i18n="modal_lbl_vat">VAT / Registry ID</label>
+            <input type="text" id="vat_number" class="doc-input" placeholder="BG123456789">
           </div>
         </div>
 
         <div class="form-row">
           <div class="mb-4">
-            <label for="work_email" data-i18n="modal_lbl_email">Work Email *</label>
-            <input type="email" id="work_email" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="alex@company.com" required>
+            <label for="work_email" class="doc-label" data-i18n="modal_lbl_email">Work Email *</label>
+            <input type="email" id="work_email" class="doc-input" placeholder="alex@company.com" required>
           </div>
           <div class="mb-4">
-            <label for="phone_number" data-i18n="modal_lbl_phone">Corporate Phone</label>
-            <input type="tel" id="phone_number" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" placeholder="+359 88 123 4567">
+            <label for="phone_number" class="doc-label" data-i18n="modal_lbl_phone">Corporate Phone</label>
+            <input type="tel" id="phone_number" class="doc-input" placeholder="+359 88 123 4567">
           </div>
         </div>
 
         <div class="mb-4">
-          <label for="selected_plan" data-i18n="modal_lbl_plan">Selected Retainer / SLA *</label>
-          <select id="selected_plan" class="w-full bg-gray-950 border border-gray-800 rounded-lg px-4 py-2.5 text-gray-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors" required>
+          <label for="selected_plan" class="doc-label" data-i18n="modal_lbl_plan">Selected Retainer / SLA *</label>
+          <select id="selected_plan" class="doc-select" required>
             <option value="B2B Pro SLA Retainer (€1,500/mo)">B2B Pro SLA Retainer (€1,500/month)</option>
             <option value="Custom Enterprise Architecture">Custom Enterprise Architecture</option>
             <option value="Turnkey AI Cluster Setup">Turnkey AI Cluster Setup</option>
@@ -1579,7 +1725,7 @@ docker kill -s HUP openbalancer
         </div>
 
         <div class="mb-4">
-          <label data-i18n="modal_lbl_payment_method">Preferred Billing &amp; Payment Method</label>
+          <label class="doc-label" data-i18n="modal_lbl_payment_method">Preferred Billing &amp; Payment Method</label>
           <div class="payment-method-selector">
             <label class="payment-radio-label">
               <input type="radio" id="payment_pref_invoice_docs" name="payment_pref" value="invoice" aria-label="Corporate Net-14 Invoicing" checked>
@@ -1598,29 +1744,29 @@ docker kill -s HUP openbalancer
           </div>
         </div>
 
-        <button type="submit" class="px-5 py-2.5 rounded-lg font-semibold text-white bg-brand-600 hover:bg-brand-500 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-all duration-300 active:scale-95" style="width: 100%; margin-top: 0.5rem;" id="submit-inquiry-btn" data-i18n="modal_btn_submit">
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" id="submit-inquiry-btn" data-i18n="modal_btn_submit">
           Submit B2B Inquiry &amp; Request Invoicing
         </button>
       </form>
 
       <div class="form-success-box" id="form-success-box">
         <h4 data-i18n="modal_success_title">Inquiry Registered Successfully</h4>
-        <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #e2e8f0;">
-          <span data-i18n="modal_success_desc">Our senior infrastructure lead at INCONTROL PLUS will review your specifications and send an official B2B proposal and Net-14 invoicing schedule to</span> <strong id="success-email" style="color: #60a5fa;"></strong>.
+        <p style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--text-muted);">
+          <span data-i18n="modal_success_desc">Our senior infrastructure lead at INCONTROL PLUS will review your specifications and send an official B2B proposal and Net-14 invoicing schedule to</span> <strong id="success-email" style="color: var(--primary);"></strong>.
         </p>
-        <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="close-success-btn" style="margin-top: 1rem;">Close</button>
+        <button type="button" class="btn btn-outline btn-sm" id="close-success-btn" style="margin-top: 1rem;">Close</button>
       </div>
     </div>
   </div>
 
   <!-- GDPR Cookie Consent Banner -->
   <div class="cookie-banner" id="cookie-banner">
-    <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">
-      <span data-i18n="cookie_text"><strong>GDPR Notice:</strong> OpenBalancer uses strictly necessary cookies for telemetry routing and secure B2B session handling. See</span> <a href="privacy.html" style="text-decoration: underline; color: #60a5fa;">Privacy Policy</a>.
+    <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+      <span data-i18n="cookie_text"><strong>GDPR Notice:</strong> OpenBalancer uses strictly necessary cookies for telemetry routing and secure B2B session handling. See</span> <a href="privacy.html" style="text-decoration: underline; color: var(--primary);">Privacy Policy</a>.
     </div>
     <div style="display: flex; gap: 0.5rem;">
-      <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-white bg-brand-600 hover:bg-brand-500 transition-colors" id="accept-cookies-btn" data-i18n="cookie_accept">Accept All</button>
-      <button type="button" class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-300 bg-gray-800 hover:bg-gray-700 transition-colors" id="dismiss-cookies-btn" data-i18n="cookie_dismiss">Essential Only</button>
+      <button type="button" class="btn btn-primary btn-sm" id="accept-cookies-btn" data-i18n="cookie_accept">Accept All</button>
+      <button type="button" class="btn btn-outline btn-sm" id="dismiss-cookies-btn" data-i18n="cookie_dismiss">Essential Only</button>
     </div>
   </div>
 
