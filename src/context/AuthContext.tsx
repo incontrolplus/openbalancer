@@ -32,48 +32,49 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Restore session from localStorage & validate via Edge API on initial load
+  // Validate active session with Backend Edge API on initial load
   const initSession = useCallback(async () => {
     try {
       const savedToken = localStorage.getItem(STORAGE_KEY_TOKEN);
-      const savedUserJson = localStorage.getItem(STORAGE_KEY_USER);
 
-      if (savedToken && savedUserJson) {
-        try {
-          const parsedUser = JSON.parse(savedUserJson);
-          setUser(parsedUser);
-        } catch (e) {
+      if (!savedToken) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      // Strictly verify token validity against Backend Edge API
+      const res = await fetch('/api/auth/session', {
+        headers: {
+          'Authorization': `Bearer ${savedToken}`,
+          'Accept': 'application/json'
+        },
+        cache: 'no-store'
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.authenticated && data.user) {
+          setUser(data.user);
+          localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(data.user));
+        } else {
+          // Token invalid or expired -> force logout
+          localStorage.removeItem(STORAGE_KEY_TOKEN);
           localStorage.removeItem(STORAGE_KEY_USER);
+          setUser(null);
         }
-
-        // Validate token with Edge API
-        try {
-          const res = await fetch('/api/auth/session', {
-            headers: {
-              'Authorization': `Bearer ${savedToken}`,
-              'Accept': 'application/json'
-            }
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            if (data && data.authenticated && data.user) {
-              setUser(data.user);
-              localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(data.user));
-            } else if (data && data.authenticated === false) {
-              // Token invalid
-              localStorage.removeItem(STORAGE_KEY_TOKEN);
-              localStorage.removeItem(STORAGE_KEY_USER);
-              setUser(null);
-            }
-          }
-        } catch (apiErr) {
-          // Keep local user session active (resilient fallback)
-          console.warn('Edge session validation fallback:', apiErr);
-        }
+      } else {
+        // Backend returned non-200 (e.g. 401 Unauthorized) -> force logout
+        localStorage.removeItem(STORAGE_KEY_TOKEN);
+        localStorage.removeItem(STORAGE_KEY_USER);
+        setUser(null);
       }
     } catch (err) {
-      console.warn('Session init error:', err);
+      console.warn('Session verification error:', err);
+      // In case of network error, do not trust untrusted session
+      localStorage.removeItem(STORAGE_KEY_TOKEN);
+      localStorage.removeItem(STORAGE_KEY_USER);
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -87,7 +88,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const cleanEmail = (email || '').trim().toLowerCase();
     const cleanPassword = password || '';
 
+    if (!cleanEmail || !cleanPassword) {
+      return { ok: false, error: 'Моля, въведете имейл и парола.' };
+    }
+
     try {
+      // 100% Backend verification via Cloudflare Edge API
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -111,50 +117,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { ok: true };
       } else if (data && data.message) {
         return { ok: false, error: data.message };
-      } else if (res.status === 401) {
-        return { ok: false, error: 'Невалиден имейл или парола за операторски достъп.' };
       } else {
-        // Fallback for standalone/offline server when edge api endpoint is not routed
-        if (cleanEmail === 'miropetrovski12@gmail.com' && cleanPassword === 'MagicBoyy24#') {
-          const fallbackUser: AuthUser = {
-            id: 'usr_ob_operator_01',
-            email: 'miropetrovski12@gmail.com',
-            name: 'Miroslav Petrovski',
-            role: 'SUPER_ADMIN',
-            avatar_initials: 'MP',
-            created_at: new Date().toISOString()
-          };
-          localStorage.setItem(STORAGE_KEY_TOKEN, 'ob_local_fallback_token_2026');
-          localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(fallbackUser));
-          setUser(fallbackUser);
-          return { ok: true };
-        }
-
         return {
           ok: false,
           error: 'Невалиден имейл или парола за операторски достъп.'
         };
       }
     } catch (err: any) {
-      // Fallback for local offline mode
-      if (cleanEmail === 'miropetrovski12@gmail.com' && cleanPassword === 'MagicBoyy24#') {
-        const fallbackUser: AuthUser = {
-          id: 'usr_ob_operator_01',
-          email: 'miropetrovski12@gmail.com',
-          name: 'Miroslav Petrovski',
-          role: 'SUPER_ADMIN',
-          avatar_initials: 'MP',
-          created_at: new Date().toISOString()
-        };
-        localStorage.setItem(STORAGE_KEY_TOKEN, 'ob_local_fallback_token_2026');
-        localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(fallbackUser));
-        setUser(fallbackUser);
-        return { ok: true };
-      }
-
       return {
         ok: false,
-        error: 'Невалиден имейл или парола за операторски достъп.'
+        error: 'Грешка при комуникация със сървъра за автентикация.'
       };
     }
   };

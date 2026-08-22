@@ -6,21 +6,17 @@ import {
   Mail, 
   Key, 
   ArrowRight, 
-  CheckCircle2, 
   AlertCircle, 
   Loader2, 
   Eye, 
-  EyeOff, 
-  Sparkles,
-  Server,
-  Terminal
+  EyeOff
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const Login: React.FC = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState<string>('miropetrovski12@gmail.com');
-  const [password, setPassword] = useState<string>('MagicBoyy24#');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -31,24 +27,15 @@ export const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      console.log('Attempting login with:', email, password);
       const result = await login(email, password);
-      console.log('Login result:', result);
       if (!result.ok) {
         setErrorMessage(result.error || 'Невалиден имейл или парола.');
       }
     } catch (err: any) {
-      console.error('Login error:', err);
       setErrorMessage('Грешка при комуникация със сървъра.');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleAutofillOperator = () => {
-    setEmail('miropetrovski12@gmail.com');
-    setPassword('MagicBoyy24#');
-    setErrorMessage(null);
   };
 
   return (
@@ -131,7 +118,8 @@ export const Login: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  placeholder="operator@openbalancer.com"
+                  autoFocus
+                  placeholder="name@company.com"
                   className="w-full pl-10 pr-4 py-3 bg-[#090f1d]/90 border border-white/10 rounded-xl text-sm font-medium text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/15 transition-all shadow-inner"
                 />
               </div>
@@ -186,17 +174,8 @@ export const Login: React.FC = () => {
             </button>
           </form>
 
-          {/* Quick Operator Autofill Badge */}
-          <div className="mt-6 pt-5 border-t border-white/10 flex flex-col items-center gap-2.5">
-            <button
-              type="button"
-              onClick={handleAutofillOperator}
-              className="text-[11px] font-mono text-slate-400 hover:text-cyan-300 flex items-center gap-1.5 transition-colors cursor-pointer bg-white/5 hover:bg-cyan-500/10 px-3 py-1.5 rounded-lg border border-white/5 hover:border-cyan-500/20"
-            >
-              <Sparkles className="w-3 h-3 text-cyan-400" />
-              <span>Попълни оператор (Miroslav Petrovski)</span>
-            </button>
-
+          {/* Security Footer Note */}
+          <div className="mt-6 pt-5 border-t border-white/10 flex flex-col items-center gap-1.5">
             <span className="text-[10px] text-slate-500 font-mono text-center">
               HMAC-SHA256 • 256-bit Edge Encryption • SLA 99.9%
             </span>

@@ -94,7 +94,11 @@ export function useSupabaseRealtimeScorecard() {
   useEffect(() => {
     fetchSnapshot();
 
-    // Supabase subscription with fallback protection
+    // Supabase subscription with fallback protection (skip on public HTTPS to avoid PNA block)
+    if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
+      return;
+    }
+
     try {
       const channel = supabase
         .channel('realtime_revenue_stream')
