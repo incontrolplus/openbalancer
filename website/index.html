@@ -97,7 +97,7 @@
   <link rel="apple-touch-icon" href="assets/favicon.svg?v=7.0.0">
 
   <!-- Stylesheet & Typography (Full Engineering Design System) -->
-  <link rel="stylesheet" href="css/style.css?v=5.3.0">
+  <link rel="stylesheet" href="css/style.css?v=5.4.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -280,57 +280,57 @@
         </div>
         <div class="terminal-code-view">
           <div class="tab-content" id="tab-docker">
-<pre><code><span style="color: #ff7b72;">version:</span> <span style="color: #a5d6ff;">'3.8'</span>
-<span style="color: #ff7b72;">services:</span>
-  <span style="color: #7ee787;">openbalancer:</span>
-    <span style="color: #79c0ff;">image:</span> ghcr.io/incontrolplus/openbalancer:latest
-    <span style="color: #79c0ff;">container_name:</span> openbalancer-core
-    <span style="color: #79c0ff;">ports:</span>
-      - <span style="color: #a5d6ff;">"8080:8080"</span>
-    <span style="color: #79c0ff;">volumes:</span>
+<pre><code><span style="color: #cf222e; font-weight: 600;">version:</span> <span style="color: #0a3069;">'3.8'</span>
+<span style="color: #cf222e; font-weight: 600;">services:</span>
+  <span style="color: #116329; font-weight: 600;">openbalancer:</span>
+    <span style="color: #0550ae;">image:</span> ghcr.io/incontrolplus/openbalancer:latest
+    <span style="color: #0550ae;">container_name:</span> openbalancer-core
+    <span style="color: #0550ae;">ports:</span>
+      - <span style="color: #0a3069;">"8080:8080"</span>
+    <span style="color: #0550ae;">volumes:</span>
       - ./config.json:/app/config.json:ro
-    <span style="color: #79c0ff;">environment:</span>
+    <span style="color: #0550ae;">environment:</span>
       - ROUTING_ALGORITHM=weighted_round_robin
       - HEALTH_PROBE_INTERVAL=3
       - CIRCUIT_BREAKER_THRESHOLD=5
-    <span style="color: #79c0ff;">restart:</span> unless-stopped</code></pre>
+    <span style="color: #0550ae;">restart:</span> unless-stopped</code></pre>
           </div>
 
           <div class="tab-content" id="tab-k8s" style="display: none;">
-<pre><code><span style="color: #ff7b72;">apiVersion:</span> <span style="color: #a5d6ff;">apps/v1</span>
-<span style="color: #ff7b72;">kind:</span> <span style="color: #a5d6ff;">Deployment</span>
-<span style="color: #ff7b72;">metadata:</span>
-  <span style="color: #79c0ff;">name:</span> openbalancer-ingress
-<span style="color: #ff7b72;">spec:</span>
-  <span style="color: #79c0ff;">replicas:</span> 3
-  <span style="color: #79c0ff;">template:</span>
-    <span style="color: #79c0ff;">spec:</span>
-      <span style="color: #79c0ff;">containers:</span>
-        - <span style="color: #79c0ff;">name:</span> openbalancer
-          <span style="color: #79c0ff;">image:</span> ghcr.io/incontrolplus/openbalancer:v1.4.0
-          <span style="color: #79c0ff;">resources:</span>
-            <span style="color: #79c0ff;">limits:</span> { <span style="color: #79c0ff;">cpu:</span> <span style="color: #a5d6ff;">"500m"</span>, <span style="color: #79c0ff;">memory:</span> <span style="color: #a5d6ff;">"64Mi"</span> }</code></pre>
+<pre><code><span style="color: #cf222e; font-weight: 600;">apiVersion:</span> <span style="color: #0a3069;">apps/v1</span>
+<span style="color: #cf222e; font-weight: 600;">kind:</span> <span style="color: #0a3069;">Deployment</span>
+<span style="color: #cf222e; font-weight: 600;">metadata:</span>
+  <span style="color: #0550ae;">name:</span> openbalancer-ingress
+<span style="color: #cf222e; font-weight: 600;">spec:</span>
+  <span style="color: #0550ae;">replicas:</span> 3
+  <span style="color: #0550ae;">template:</span>
+    <span style="color: #0550ae;">spec:</span>
+      <span style="color: #0550ae;">containers:</span>
+        - <span style="color: #0550ae;">name:</span> openbalancer
+          <span style="color: #0550ae;">image:</span> ghcr.io/incontrolplus/openbalancer:v1.4.0
+          <span style="color: #0550ae;">resources:</span>
+            <span style="color: #0550ae;">limits:</span> { <span style="color: #0550ae;">cpu:</span> <span style="color: #0a3069;">"500m"</span>, <span style="color: #0550ae;">memory:</span> <span style="color: #0a3069;">"64Mi"</span> }</code></pre>
           </div>
 
           <div class="tab-content" id="tab-config" style="display: none;">
 <pre><code>{
-  <span style="color: #7ee787;">"server"</span>: { <span style="color: #79c0ff;">"host"</span>: <span style="color: #a5d6ff;">"0.0.0.0"</span>, <span style="color: #79c0ff;">"port"</span>: 8080 },
-  <span style="color: #7ee787;">"algorithm"</span>: <span style="color: #a5d6ff;">"weighted_least_connections"</span>,
-  <span style="color: #7ee787;">"upstreams"</span>: [
-    { <span style="color: #79c0ff;">"id"</span>: <span style="color: #a5d6ff;">"srv-ai-1"</span>, <span style="color: #79c0ff;">"url"</span>: <span style="color: #a5d6ff;">"http://10.0.1.10:8000"</span>, <span style="color: #79c0ff;">"weight"</span>: 3 },
-    { <span style="color: #79c0ff;">"id"</span>: <span style="color: #a5d6ff;">"srv-ai-2"</span>, <span style="color: #79c0ff;">"url"</span>: <span style="color: #a5d6ff;">"http://10.0.1.11:8000"</span>, <span style="color: #79c0ff;">"weight"</span>: 2 }
+  <span style="color: #116329; font-weight: 600;">"server"</span>: { <span style="color: #0550ae;">"host"</span>: <span style="color: #0a3069;">"0.0.0.0"</span>, <span style="color: #0550ae;">"port"</span>: 8080 },
+  <span style="color: #116329; font-weight: 600;">"algorithm"</span>: <span style="color: #0a3069;">"weighted_least_connections"</span>,
+  <span style="color: #116329; font-weight: 600;">"upstreams"</span>: [
+    { <span style="color: #0550ae;">"id"</span>: <span style="color: #0a3069;">"srv-ai-1"</span>, <span style="color: #0550ae;">"url"</span>: <span style="color: #0a3069;">"http://10.0.1.10:8000"</span>, <span style="color: #0550ae;">"weight"</span>: 3 },
+    { <span style="color: #0550ae;">"id"</span>: <span style="color: #0a3069;">"srv-ai-2"</span>, <span style="color: #0550ae;">"url"</span>: <span style="color: #0a3069;">"http://10.0.1.11:8000"</span>, <span style="color: #0550ae;">"weight"</span>: 2 }
   ]
 }</code></pre>
           </div>
 
           <div class="tab-content" id="tab-curl" style="display: none;">
-<pre><code><span style="color: #79c0ff;">$</span> curl -s http://localhost:8080/openbalancer/status | jq .
+<pre><code><span style="color: #cf222e; font-weight: 700;">$</span> curl -s http://localhost:8080/openbalancer/status | jq .
 {
-  <span style="color: #7ee787;">"status"</span>: <span style="color: #a5d6ff;">"HEALTHY"</span>,
-  <span style="color: #7ee787;">"active_nodes"</span>: 3,
-  <span style="color: #7ee787;">"total_requests"</span>: 142850,
-  <span style="color: #7ee787;">"p99_latency_ms"</span>: 0.34,
-  <span style="color: #7ee787;">"circuit_breaker"</span>: <span style="color: #a5d6ff;">"CLOSED"</span>
+  <span style="color: #116329; font-weight: 600;">"status"</span>: <span style="color: #0a3069;">"HEALTHY"</span>,
+  <span style="color: #116329; font-weight: 600;">"active_nodes"</span>: 3,
+  <span style="color: #116329; font-weight: 600;">"total_requests"</span>: 142850,
+  <span style="color: #116329; font-weight: 600;">"p99_latency_ms"</span>: 0.34,
+  <span style="color: #116329; font-weight: 600;">"circuit_breaker"</span>: <span style="color: #0a3069;">"CLOSED"</span>
 }</code></pre>
           </div>
         </div>
