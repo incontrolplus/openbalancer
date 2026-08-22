@@ -1,12 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3b82f6" />
-      <stop offset="100%" stop-color="#10b981" />
-    </linearGradient>
+    <style>
+      .logo-c1 { fill: #afc5c9; opacity: 0.60; }
+      .logo-c2 { fill: #7da7cc; opacity: 0.70; }
+      .logo-core { fill: #2563eb; }
+    </style>
   </defs>
-  <rect width="32" height="32" rx="8" fill="#0b0f19" />
-  <polygon points="16,4 28,11 28,21 16,28 4,21 4,11" stroke="url(#favGrad)" stroke-width="2" fill="#111827" />
-  <circle cx="16" cy="16" r="4" fill="url(#favGrad)" />
-  <path d="M16 13L14 16H17L15 19L19 15H16L16 13Z" fill="#ffffff" />
+  <rect width="64" height="64" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+  <circle class="logo-c1" cx="30" cy="32" r="22" />
+  <circle class="logo-c2" cx="34" cy="32" r="17" />
+  <circle class="logo-core" cx="32" cy="32" r="6" />
+  <circle cx="32" cy="32" r="2.5" fill="#ffffff" />
 </svg>

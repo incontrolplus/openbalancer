@@ -1,36 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3b82f6" />
-      <stop offset="100%" stop-color="#10b981" />
-    </linearGradient>
-    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.8" />
-      <stop offset="100%" stop-color="#34d399" stop-opacity="0.2" />
-    </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
+    <style>
+      .logo-c1 { fill: #afc5c9; opacity: 0.60; }
+      .logo-c2 { fill: #7da7cc; opacity: 0.70; }
+      .logo-core { fill: #2563eb; }
+    </style>
   </defs>
-  
-  <!-- Outer Hex Shield -->
-  <polygon points="50,6 90,28 90,72 50,94 10,72 10,28" 
-           stroke="url(#primaryGrad)" stroke-width="4" fill="#111827" fill-opacity="0.9" />
-  
-  <!-- Circuit Nodes / Routing Lines -->
-  <line x1="50" y1="20" x2="50" y2="42" stroke="#60a5fa" stroke-width="3" stroke-linecap="round" />
-  <line x1="50" y1="58" x2="30" y2="76" stroke="#34d399" stroke-width="3" stroke-linecap="round" />
-  <line x1="50" y1="58" x2="70" y2="76" stroke="#34d399" stroke-width="3" stroke-linecap="round" />
-  
-  <!-- Peripheral Nodes -->
-  <circle cx="50" cy="20" r="5" fill="#60a5fa" filter="url(#glow)" />
-  <circle cx="30" cy="76" r="5" fill="#34d399" filter="url(#glow)" />
-  <circle cx="70" cy="76" r="5" fill="#34d399" filter="url(#glow)" />
-  
-  <!-- Central Pulse Gateway -->
-  <circle cx="50" cy="50" r="10" fill="url(#primaryGrad)" filter="url(#glow)" />
-  
-  <!-- Lightning Energy Core -->
-  <path d="M51 44L46 51H51L49 57L55 49H50L51 44Z" fill="#ffffff" />
+  <circle class="logo-c1" cx="30" cy="32" r="22" />
+  <circle class="logo-c2" cx="34" cy="32" r="17" />
+  <circle class="logo-core" cx="32" cy="32" r="6" />
+  <circle cx="32" cy="32" r="2.5" fill="#ffffff" />
 </svg>
