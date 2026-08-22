@@ -526,10 +526,6 @@ function initThemeSwitcher() {
   const desktopBtn = document.getElementById('theme-toggle-btn');
   const mobileBtn = document.getElementById('mobile-theme-toggle-btn');
 
-  function getSystemPreference() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
   function getActiveTheme() {
     const saved = localStorage.getItem('openbalancer_theme');
     if (saved === 'dark' || saved === 'light') {
@@ -539,7 +535,8 @@ function initThemeSwitcher() {
     if (saved === 'matrix' || saved === 'theme-matrix') {
       try { localStorage.removeItem('openbalancer_theme'); } catch (e) {}
     }
-    return getSystemPreference();
+    // Normal / default theme is strictly white (light)
+    return 'light';
   }
 
   function updateButtonLabels(theme) {
@@ -558,6 +555,7 @@ function initThemeSwitcher() {
 
     document.querySelectorAll('.theme-btn-text').forEach(el => {
       el.textContent = label;
+      el.style.display = 'inline-block';
     });
 
     [desktopBtn, mobileBtn].forEach(btn => {
@@ -602,16 +600,6 @@ function initThemeSwitcher() {
 
   if (desktopBtn) desktopBtn.addEventListener('click', toggle);
   if (mobileBtn) mobileBtn.addEventListener('click', toggle);
-
-  // Listen to OS system theme changes if user hasn't explicitly set preference
-  if (window.matchMedia) {
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('openbalancer_theme')) {
-        currentTheme = e.matches ? 'dark' : 'light';
-        applyTheme(currentTheme, false);
-      }
-    });
-  }
 
   // Expose global helper so i18n switcher can refresh button labels
   window.updateThemeButtonLabels = () => updateButtonLabels(currentTheme);
