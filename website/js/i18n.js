@@ -20,10 +20,10 @@
       "nav_retainers": "Retainers",
       "nav_request_sla": "Request Enterprise SLA",
       "nav_docs": "Documentation",
-      "nav_theme_toggle": "Toggle Theme Mode",
+      "nav_theme_toggle": "Toggle Theme (Light / Dark)",
       "theme_btn_label": "Theme",
-      "theme_dark": "Deep Space Dark",
-      "theme_matrix": "Matrix Terminal Console",
+      "theme_dark": "Dark",
+      "theme_light": "Light",
 
       // Documentation Portal
       "doc_header_title": "Technical Documentation",
@@ -406,10 +406,10 @@
       "nav_retainers": "Абонаменти",
       "nav_request_sla": "Заяви Enterprise SLA",
       "nav_docs": "Документация",
-      "nav_theme_toggle": "Превключи режим на тема",
+      "nav_theme_toggle": "Превключи тема (Светла / Тъмна)",
       "theme_btn_label": "Тема",
-      "theme_dark": "Deep Space Тъмна",
-      "theme_matrix": "Matrix Терминална конзола",
+      "theme_dark": "Тъмна",
+      "theme_light": "Светла",
 
       // Documentation Portal
       "doc_header_title": "Техническа Документация",
@@ -825,6 +825,10 @@
         el.setAttribute('placeholder', translations[lang][key]);
       }
     });
+
+    if (typeof window.updateThemeButtonLabels === 'function') {
+      window.updateThemeButtonLabels();
+    }
   }
 
   function bindEvents() {

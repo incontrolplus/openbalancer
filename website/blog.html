@@ -27,9 +27,13 @@
   <script>
     (function() {
       try {
-        var savedTheme = localStorage.getItem('openbalancer_theme');
-        if (savedTheme === 'matrix') {
-          document.documentElement.setAttribute('data-theme', 'matrix');
+        var saved = localStorage.getItem('openbalancer_theme');
+        var systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (systemDark ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
         }
       } catch (e) {}
     })();
@@ -70,11 +74,11 @@
         </ul>
       </nav>
       <div class="nav-actions">
-        <!-- Theme Switcher (Deep Space Dark vs Matrix Console) -->
-        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme Mode" title="Toggle Theme (Deep Space / Matrix Terminal)" data-i18n-title="nav_theme_toggle">
-          <svg class="theme-icon-dark" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="theme-icon-matrix" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-          <span class="theme-btn-text" data-i18n="theme_btn_label">Theme</span>
+        <!-- Theme Switcher (CompanyBook Light vs Deep Space Dark) -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle Theme Mode" title="Toggle Theme (Light / Dark)" data-i18n-title="nav_theme_toggle">
+          <svg class="theme-icon-moon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="theme-icon-sun" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <span class="theme-btn-text" data-i18n="theme_dark">Тъмна</span>
         </button>
 
         <!-- Language Switcher (EN / BG) -->

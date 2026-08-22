@@ -519,52 +519,98 @@ function initTerminalTabs() {
 }
 
 /**
- * Theme Switcher: Deep Space Dark vs Matrix Terminal Console
+ * Smart Theme Switcher: CompanyBook Light vs Deep Space Dark
+ * Inverts based on user interaction and system preference (prefers-color-scheme)
  */
 function initThemeSwitcher() {
   const desktopBtn = document.getElementById('theme-toggle-btn');
   const mobileBtn = document.getElementById('mobile-theme-toggle-btn');
 
-  function applyTheme(theme) {
-    const isMatrix = theme === 'matrix';
-    if (isMatrix) {
-      document.documentElement.setAttribute('data-theme', 'matrix');
-      document.body.classList.add('theme-matrix');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      document.body.classList.remove('theme-matrix');
-    }
-
-    const isBg = (document.documentElement.lang || 'en') === 'bg';
-    const matrixLabel = isBg ? 'Матрикс' : 'Matrix';
-    const darkLabel = isBg ? 'Тъмна' : 'Space Dark';
-
-    document.querySelectorAll('.theme-btn-text').forEach(el => {
-      el.textContent = isMatrix ? darkLabel : matrixLabel;
-    });
-
-    try {
-      localStorage.setItem('openbalancer_theme', isMatrix ? 'matrix' : 'dark');
-    } catch(e) {}
+  function getSystemPreference() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  let currentTheme = 'dark';
-  try {
+  function getActiveTheme() {
     const saved = localStorage.getItem('openbalancer_theme');
-    if (saved === 'matrix') {
-      currentTheme = 'matrix';
+    if (saved === 'dark' || saved === 'light') {
+      return saved;
     }
-  } catch(e) {}
+    return getSystemPreference();
+  }
 
-  applyTheme(currentTheme);
+  function updateButtonLabels(theme) {
+    const isDark = theme === 'dark';
+    const isBg = (document.documentElement.lang || localStorage.getItem('openbalancer_lang') || 'bg') === 'bg';
+    
+    // In Light mode, button prompts to switch to Dark ("Тъмна" / "Dark")
+    // In Dark mode, button prompts to switch to Light ("Светла" / "Light")
+    const label = isDark 
+      ? (isBg ? 'Светла' : 'Light') 
+      : (isBg ? 'Тъмна' : 'Dark');
+
+    const title = isDark
+      ? (isBg ? 'Превключи към светла тема' : 'Switch to Light Theme')
+      : (isBg ? 'Превключи към тъмна тема' : 'Switch to Dark Theme');
+
+    document.querySelectorAll('.theme-btn-text').forEach(el => {
+      el.textContent = label;
+    });
+
+    [desktopBtn, mobileBtn].forEach(btn => {
+      if (btn) {
+        btn.setAttribute('title', title);
+        btn.setAttribute('aria-label', title);
+      }
+    });
+  }
+
+  function applyTheme(theme, save = false) {
+    const isDark = theme === 'dark';
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.body.classList.add('theme-dark');
+      document.body.classList.remove('theme-light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      document.body.classList.add('theme-light');
+      document.body.classList.remove('theme-dark');
+    }
+
+    updateButtonLabels(theme);
+
+    if (save) {
+      try {
+        localStorage.setItem('openbalancer_theme', theme);
+      } catch (e) {}
+    }
+  }
+
+  let currentTheme = getActiveTheme();
+  applyTheme(currentTheme, false);
 
   function toggle() {
-    currentTheme = currentTheme === 'matrix' ? 'dark' : 'matrix';
-    applyTheme(currentTheme);
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(currentTheme, true);
+    if (typeof SoundFX !== 'undefined' && SoundFX.playClick) {
+      SoundFX.playClick();
+    }
   }
 
   if (desktopBtn) desktopBtn.addEventListener('click', toggle);
   if (mobileBtn) mobileBtn.addEventListener('click', toggle);
+
+  // Listen to OS system theme changes if user hasn't explicitly set preference
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('openbalancer_theme')) {
+        currentTheme = e.matches ? 'dark' : 'light';
+        applyTheme(currentTheme, false);
+      }
+    });
+  }
+
+  // Expose global helper so i18n switcher can refresh button labels
+  window.updateThemeButtonLabels = () => updateButtonLabels(currentTheme);
 }
 
 /**
@@ -1041,8 +1087,7 @@ function initLoadBalancerSimulator() {
       targetNode = backends[0];
     }
 
-    const isMatrix = document.documentElement.getAttribute('data-theme') === 'matrix';
-    let pColor = isMatrix ? '#00ff66' : '#10b981'; // Green (200 OK)
+    let pColor = '#10b981'; // Emerald Green (200 OK)
     let pType = opts.type || activeProtocol;
     let baseSpeed = 0.016;
 
@@ -1129,7 +1174,7 @@ function initLoadBalancerSimulator() {
     dashOffset -= 0.65;
 
     const anchors = getAnchorPositions();
-    const isMatrix = document.documentElement.getAttribute('data-theme') === 'matrix';
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
     // 1. Draw Connecting Bus Bezier Lines
     const isMobile = window.innerWidth <= 992;
@@ -1173,13 +1218,13 @@ function initLoadBalancerSimulator() {
       // Base glowing line
       ctx.lineWidth = 2.5;
       if (status === 'DOWN') {
-        ctx.strokeStyle = isMatrix ? 'rgba(255, 51, 102, 0.45)' : 'rgba(239, 68, 68, 0.45)';
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
         ctx.setLineDash([6, 6]);
       } else if (isDegraded) {
-        ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
+        ctx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
         ctx.setLineDash([4, 4]);
       } else {
-        ctx.strokeStyle = isMatrix ? 'rgba(0, 255, 102, 0.35)' : 'rgba(59, 130, 246, 0.35)';
+        ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.45)' : 'rgba(37, 99, 235, 0.35)';
         ctx.setLineDash([8, 6]);
       }
       ctx.lineDashOffset = dashOffset;
