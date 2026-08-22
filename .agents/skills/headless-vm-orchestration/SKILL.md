@@ -74,3 +74,30 @@ echo 'screendump /tmp/vm_screen.ppm' | nc -U /tmp/qemu-monitor.sock
 sips -s format png /tmp/vm_screen.ppm --out /tmp/vm_screen.png
 ```
 
+### 7. External Disk & NFS Byte-Locking Workarounds (PHILIPS_SSD)
+When executing QEMU or `qemu-img` commands on external volumes (`/Volumes/PHILIPS_SSD/`):
+
+1. **QEMU Virtual Machine Launch:**
+   ```bash
+   /opt/homebrew/bin/qemu-system-x86_64 \
+       -drive "file=/Volumes/PHILIPS_SSD/VMs/Portable_Windows_VM/windows11_portable.qcow2,format=qcow2,if=none,id=hd0,file.locking=off" \
+       -device "ide-hd,drive=hd0,bus=ahci0.0,bootindex=0" ...
+   ```
+
+2. **Disk Diagnostics & Info (Read-Only):**
+   ```bash
+   /opt/homebrew/bin/qemu-img info -U --image-opts "file.filename=/path/to/disk.qcow2,file.locking=off"
+   ```
+
+3. **Disk Refcount & Corruption Repair:**
+   ```bash
+   /opt/homebrew/bin/qemu-img check -r all --image-opts "file.filename=/path/to/disk.qcow2,file.locking=off"
+   ```
+
+4. **Dynamic Disk Creation Bypass on NFS:**
+   ```bash
+   /opt/homebrew/bin/qemu-img create -f qcow2 -o lazy_refcounts=on /tmp/new_disk.qcow2 64G
+   mv /tmp/new_disk.qcow2 /Volumes/PHILIPS_SSD/VMs/target_disk.qcow2
+   ```
+
+
